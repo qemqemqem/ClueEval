@@ -2,7 +2,7 @@ import random
 from dataclasses import dataclass, field
 import os
 from utils.gpt import prompt_completion_chat
-from utils.display_interface import display_story_summary, display_crime_story, display_distractor_stories, display_bullet_points
+from utils.display_interface import show_narrative_text, show_situation
 
 @dataclass
 class Story:
@@ -113,12 +113,13 @@ def convert_story_to_bullet_points(story: Story):
 
 def main():
     story = get_random_details()
-    display_story_summary(story.summary)
+    show_situation(story.summary, title="Story Summary")
     story = write_stories(story)
     story = convert_story_to_bullet_points(story)
-    display_crime_story(story.crime_story)
-    display_distractor_stories(story.distractor_stories)
-    display_bullet_points(story.bullet_points)
+    show_narrative_text(story.crime_story, speaker="Crime Story")
+    for i, distractor in enumerate(story.distractor_stories, 1):
+        show_narrative_text(distractor, speaker=f"Distractor Story {i}")
+    show_situation("\n".join(story.bullet_points), title="Bullet Points")
 
 if __name__ == '__main__':
     main()
