@@ -21,6 +21,9 @@ class Story:
     crime_story: str = ""
     distractor_stories: list[str] = field(default_factory=list)
 
+    # This is an attempt to summarize the facts of the story
+    bullet_points: list[str] = field(default_factory=list)
+
 
 def load_elements(filename):
     with open(os.path.join('config', filename), 'r') as f:
@@ -88,6 +91,9 @@ def write_stories(story: Story):
         story.distractor_stories.append(distractor_story)
 
     return story
+
+def convert_story_to_bullet_points():
+    ...
 
 def main():
     story = get_random_details()

@@ -1,0 +1,16 @@
+I'm writing a murder mystery story, and I want to convert my prose into bullet points for my notes.
+
+Here's a summary of one of the stories that's going on in the book:
+
+{{story}}
+
+I want to convert it into a set of bullet point facts like this:
+
+* The [character] likes [food]
+* After eating the [food], the [other character] went to the [location]
+* Another fact
+* Another fact
+
+Obviously don't put words in brackets, those are just examples. Try to keep the bullet point facts short, but situation them within the story as you need to. Don't invent anything new, just pull out short bullet point facts from the story I gave you.
+
+Only output bullet points starting with "* ", and nothing else.
