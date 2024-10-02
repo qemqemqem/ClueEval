@@ -66,14 +66,14 @@ class EvidenceClassification:
         return evidence_classification
 
 
-def classify_evidence(story: str, hypotheses: Hypotheses) -> EvidenceClassification:
+def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> EvidenceClassification:
     # Load the prompt template
     with open('config/prompts/classify_evidence.txt', 'r') as f:
         prompt_template = f.read()
 
     # Prepare the prompt
     prompt = prompt_template.format(
-        story=story,
+        bullet_points="\n".join(f"- {bp}" for bp in bullet_points),
         killers=", ".join(h.name for h in hypotheses.killers),
         weapons=", ".join(h.name for h in hypotheses.weapons),
         locations=", ".join(h.name for h in hypotheses.locations)
@@ -112,12 +112,16 @@ def display_classified_evidence(evidence_classification):
 
 
 if __name__ == "__main__":
-    story = "Your story text here..."
+    bullet_points = [
+        "John was seen near the kitchen at the time of the murder.",
+        "A bloody knife was found in the bedroom.",
+        "Mary has an alibi for the time of the murder."
+    ]
     hypotheses = Hypotheses(
         killers=[Hypothesis("John"), Hypothesis("Mary")],
         weapons=[Hypothesis("Knife"), Hypothesis("Gun")],
         locations=[Hypothesis("Kitchen"), Hypothesis("Bedroom")]
     )
 
-    evidence_classification = classify_evidence(story, hypotheses)
+    evidence_classification = classify_evidence(bullet_points, hypotheses)
     print(evidence_classification.to_json())
