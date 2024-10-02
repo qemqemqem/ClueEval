@@ -6,7 +6,7 @@ from utils.gpt import prompt_completion_chat
 @dataclass
 class Story:
     # This is generated without an LLM, for diversity prompting reasons
-    story_description: str
+    summary: str
 
     # The story has these elements, which are part of the story description
     random_crimes: list[str]
@@ -42,7 +42,7 @@ def get_random_details() -> Story:
 
     # Create a Story object
     story = Story(
-        story_description="",
+        summary="",
         random_crimes=random.sample(crime_elements, 3),
         random_places=random.sample(place_elements, 3),
         random_people=random_people,
@@ -52,11 +52,11 @@ def get_random_details() -> Story:
         crime_location=crime_location
     )
 
-    story.story_description = f"This is a mystery story in the style of a golden age classic, and it features the following elements:"
+    story.summary = f"This is a mystery story in the style of a golden age classic, and it features the following elements:"
     for element in story.random_crimes + story.random_places + story.random_people:
-        story.story_description += f"\n- {element}"
+        story.summary += f"\n- {element}"
 
-    story.story_description += f"\n\nThe central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too."
+    story.summary += f"\n\nThe central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too."
 
     return story
 
@@ -68,32 +68,32 @@ def write_stories(story: Story):
         other_story_prompt = f.read()
 
     # Generate the central crime story
-    central_prompt = central_story_prompt.replace('{{summary}}', story.story_description)
+    central_prompt = central_story_prompt.replace('{{summary}}', story.summary)
     central_prompt = central_prompt.replace('{{killer}}', story.killer)
     central_prompt = central_prompt.replace('{{victim}}', story.victim)
-    story.crime_story = prompt_completion_chat(central_prompt, model="gpt-4", temperature=0.7, max_tokens=500)
+    story.crime_story = prompt_completion_chat(central_prompt)
 
     # Generate distractor stories for other characters
     other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
-    murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
+    # murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
+    murder_summary = story.crime_story
     
     for character in other_characters:
-        other_prompt = other_story_prompt.replace('{{summary}}', story.story_description)
+        other_prompt = other_story_prompt.replace('{{summary}}', story.summary)
         other_prompt = other_prompt.replace('{{murder_summary}}', murder_summary)
         other_prompt = other_prompt.replace('{{character}}', character)
         other_prompt = other_prompt.replace('{{other_stories}}', "\n".join(story.distractor_stories))
         
-        distractor_story = prompt_completion_chat(other_prompt, model="gpt-4", temperature=0.7, max_tokens=500)
+        distractor_story = prompt_completion_chat(other_prompt)
         story.distractor_stories.append(distractor_story)
 
     return story
 
 def main():
     story = get_random_details()
+    print(f"Random story {story.summary}")
     story = write_stories(story)
-    print(story.story_description)
-    print("\nCrime Story:")
-    print(story.crime_story)
+    print(f"\nMain Crime Story:\n{story.crime_story}")
     print("\nDistractor Stories:")
     for i, distractor in enumerate(story.distractor_stories, 1):
         print(f"\nDistractor {i}:")
