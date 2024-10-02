@@ -1,7 +1,11 @@
+I'm writing a murder mystery story. I've written up my story in the form of some bullet points, and I want to organize them.
+
 Analyze the following story and classify each piece of evidence (bullet point) according to how it relates to the hypotheses about the killer, weapon, and location of the crime. For each bullet point, determine if it proves, suggests, suggests against, or proves against each hypothesis.
 
+I'm going to give you a list of facts about the story, and I want you to classify each of them according to the scheme I'm giving you.
+
 Story:
-{story}
+{bullet_points}
 
 Hypotheses:
 Killers: {killers}
