@@ -52,7 +52,7 @@ def prompt_completion(question, engine="davinci-instruct-beta", max_tokens=64, t
     return answer
 
 
-def prompt_completion_chat(question="", model="gpt-4o", n=1, temperature=0.2, max_tokens=256, system_description="You write clearly and well.", messages=None, stop=None):
+def prompt_completion_chat(question="", model="gpt-4o-mini", n=1, temperature=0.2, max_tokens=256, system_description="You write clearly and well.", messages=None, stop=None):
     start_time = time.perf_counter()
     prompt = f"{question} "
     response = client.chat.completions.create(
