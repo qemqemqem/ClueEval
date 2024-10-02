@@ -11,6 +11,8 @@ class Story:
     killer: str
     victim: str
 
+
+
 def load_elements(filename):
     with open(os.path.join('ClueEval', 'config', filename), 'r') as f:
         return [line.strip() for line in f]
