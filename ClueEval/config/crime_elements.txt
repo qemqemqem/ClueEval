@@ -1,0 +1,43 @@
+gun
+poison
+knife
+rope
+candlestick
+wrench
+lead pipe
+revolver
+dagger
+candle
+hammer
+hatchet
+screwdriver
+scissors
+bat
+trophy
+shovel
+poker
+axe
+machete
+ice pick
+crowbar
+syringe
+razor
+laser
+garrote
+blowgun
+crossbow
+bow
+sword
+machete
+chainsaw
+nunchucks
+brass knuckles
+boomerang
+flamethrower
+grenade
+landmine
+rocket launcher
+taser
+stun gun
+slingshot
+whip
