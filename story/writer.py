@@ -1,6 +1,7 @@
 import random
 from dataclasses import dataclass, field
 import os
+import string
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_narrative, display_bullet_points
 
@@ -32,9 +33,9 @@ def load_elements(filename):
 
 def get_random_details() -> Story:
     # Load elements from files
-    crime_elements = load_elements('crime_elements.txt')
-    place_elements = load_elements('place_elements.txt')
-    person_elements = load_elements('person_elements.txt')
+    crime_elements = [string.capwords(elem) for elem in load_elements('crime_elements.txt')]
+    place_elements = [string.capwords(elem) for elem in load_elements('place_elements.txt')]
+    person_elements = [string.capwords(elem) for elem in load_elements('person_elements.txt')]
 
     # Sample random people
     random_people = random.sample(person_elements, 5)
