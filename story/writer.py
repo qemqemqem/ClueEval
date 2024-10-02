@@ -8,6 +8,8 @@ class Story:
     random_crimes: list[str]
     random_places: list[str]
     random_people: list[str]
+    killer: str
+    victim: str
 
 def load_elements(filename):
     with open(os.path.join('ClueEval', 'config', filename), 'r') as f:
@@ -19,21 +21,25 @@ def get_random_details() -> Story:
     place_elements = load_elements('place_elements.txt')
     person_elements = load_elements('person_elements.txt')
 
+    # Sample random people
+    random_people = random.sample(person_elements, 5)
+    killer, victim = random_people[0], random_people[1]
+
     # Create a Story object
     story = Story(
         diversity_prompt="",
         random_crimes=random.sample(crime_elements, 3),
         random_places=random.sample(place_elements, 3),
-        random_people=random.sample(person_elements, 5)
+        random_people=random_people,
+        killer=killer,
+        victim=victim
     )
-
-    killer, victim = story.random_people[0], story.random_people[1]
 
     story.diversity_prompt = f"This is a mystery story in the style of a golden age classic, and it features the following elements:"
     for element in story.random_crimes + story.random_places + story.random_people:
         story.diversity_prompt += f"\n- {element}"
 
-    story.diversity_prompt += f"\n\nThe central story is that a crime was committed with a {random.choice(story.random_crimes)} in the {random.choice(story.random_places)} by {killer}, killing {victim}. But there's shenanigans going on with the other stuff, too."
+    story.diversity_prompt += f"\n\nThe central story is that a crime was committed with a {random.choice(story.random_crimes)} in the {random.choice(story.random_places)} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too."
 
     return story
 
