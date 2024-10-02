@@ -64,4 +64,6 @@ Provide your analysis in the following JSON format:
   ]
 }}
 
-Ensure that each bullet point is classified for all relevant hypotheses, and that the full text of each bullet point is included in the "bullet_points" section.
+Important: Ensure that EVERY bullet point is classified for ALL relevant hypotheses. If a bullet point doesn't relate to a specific hypothesis, classify it as "suggests_against" for that hypothesis. The goal is to have all bullet points sorted into at least one category for each hypothesis type (killer, weapon, location).
+
+Ensure that the full text of each bullet point is included in the "bullet_points" section, and that each bullet point has at least one classification for each hypothesis type.

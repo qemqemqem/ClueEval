@@ -3,6 +3,7 @@ from typing import List, Dict
 import json
 
 from utils.gpt import prompt_completion_json
+from utils.display_interface import display_story_element, display_narrative, display_bullet_points, display_error
 
 
 @dataclass
@@ -83,6 +84,9 @@ def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> Evide
     messages = [{"role": "user", "content": prompt}]
     json_response = prompt_completion_json(messages)
 
+    # Print the full JSON response
+    display_story_element(json_response, title="Full JSON Response from LLM")
+
     # Parse the response
     if json_response:
         return EvidenceClassification.from_json(json_response)
@@ -91,24 +95,21 @@ def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> Evide
 
 
 def display_classified_evidence(evidence_classification):
-    print("\n=== Classified Evidence ===")
+    display_story_element("Classified Evidence", title="Evidence Classification")
 
     for hypothesis_type in ['killers', 'weapons', 'locations']:
-        print(f"\n{hypothesis_type.capitalize()}:")
+        display_narrative(f"{hypothesis_type.capitalize()}:", speaker=hypothesis_type.capitalize())
         for hypothesis in getattr(evidence_classification.hypotheses, hypothesis_type):
-            print(f"  {hypothesis.name}:")
+            evidence_points = []
             for category in ['proves', 'suggests', 'suggests_against', 'proves_against']:
                 if getattr(hypothesis.evidence, category):
-                    print(f"    {category.replace('_', ' ').capitalize()}:")
-                    for evidence in getattr(hypothesis.evidence, category):
-                        print(f"      - {evidence}")
+                    evidence_points.extend([f"{category.replace('_', ' ').capitalize()}: {evidence}" for evidence in getattr(hypothesis.evidence, category)])
+            display_bullet_points(evidence_points, title=hypothesis.name)
 
-    print("\nBullet Points Classifications:")
+    display_narrative("Bullet Points Classifications:", speaker="Classifications")
     for bullet_point in evidence_classification.bullet_points:
-        print(f"  - {bullet_point.text}")
-        for classification in bullet_point.classifications:
-            print(
-                f"    {classification.hypothesis_type.capitalize()} ({classification.hypothesis_name}): {classification.category}")
+        classifications = [f"{c.hypothesis_type.capitalize()} ({c.hypothesis_name}): {c.category}" for c in bullet_point.classifications]
+        display_bullet_points([bullet_point.text] + classifications)
 
 
 if __name__ == "__main__":
@@ -123,5 +124,8 @@ if __name__ == "__main__":
         locations=[Hypothesis("Kitchen"), Hypothesis("Bedroom")]
     )
 
-    evidence_classification = classify_evidence(bullet_points, hypotheses)
-    print(evidence_classification.to_json())
+    try:
+        evidence_classification = classify_evidence(bullet_points, hypotheses)
+        display_classified_evidence(evidence_classification)
+    except Exception as e:
+        display_error(str(e))
