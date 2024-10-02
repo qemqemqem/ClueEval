@@ -1,6 +1,7 @@
 import random
 from dataclasses import dataclass, field
 import os
+from utils.gpt import prompt_completion_chat
 
 @dataclass
 class Story:
@@ -59,13 +60,44 @@ def get_random_details() -> Story:
 
     return story
 
-def write_stories():
-    # Using central_story.txt and other_story.txt, prompt an LLM using gpt.py to generate stories, and store them on Story's crime_story and distractor_stories fields
-    ...
+def write_stories(story: Story):
+    # Load prompt templates
+    with open('config/prompts/central_story.txt', 'r') as f:
+        central_story_prompt = f.read()
+    with open('config/prompts/other_story.txt', 'r') as f:
+        other_story_prompt = f.read()
+
+    # Generate the central crime story
+    central_prompt = central_story_prompt.replace('{{summary}}', story.story_description)
+    central_prompt = central_prompt.replace('{{killer}}', story.killer)
+    central_prompt = central_prompt.replace('{{victim}}', story.victim)
+    story.crime_story = prompt_completion_chat(central_prompt, model="gpt-4", temperature=0.7, max_tokens=500)
+
+    # Generate distractor stories for other characters
+    other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
+    murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
+    
+    for character in other_characters:
+        other_prompt = other_story_prompt.replace('{{summary}}', story.story_description)
+        other_prompt = other_prompt.replace('{{murder_summary}}', murder_summary)
+        other_prompt = other_prompt.replace('{{character}}', character)
+        other_prompt = other_prompt.replace('{{other_stories}}', "\n".join(story.distractor_stories))
+        
+        distractor_story = prompt_completion_chat(other_prompt, model="gpt-4", temperature=0.7, max_tokens=500)
+        story.distractor_stories.append(distractor_story)
+
+    return story
 
 def main():
     story = get_random_details()
+    story = write_stories(story)
     print(story.story_description)
+    print("\nCrime Story:")
+    print(story.crime_story)
+    print("\nDistractor Stories:")
+    for i, distractor in enumerate(story.distractor_stories, 1):
+        print(f"\nDistractor {i}:")
+        print(distractor)
 
 if __name__ == '__main__':
     main()
