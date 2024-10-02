@@ -92,18 +92,37 @@ def write_stories(story: Story):
 
     return story
 
-def convert_story_to_bullet_points():
-    ...
+def convert_story_to_bullet_points(story: Story):
+    # Load prompt template
+    with open('config/prompts/convert_story_to_bullets.txt', 'r') as f:
+        bullet_prompt = f.read()
+
+    # Convert crime story to bullet points
+    crime_prompt = bullet_prompt.replace('{{story}}', story.crime_story)
+    crime_bullets = prompt_completion_chat(crime_prompt)
+    story.bullet_points.extend([line.strip() for line in crime_bullets.split('\n') if line.strip().startswith('* ')])
+
+    # Convert distractor stories to bullet points
+    for distractor in story.distractor_stories:
+        distractor_prompt = bullet_prompt.replace('{{story}}', distractor)
+        distractor_bullets = prompt_completion_chat(distractor_prompt)
+        story.bullet_points.extend([line.strip() for line in distractor_bullets.split('\n') if line.strip().startswith('* ')])
+
+    return story
 
 def main():
     story = get_random_details()
     print(f"Random story {story.summary}")
     story = write_stories(story)
+    story = convert_story_to_bullet_points(story)
     print(f"\nMain Crime Story:\n{story.crime_story}")
     print("\nDistractor Stories:")
     for i, distractor in enumerate(story.distractor_stories, 1):
         print(f"\nDistractor {i}:")
         print(distractor)
+    print("\nBullet Points:")
+    for bullet in story.bullet_points:
+        print(bullet)
 
 if __name__ == '__main__':
     main()
