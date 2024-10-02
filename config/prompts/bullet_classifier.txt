@@ -1,0 +1,63 @@
+Analyze the following story and classify each piece of evidence (bullet point) according to how it relates to the hypotheses about the killer, weapon, and location of the crime. For each bullet point, determine if it proves, suggests, suggests against, or proves against each hypothesis.
+
+Story:
+{story}
+
+Hypotheses:
+Killers: {killers}
+Weapons: {weapons}
+Locations: {locations}
+
+Provide your analysis in the following JSON format:
+
+{{
+  "hypotheses": {{
+    "killers": [
+      {{
+        "name": "Killer's name",
+        "evidence": {{
+          "proves": ["Bullet point that proves this person is the killer"],
+          "suggests": ["Bullet point that suggests this person might be the killer"],
+          "suggests_against": ["Bullet point that suggests this person might not be the killer"],
+          "proves_against": ["Bullet point that proves this person is not the killer"]
+        }}
+      }}
+    ],
+    "weapons": [
+      {{
+        "name": "Weapon's name",
+        "evidence": {{
+          "proves": ["Bullet point that proves this was the murder weapon"],
+          "suggests": ["Bullet point that suggests this might be the murder weapon"],
+          "suggests_against": ["Bullet point that suggests this might not be the murder weapon"],
+          "proves_against": ["Bullet point that proves this was not the murder weapon"]
+        }}
+      }}
+    ],
+    "locations": [
+      {{
+        "name": "Location's name",
+        "evidence": {{
+          "proves": ["Bullet point that proves this was the crime scene"],
+          "suggests": ["Bullet point that suggests this might be the crime scene"],
+          "suggests_against": ["Bullet point that suggests this might not be the crime scene"],
+          "proves_against": ["Bullet point that proves this was not the crime scene"]
+        }}
+      }}
+    ]
+  }},
+  "bullet_points": [
+    {{
+      "text": "The full text of the bullet point",
+      "classifications": [
+        {{
+          "hypothesis_type": "killer/weapon/location",
+          "hypothesis_name": "Name of the specific hypothesis",
+          "category": "proves/suggests/suggests_against/proves_against"
+        }}
+      ]
+    }}
+  ]
+}}
+
+Ensure that each bullet point is classified for all relevant hypotheses, and that the full text of each bullet point is included in the "bullet_points" section.

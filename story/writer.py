@@ -1,30 +1,11 @@
 import random
-from dataclasses import dataclass, field
 import os
 import string
+
+from story.bullet_classifier import Hypotheses, classify_evidence, Hypothesis, display_classified_evidence
+from story.story import Story
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_narrative, display_bullet_points
-
-@dataclass
-class Story:
-    # This is generated without an LLM, for diversity prompting reasons
-    summary: str
-
-    # The story has these elements, which are part of the story description
-    random_crimes: list[str]
-    random_places: list[str]
-    random_people: list[str]
-    killer: str
-    victim: str
-    crime_weapon: str
-    crime_location: str
-
-    # These are narratives within the story
-    crime_story: str = ""
-    distractor_stories: list[str] = field(default_factory=list)
-
-    # This is an attempt to summarize the facts of the story
-    bullet_points: list[str] = field(default_factory=list)
 
 
 def load_elements(filename):
@@ -113,14 +94,33 @@ def convert_story_to_bullet_points(story: Story):
     return story
 
 def main():
+    # Get random story details
     story = get_random_details()
     display_story_element(story.summary, title="Story Summary")
+
+    # Write stories
     story = write_stories(story)
     display_narrative(story.crime_story, speaker="Crime Story")
     for i, distractor in enumerate(story.distractor_stories, 1):
         display_narrative(distractor, speaker=f"Distractor Story {i}")
+
+    # Convert story to bullet points
     story = convert_story_to_bullet_points(story)
     display_bullet_points(story.bullet_points, title="Story Bullet Points")
+
+    # Create hypotheses based on story details
+    hypotheses = Hypotheses(
+        killers=[Hypothesis(name) for name in story.random_people],
+        weapons=[Hypothesis(weapon) for weapon in story.random_crimes],
+        locations=[Hypothesis(location) for location in story.random_places]
+    )
+
+    # Classify evidence
+    full_story = f"{story.crime_story}\n\n" + "\n\n".join(story.distractor_stories)
+    evidence_classification = classify_evidence(full_story, hypotheses)
+
+    # Display classified evidence
+    display_classified_evidence(evidence_classification)
 
 if __name__ == '__main__':
     main()
