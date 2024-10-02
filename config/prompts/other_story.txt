@@ -1,0 +1,15 @@
+I'm writing a mystery story. Here's a summary of what it involves:
+
+{{summary}}
+
+I know what happened with the central story, the actual murder. Here's a summary of that:
+
+{{murder_summary}}
+
+I also know a little bit about what happens to some of the other characters.
+
+{{other_stories}}
+
+Now, I want to focus on {{character}}. What were they doing in all this? They were innocent, but their actions make them seem suspicious.
+
+Write a three paragraph story detailing what {{character}} was doing in all this. Write a summary of their actions, keeping in mind that they are innocent but suspicious. Write nothing else, just a three paragraph story. Write clearly and stick to the facts, because this is for my notes, not for the reader.

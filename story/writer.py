@@ -1,10 +1,13 @@
 import random
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import os
 
 @dataclass
 class Story:
-    diversity_prompt: str
+    # This is generated without an LLM, for diversity prompting reasons
+    story_description: str
+
+    # The story has these elements, which are part of the story description
     random_crimes: list[str]
     random_places: list[str]
     random_people: list[str]
@@ -13,10 +16,13 @@ class Story:
     crime_weapon: str
     crime_location: str
 
+    # These are narratives within the story
+    crime_story: str = ""
+    distractor_stories: list[str] = field(default_factory=list)
 
 
 def load_elements(filename):
-    with open(os.path.join('ClueEval', 'config', filename), 'r') as f:
+    with open(os.path.join('config', filename), 'r') as f:
         return [line.strip() for line in f]
 
 def get_random_details() -> Story:
@@ -35,7 +41,7 @@ def get_random_details() -> Story:
 
     # Create a Story object
     story = Story(
-        diversity_prompt="",
+        story_description="",
         random_crimes=random.sample(crime_elements, 3),
         random_places=random.sample(place_elements, 3),
         random_people=random_people,
@@ -45,17 +51,21 @@ def get_random_details() -> Story:
         crime_location=crime_location
     )
 
-    story.diversity_prompt = f"This is a mystery story in the style of a golden age classic, and it features the following elements:"
+    story.story_description = f"This is a mystery story in the style of a golden age classic, and it features the following elements:"
     for element in story.random_crimes + story.random_places + story.random_people:
-        story.diversity_prompt += f"\n- {element}"
+        story.story_description += f"\n- {element}"
 
-    story.diversity_prompt += f"\n\nThe central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too."
+    story.story_description += f"\n\nThe central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too."
 
     return story
 
+def write_stories():
+    # Using central_story.txt and other_story.txt, prompt an LLM using gpt.py to generate stories, and store them on Story's crime_story and distractor_stories fields
+    ...
+
 def main():
     story = get_random_details()
-    print(story.diversity_prompt)
+    print(story.story_description)
 
 if __name__ == '__main__':
     main()
