@@ -3,7 +3,7 @@ from rich.panel import Panel
 from rich.text import Text
 from rich.box import DOUBLE
 
-console = Console(width=180)
+console = Console(width=100)
 
 def display_story_element(text: str, title: str = None, style: str = "cyan") -> None:
     """

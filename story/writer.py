@@ -2,10 +2,10 @@ import random
 import os
 import string
 
-from story.bullet_classifier import Hypotheses, classify_evidence, Hypothesis, display_classified_evidence
 from story.story import Story
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_narrative, display_bullet_points
+from story.bullet_classifier import Hypotheses, classify_evidence, Hypothesis, display_classified_evidence
 
 
 def load_elements(filename):
@@ -89,9 +89,10 @@ def convert_story_to_bullet_points(story: Story):
     for distractor in story.distractor_stories:
         distractor_prompt = bullet_prompt.replace('{{story}}', distractor)
         distractor_bullets = prompt_completion_chat(distractor_prompt)
-        story.bullet_points.extend([line.strip() for line in distractor_bullets.split('\n') if line.strip().startswith('* ')])
+        story.bullet_points.extend([line.strip()[2:] for line in distractor_bullets.split('\n') if line.strip().startswith('* ')])
 
     return story
+
 
 def main():
     # Get random story details
