@@ -3,7 +3,7 @@ from rich.panel import Panel
 from rich.text import Text
 from rich.box import DOUBLE
 
-console = Console()
+console = Console(width=180)
 
 def display_story_element(text: str, title: str = None, style: str = "cyan") -> None:
     """
@@ -30,7 +30,7 @@ def display_narrative(text: str, speaker: str = None, style: str = "green") -> N
         border_style=style,
         expand=False,
         title=speaker,
-        title_align="left" if speaker else None
+        title_align="left" if speaker else "right"
     )
     console.print(panel)
 

@@ -102,7 +102,7 @@ def convert_story_to_bullet_points(story: Story):
     # Convert crime story to bullet points
     crime_prompt = bullet_prompt.replace('{{story}}', story.crime_story)
     crime_bullets = prompt_completion_chat(crime_prompt)
-    story.bullet_points.extend([line.strip() for line in crime_bullets.split('\n') if line.strip().startswith('* ')])
+    story.bullet_points.extend([line.strip()[2:] for line in crime_bullets.split('\n') if line.strip().startswith('* ')])
 
     # Convert distractor stories to bullet points
     for distractor in story.distractor_stories:
@@ -116,10 +116,10 @@ def main():
     story = get_random_details()
     display_story_element(story.summary, title="Story Summary")
     story = write_stories(story)
-    story = convert_story_to_bullet_points(story)
     display_narrative(story.crime_story, speaker="Crime Story")
     for i, distractor in enumerate(story.distractor_stories, 1):
         display_narrative(distractor, speaker=f"Distractor Story {i}")
+    story = convert_story_to_bullet_points(story)
     display_bullet_points(story.bullet_points, title="Story Bullet Points")
 
 if __name__ == '__main__':
