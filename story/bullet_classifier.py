@@ -1,9 +1,14 @@
+import logging
 from dataclasses import dataclass, field
 from typing import List, Dict
 import json
 
 from utils.gpt import prompt_completion_json
 from utils.display_interface import display_story_element, display_narrative, display_bullet_points, display_error
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 @dataclass
