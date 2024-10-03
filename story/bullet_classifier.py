@@ -42,7 +42,6 @@ class BulletPointClassification:
 @dataclass
 class BulletPoint:
     id: str
-    text: str
     classifications: List[BulletPointClassification] = field(default_factory=list)
 
 
@@ -54,12 +53,12 @@ class EvidenceClassification:
         return json.dumps(self, default=lambda o: o.__dict__, indent=2)
 
     @classmethod
-    def from_json(cls, json_str, bullet_points):
+    def from_json(cls, json_str):
         data = json.loads(json_str)
         evidence_classification = cls()
 
         for item in data['classified_evidence']:
-            bullet_point = BulletPoint(id=item['id'], text=bullet_points[int(item['id'])-1])
+            bullet_point = BulletPoint(id=item['id'])
             for classification in item['classifications']:
                 bullet_point.classifications.append(BulletPointClassification(**classification))
             evidence_classification.classified_evidence.append(bullet_point)
@@ -74,9 +73,9 @@ def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> Evide
         prompt_template = f.read()
 
     # Prepare the prompt
-    bullet_points_with_ids = "\n".join(f"{i+1}. {bp}" for i, bp in enumerate(bullet_points))
+    bullet_points_text = "\n".join(bullet_points)
     prompt = prompt_template.format(
-        bullet_points=bullet_points_with_ids,
+        bullet_points=bullet_points_text,
         killers=", ".join(h.name for h in hypotheses.killers),
         weapons=", ".join(h.name for h in hypotheses.weapons),
         locations=", ".join(h.name for h in hypotheses.locations)
@@ -93,7 +92,7 @@ def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> Evide
     # Parse the response
     if json_response:
         logger.info("Successfully received JSON response from LLM")
-        return EvidenceClassification.from_json(json_response, bullet_points)
+        return EvidenceClassification.from_json(json_response)
     else:
         logger.error("Failed to get a valid response from the LLM")
         raise Exception("Failed to get a valid response from the LLM")
@@ -104,12 +103,12 @@ def display_classified_evidence(evidence_classification):
     display_story_element("Classified Evidence", title="Evidence Classification")
 
     for bullet_point in evidence_classification.classified_evidence:
-        display_narrative(f"{bullet_point.id}. {bullet_point.text}", speaker="Bullet Point")
+        display_narrative(f"{bullet_point.id}", speaker="Bullet Point")
         classifications = []
         for c in bullet_point.classifications:
             classifications.append(f"{c.hypothesis_type.capitalize()} ({c.hypothesis_name}): {c.category}")
         display_bullet_points(classifications, title="Classifications")
-        logger.info(f"Displayed classifications for bullet point: {bullet_point.text[:30]}...")
+        logger.info(f"Displayed classifications for bullet point: {bullet_point.id[:30]}...")
 
     logger.info(f"Displayed classifications for {len(evidence_classification.classified_evidence)} bullet points")
 
