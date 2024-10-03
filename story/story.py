@@ -14,6 +14,7 @@ class Story:
     victim: str
     crime_weapon: str
     crime_location: str
+    mystery_setting: str
 
     # These are narratives within the story
     crime_story: str = ""
