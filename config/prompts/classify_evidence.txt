@@ -17,13 +17,12 @@ Provide your analysis in the following JSON format:
 {{
   "classified_evidence": [
     {{
-      "bullet_point": "The full text of the bullet point",
+      "id": "1",
       "classifications": [
         {{
           "hypothesis_type": "killer/weapon/location",
           "hypothesis_name": "Name of the specific hypothesis",
-          "category": "proves/suggests/suggests_against/proves_against",
-          "explanation": "A brief explanation of why this bullet point supports or opposes the hypothesis"
+          "category": "proves/suggests/suggests_against/proves_against"
         }}
       ]
     }}
@@ -31,11 +30,10 @@ Provide your analysis in the following JSON format:
 }}
 
 Important:
-1. Include EVERY bullet point in the "classified_evidence" array.
+1. Include EVERY bullet point ID in the "classified_evidence" array.
 2. For each bullet point, provide classifications for ALL relevant hypotheses it relates to.
 3. If a bullet point doesn't relate to a specific hypothesis type, don't include a classification for that hypothesis type.
 4. Use the categories "proves", "suggests", "suggests_against", or "proves_against" as appropriate.
-5. Provide a brief explanation for each classification to justify the categorization.
-6. Ensure that the full text of each bullet point is included in the "bullet_point" field.
+5. Use the provided bullet point IDs instead of including the full text of the bullet point.
 
 Your goal is to provide a comprehensive analysis of how each piece of evidence relates to the various hypotheses about the killer, weapon, and location of the crime.
