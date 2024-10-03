@@ -1,50 +1,8 @@
-import random
-import os
-import string
-
 from story.story import Story
+from story.random_details import get_random_details
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_narrative, display_bullet_points
 from story.bullet_classifier import Hypotheses, classify_evidence, Hypothesis, display_classified_evidence
-
-
-def load_elements(filename):
-    with open(os.path.join('config', filename), 'r') as f:
-        return [line.strip() for line in f]
-
-def get_random_details() -> Story:
-    # Load elements from files
-    crime_elements = [string.capwords(elem) for elem in load_elements('crime_elements.txt')]
-    place_elements = [string.capwords(elem) for elem in load_elements('place_elements.txt')]
-    person_elements = [string.capwords(elem) for elem in load_elements('person_elements.txt')]
-
-    # Sample random people
-    random_people = random.sample(person_elements, 5)
-    killer, victim = random_people[0], random_people[1]
-
-    # Select specific crime weapon and location
-    crime_weapon = random.choice(crime_elements)
-    crime_location = random.choice(place_elements)
-
-    # Create a Story object
-    story = Story(
-        summary="",
-        random_crimes=random.sample(crime_elements, 3),
-        random_places=random.sample(place_elements, 3),
-        random_people=random_people,
-        killer=killer,
-        victim=victim,
-        crime_weapon=crime_weapon,
-        crime_location=crime_location
-    )
-
-    story.summary = f"This is a mystery story in the style of a golden age classic, and it features the following elements:"
-    for element in story.random_crimes + story.random_places + story.random_people:
-        story.summary += f"\n- {element}"
-
-    story.summary += f"\n\nThe central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too."
-
-    return story
 
 def write_stories(story: Story):
     # Load prompt templates
