@@ -20,9 +20,9 @@ Provide your analysis in the following JSON format:
       "id": "1",
       "classifications": [
         {{
-          "hypothesis_type": "killer/weapon/location",
-          "hypothesis_name": "Name of the specific hypothesis",
-          "category": "proves/suggests/suggests_against/proves_against"
+          "hypothesis_type": "killer/weapon/location/none",
+          "hypothesis_name": "Name of the specific hypothesis or 'None' if not applicable",
+          "category": "proves/suggests/suggests_against/proves_against/unrelated"
         }}
       ]
     }}
@@ -32,8 +32,20 @@ Provide your analysis in the following JSON format:
 Important:
 1. Include EVERY bullet point ID in the "classified_evidence" array.
 2. For each bullet point, provide classifications for ALL relevant hypotheses it relates to.
-3. If a bullet point doesn't relate to a specific hypothesis type, don't include a classification for that hypothesis type.
-4. Use the categories "proves", "suggests", "suggests_against", or "proves_against" as appropriate.
+3. If a bullet point doesn't relate to any specific hypothesis type, use "none" as the hypothesis_type and "None" as the hypothesis_name.
+4. Use the categories "proves", "suggests", "suggests_against", "proves_against", or "unrelated" as appropriate.
 5. Use the provided bullet point IDs instead of including the full text of the bullet point.
 
-Your goal is to provide a comprehensive analysis of how each piece of evidence relates to the various hypotheses about the killer, weapon, and location of the crime.
+Example of a bullet point not related to any hypothesis:
+{{
+  "id": "5",
+  "classifications": [
+    {{
+      "hypothesis_type": "none",
+      "hypothesis_name": "None",
+      "category": "unrelated"
+    }}
+  ]
+}}
+
+Your goal is to provide a comprehensive analysis of how each piece of evidence relates to the various hypotheses about the killer, weapon, and location of the crime, or to indicate when a piece of evidence is unrelated to these hypotheses.
