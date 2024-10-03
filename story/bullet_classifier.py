@@ -62,6 +62,7 @@ class EvidenceClassification:
 
 
 def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> EvidenceClassification:
+    logger.info("Starting evidence classification")
     # Load the prompt template
     with open('config/prompts/classify_evidence.txt', 'r') as f:
         prompt_template = f.read()
@@ -76,6 +77,7 @@ def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> Evide
 
     # Call the LLM
     messages = [{"role": "user", "content": prompt}]
+    logger.info("Calling LLM for evidence classification")
     json_response = prompt_completion_json(messages)
 
     # Print the full JSON response
@@ -83,27 +85,27 @@ def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> Evide
 
     # Parse the response
     if json_response:
+        logger.info("Successfully received JSON response from LLM")
         return EvidenceClassification.from_json(json_response)
     else:
+        logger.error("Failed to get a valid response from the LLM")
         raise Exception("Failed to get a valid response from the LLM")
 
 
 def display_classified_evidence(evidence_classification):
+    logger.info("Displaying classified evidence")
     display_story_element("Classified Evidence", title="Evidence Classification")
 
-    for hypothesis_type in ['killers', 'weapons', 'locations']:
-        display_narrative(f"{hypothesis_type.capitalize()}:", speaker=hypothesis_type.capitalize())
-        for hypothesis in getattr(evidence_classification.hypotheses, hypothesis_type):
-            evidence_points = []
-            for category in ['proves', 'suggests', 'suggests_against', 'proves_against']:
-                if getattr(hypothesis.evidence, category):
-                    evidence_points.extend([f"{category.replace('_', ' ').capitalize()}: {evidence}" for evidence in getattr(hypothesis.evidence, category)])
-            display_bullet_points(evidence_points, title=hypothesis.name)
+    for bullet_point in evidence_classification.classified_evidence:
+        display_narrative(bullet_point.text, speaker="Bullet Point")
+        classifications = []
+        for c in bullet_point.classifications:
+            classifications.append(f"{c.hypothesis_type.capitalize()} ({c.hypothesis_name}): {c.category}")
+            classifications.append(f"Explanation: {c.explanation}")
+        display_bullet_points(classifications, title="Classifications")
+        logger.info(f"Displayed classifications for bullet point: {bullet_point.text[:30]}...")
 
-    display_narrative("Bullet Points Classifications:", speaker="Classifications")
-    for bullet_point in evidence_classification.bullet_points:
-        classifications = [f"{c.hypothesis_type.capitalize()} ({c.hypothesis_name}): {c.category}" for c in bullet_point.classifications]
-        display_bullet_points([bullet_point.text] + classifications)
+    logger.info(f"Displayed classifications for {len(evidence_classification.classified_evidence)} bullet points")
 
 
 if __name__ == "__main__":
