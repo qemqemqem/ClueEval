@@ -41,7 +41,7 @@ class BulletPointClassification:
 
 @dataclass
 class BulletPoint:
-    id: str
+    text: str
     classifications: List[BulletPointClassification] = field(default_factory=list)
 
 
@@ -58,7 +58,7 @@ class EvidenceClassification:
         evidence_classification = cls()
 
         for item in data['classified_evidence']:
-            bullet_point = BulletPoint(id=item['id'])
+            bullet_point = BulletPoint(text=item['text'])
             for classification in item['classifications']:
                 if classification['hypothesis_type'] == 'none':
                     bullet_point.classifications.append(BulletPointClassification(
@@ -80,7 +80,7 @@ def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> Evide
         prompt_template = f.read()
 
     # Prepare the prompt
-    bullet_points_text = "\n".join(bullet_points)
+    bullet_points_text = "\n".join(f"{i+1}. {point}" for i, point in enumerate(bullet_points))
     prompt = prompt_template.format(
         bullet_points=bullet_points_text,
         killers=", ".join(h.name for h in hypotheses.killers),
@@ -111,13 +111,13 @@ def display_classified_evidence(evidence_classification):
     logger.info("Displaying classified evidence")
     display_story_element("Classified Evidence", title="Evidence Classification")
 
-    for bullet_point in evidence_classification.classified_evidence:
-        display_narrative(f"{bullet_point.id}", speaker="Bullet Point")
+    for i, bullet_point in enumerate(evidence_classification.classified_evidence, 1):
+        display_narrative(f"{i}. {bullet_point.text}", speaker="Bullet Point")
         classifications = []
         for c in bullet_point.classifications:
             classifications.append(f"{c.hypothesis_type.capitalize()} ({c.hypothesis_name}): {c.category}")
         display_bullet_points(classifications, title="Classifications")
-        logger.info(f"Displayed classifications for bullet point: {bullet_point.id[:30]}...")
+        logger.info(f"Displayed classifications for bullet point: {bullet_point.text[:30]}...")
 
     logger.info(f"Displayed classifications for {len(evidence_classification.classified_evidence)} bullet points")
 
