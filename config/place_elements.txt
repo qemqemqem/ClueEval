@@ -1,20 +1,72 @@
-Isolated country manor
-Orient Express-style luxury train
-Remote lighthouse on a stormy coast
-Snowbound mountain chalet
-Private island estate
-Locked room in a grand hotel
-Sealed underground bunker
-Exclusive members-only club
-Abandoned monastery
-Secluded hunting lodge
-Mansion in a snow storm
-Cross-country train rolling across the great plains
-Secluded country estate
-Luxurious ocean liner
-Remote island resort
-Quaint village inn
-Gothic castle on a cliff
-Exclusive boarding school
-Isolated mountain lodge
-Opulent theater during a performance
+drawing room
+kitchen
+library
+conservatory
+billiard room
+ballroom
+dining room
+lounge
+hall
+study
+cellar
+attic
+bathroom
+bedroom
+closet
+garage
+garden
+patio
+porch
+shed
+greenhouse
+pool
+sauna
+hot tub
+gazebo
+gym
+office
+studio
+workshop
+lab
+classroom
+auditorium
+theater
+studio
+gallery
+museum
+church
+temple
+synagogue
+mosque
+cathedral
+castle
+fortress
+palace
+mansion
+manor
+villa
+cabin
+cottage
+house
+apartment
+condo
+townhouse
+duplex
+triplex
+fourplex
+hotel
+motel
+inn
+hostel
+resort
+campground
+campsite
+tent
+yurt
+igloo
+cave
+treehouse
+hut
+shack
+barn
+stable
