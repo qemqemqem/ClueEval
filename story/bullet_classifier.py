@@ -42,8 +42,7 @@ class BulletPoint:
 
 @dataclass
 class EvidenceClassification:
-    hypotheses: Hypotheses = field(default_factory=Hypotheses)
-    bullet_points: List[BulletPoint] = field(default_factory=list)
+    classified_evidence: List[BulletPoint] = field(default_factory=list)
 
     def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__, indent=2)
@@ -53,16 +52,11 @@ class EvidenceClassification:
         data = json.loads(json_str)
         evidence_classification = cls()
 
-        for hypothesis_type in ['killers', 'weapons', 'locations']:
-            for hyp in data['hypotheses'][hypothesis_type]:
-                hypothesis = Hypothesis(hyp['name'], EvidenceCategories(**hyp['evidence']))
-                getattr(evidence_classification.hypotheses, hypothesis_type).append(hypothesis)
-
-        for bp in data['bullet_points']:
-            bullet_point = BulletPoint(bp['text'])
-            for classification in bp['classifications']:
+        for item in data['classified_evidence']:
+            bullet_point = BulletPoint(item['bullet_point'])
+            for classification in item['classifications']:
                 bullet_point.classifications.append(BulletPointClassification(**classification))
-            evidence_classification.bullet_points.append(bullet_point)
+            evidence_classification.classified_evidence.append(bullet_point)
 
         return evidence_classification
 

@@ -1,6 +1,6 @@
 I'm writing a murder mystery story. I've written up my story in the form of some bullet points, and I want to organize them.
 
-Analyze the following story and classify each piece of evidence (bullet point) according to how it relates to the hypotheses about the killer, weapon, and location of the crime. For each bullet point, determine if it proves, suggests, suggests against, or proves against each hypothesis.
+Analyze the following story and classify each piece of evidence (bullet point) according to how it relates to the hypotheses about the killer, weapon, and location of the crime. For each bullet point, determine if it proves, suggests, suggests against, or proves against any hypothesis.
 
 I'm going to give you a list of facts about the story, and I want you to classify each of them according to the scheme I'm giving you.
 
@@ -15,55 +15,27 @@ Locations: {locations}
 Provide your analysis in the following JSON format:
 
 {{
-  "hypotheses": {{
-    "killers": [
-      {{
-        "name": "Killer's name",
-        "evidence": {{
-          "proves": ["Bullet point that proves this person is the killer"],
-          "suggests": ["Bullet point that suggests this person might be the killer"],
-          "suggests_against": ["Bullet point that suggests this person might not be the killer"],
-          "proves_against": ["Bullet point that proves this person is not the killer"]
-        }}
-      }}
-    ],
-    "weapons": [
-      {{
-        "name": "Weapon's name",
-        "evidence": {{
-          "proves": ["Bullet point that proves this was the murder weapon"],
-          "suggests": ["Bullet point that suggests this might be the murder weapon"],
-          "suggests_against": ["Bullet point that suggests this might not be the murder weapon"],
-          "proves_against": ["Bullet point that proves this was not the murder weapon"]
-        }}
-      }}
-    ],
-    "locations": [
-      {{
-        "name": "Location's name",
-        "evidence": {{
-          "proves": ["Bullet point that proves this was the crime scene"],
-          "suggests": ["Bullet point that suggests this might be the crime scene"],
-          "suggests_against": ["Bullet point that suggests this might not be the crime scene"],
-          "proves_against": ["Bullet point that proves this was not the crime scene"]
-        }}
-      }}
-    ]
-  }},
-  "bullet_points": [
+  "classified_evidence": [
     {{
-      "text": "The full text of the bullet point",
+      "bullet_point": "The full text of the bullet point",
       "classifications": [
         {{
           "hypothesis_type": "killer/weapon/location",
           "hypothesis_name": "Name of the specific hypothesis",
-          "category": "proves/suggests/suggests_against/proves_against"
+          "category": "proves/suggests/suggests_against/proves_against",
+          "explanation": "A brief explanation of why this bullet point supports or opposes the hypothesis"
         }}
       ]
     }}
   ]
 }}
 
-Important: Ensure that EVERY bullet point is classified for ALL relevant hypotheses. If a bullet point doesn't relate to a specific hypothesis, classify it as "suggests_against" for that hypothesis. The goal is to have all bullet points sorted into at least one category for each hypothesis type (killer, weapon, location).
+Important:
+1. Include EVERY bullet point in the "classified_evidence" array.
+2. For each bullet point, provide classifications for ALL relevant hypotheses it relates to.
+3. If a bullet point doesn't relate to a specific hypothesis type, don't include a classification for that hypothesis type.
+4. Use the categories "proves", "suggests", "suggests_against", or "proves_against" as appropriate.
+5. Provide a brief explanation for each classification to justify the categorization.
+6. Ensure that the full text of each bullet point is included in the "bullet_point" field.
 
-Ensure that the full text of each bullet point is included in the "bullet_points" section, and that each bullet point has at least one classification for each hypothesis type.
+Your goal is to provide a comprehensive analysis of how each piece of evidence relates to the various hypotheses about the killer, weapon, and location of the crime.
