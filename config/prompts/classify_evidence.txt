@@ -17,7 +17,7 @@ Provide your analysis in the following JSON format:
 {{
   "classified_evidence": [
     {{
-      "id": "1",
+      "id": "The butler was seen in the kitchen",
       "classifications": [
         {{
           "hypothesis_type": "killer/weapon/location/none",
@@ -38,12 +38,10 @@ Important:
 
 Example of a bullet point not related to any hypothesis:
 {{
-  "id": "5",
+  "id": "the butler likes sandwiches",
   "classifications": [
     {{
       "hypothesis_type": "none",
-      "hypothesis_name": "None",
-      "category": "unrelated"
     }}
   ]
 }}

@@ -88,6 +88,8 @@ def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> Evide
         locations=", ".join(h.name for h in hypotheses.locations)
     )
 
+    print(prompt)
+
     # Call the LLM
     messages = [{"role": "user", "content": prompt}]
     logger.info("Calling LLM for evidence classification")

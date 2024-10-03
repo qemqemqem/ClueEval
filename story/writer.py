@@ -19,6 +19,7 @@ def write_stories(story: Story):
 
     # Generate distractor stories for other characters
     other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
+    other_characters = []  # Disabling for Development! TODO Reenable
     # murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
     murder_summary = story.crime_story
     
@@ -76,7 +77,7 @@ def main():
 
     # Classify evidence
     full_story = f"{story.crime_story}\n\n" + "\n\n".join(story.distractor_stories)
-    evidence_classification = classify_evidence(full_story, hypotheses)
+    evidence_classification = classify_evidence(story.bullet_points, hypotheses)
 
     # Display classified evidence
     display_classified_evidence(evidence_classification)

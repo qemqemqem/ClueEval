@@ -52,7 +52,7 @@ def prompt_completion(question, engine="davinci-instruct-beta", max_tokens=64, t
     return answer
 
 
-def prompt_completion_chat(question="", model="gpt-4o-mini", n=1, temperature=0.2, max_tokens=4000, system_description="You write clearly and well.", messages=None, stop=None):
+def prompt_completion_chat(question="", model="gpt-4o-mini", n=1, temperature=0.2, max_tokens=12_000, system_description="You write clearly and well. You are smart and clever, with the mind of a masterful mystery writer.", messages=None, stop=None):
     start_time = time.perf_counter()
     prompt = f"{question} "
     response = client.chat.completions.create(
@@ -83,11 +83,11 @@ def prompt_completion_chat(question="", model="gpt-4o-mini", n=1, temperature=0.
         return answers[0]
     return
 
-def prompt_completion_json(messages, model="gpt-4o-mini", temperature=0.2, max_tokens=4000):
+def prompt_completion_json(messages, model="gpt-4o-mini", temperature=0.2, max_tokens=12_000):
     try:
         response = client.chat.completions.create(
             model=model,
-            messages=messages + [{"role": "system", "content": "You must respond with valid JSON only."}],
+            messages=messages + [{"role": "system", "content": "You must respond with valid JSON only. You are clear and clever, with the mind of a masterful mystery writer."}],
             temperature=temperature,
             max_tokens=max_tokens,
             response_format={"type": "json_object"}
