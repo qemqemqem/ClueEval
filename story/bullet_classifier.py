@@ -60,7 +60,14 @@ class EvidenceClassification:
         for item in data['classified_evidence']:
             bullet_point = BulletPoint(id=item['id'])
             for classification in item['classifications']:
-                bullet_point.classifications.append(BulletPointClassification(**classification))
+                if classification['hypothesis_type'] == 'none':
+                    bullet_point.classifications.append(BulletPointClassification(
+                        hypothesis_type='none',
+                        hypothesis_name='None',
+                        category='unrelated'
+                    ))
+                else:
+                    bullet_point.classifications.append(BulletPointClassification(**classification))
             evidence_classification.classified_evidence.append(bullet_point)
 
         return evidence_classification
