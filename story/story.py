@@ -1,4 +1,14 @@
 from dataclasses import dataclass, field
+from typing import List, Optional
+
+
+@dataclass
+class CharacterStory:
+    means: str
+    motive: str
+    opportunity: str
+    real_story: str
+    story_to_detective: str
 
 
 @dataclass
@@ -7,9 +17,9 @@ class Story:
     summary: str
 
     # The story has these elements, which are part of the story description
-    random_crimes: list[str]
-    random_places: list[str]
-    random_people: list[str]
+    random_crimes: List[str]
+    random_places: List[str]
+    random_people: List[str]
     killer: str
     victim: str
     crime_weapon: str
@@ -17,8 +27,8 @@ class Story:
     mystery_setting: str
 
     # These are narratives within the story
-    crime_story: str = ""
-    distractor_stories: list[str] = field(default_factory=list)
+    crime_story: Optional[CharacterStory] = None
+    distractor_stories: List[CharacterStory] = field(default_factory=list)
 
     # This is an attempt to summarize the facts of the story
-    bullet_points: list[str] = field(default_factory=list)
+    bullet_points: List[str] = field(default_factory=list)
