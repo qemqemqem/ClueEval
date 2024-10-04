@@ -49,3 +49,5 @@ class Story:
     # This is for converting the story into prose
     new_story_details: list[StoryElement] = field(default_factory=list)
     full_prose: str = ""
+
+    question: str = ""
