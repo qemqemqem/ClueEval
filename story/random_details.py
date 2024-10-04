@@ -2,6 +2,7 @@ import random
 import os
 import string
 from story.story import Story
+from utils.display_interface import display_narrative
 from utils.str_utils import unindent
 from utils.gpt import prompt_completion_chat
 
@@ -72,29 +73,32 @@ def get_random_details() -> Story:
         The Murder Weapon: {story.crime_weapon}
         Other Suspicious Items: {', '.join(other_items)}
         
-        Title: ...
-        
-        Synopsis: ...
-
         The central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. Detective Detecto is on the case!
     """).strip()
 
+    display_narrative(story.summary, "Story summary before edit")
+
     # Refine the story summary using GPT
-    story = refine_story_summary(story)
+    synopsis = refine_story_summary(story)
+
+    display_narrative(synopsis, "Synopsis")
 
     return story
 
 
-def refine_story_summary(story: Story) -> Story:
-    prompt = f"""
-    Please refine the following story summary by filling out the Title and Synopsis. 
-    You may also change the details of one character, one location, and one item if you think they don't fit well.
-    Here's the current summary:
-
-    {story.summary}
-
-    Please provide the refined summary in the same format, ensuring to fill out the Title and Synopsis sections.
-    """
+def refine_story_summary(story: Story) -> str:
+    prompt = unindent(f"""
+        I'm going to show you the summary for my mystery story. I want you to help me choose a title and a synopsis. 
+        
+        Here's the current summary:
+    
+        {story.summary}
+    
+        Please fill out the Title and Synopsis. Use the format I'm showing you, with "Title: ..." and "Synopsis: ...", and no extra new lines.
+        
+        Title: Your Title Here
+        Synopsis: Your 2-3 sentence synopsis here.
+    """)
 
     refined_summary = prompt_completion_chat(
         question=prompt,
@@ -103,13 +107,12 @@ def refine_story_summary(story: Story) -> Story:
         max_tokens=1000
     )
 
-    story.summary = refined_summary
-    return story
+    return refined_summary
 
 
 def random_character_details():
     gender = random.choice(["man", "woman", "non-binary person"])
-    age = random.randint(18, 85)
+    age = random.randint(18, 70)
     physical_traits = [
         "tall", "short", "average height", "fat", "thin", "muscular", "lanky",
         "blonde", "brunette", "redhead", "grey-haired", "curly-haired",

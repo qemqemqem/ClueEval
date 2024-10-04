@@ -8,4 +8,4 @@ def unindent(text: str) -> str:
     the display, while still presenting them in the source code in indented form
     for readability.
     """
-    return textwrap.dedent(text)
+    return textwrap.dedent(text).strip()

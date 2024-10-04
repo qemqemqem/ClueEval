@@ -44,6 +44,8 @@ class Story:
     character_details: dict[str, str] = field(default_factory=dict)
     detective_details: str = ""
 
+    title: str = ""
+
     # These are narratives within the story
     crime_story: Optional[CharacterStory] = None
     distractor_stories: List[CharacterStory] = field(default_factory=list)
