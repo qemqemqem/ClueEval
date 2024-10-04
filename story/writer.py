@@ -2,6 +2,7 @@ from story.story import Story, CharacterStory
 from story.random_details import get_random_details
 from story.story_assembler import assemble_details
 from story.story_elements import convert_story_to_story_elements, generate_innocuous_details
+from story.evidence import StoryElement, TypeOfEvidence, WhenInTime
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_narrative, display_story_elements, display_bullet_points
 import random
@@ -122,16 +123,28 @@ def write_prose(story: Story):
     # Prepare the notes and outline
     notes = story.summary + "\n\n" + "\n\n".join([f"{cs.character_name}'s Story to the Detective: \n\n{cs.story_to_detective}" for cs in [story.crime_story] + story.distractor_stories])
 
-    outline = f"- The setting: {story.mystery_setting}\n"
-    outline += f"- The victim, {story.victim}, lies dead on the floor!\n"
-    outline += f"- Detective Detecto arrives at the scene of the crime. (Detecto is {story.detective_details})\n"
+    outline = []
+    story.new_story_details = []
+
+    def add_narrative(text):
+        outline.append(f"- {text}")
+        story.new_story_details.append(StoryElement(text=text, target="", type_of_evidence=TypeOfEvidence.NARRATIVE, when=WhenInTime.UNKNOWN))
+
+    add_narrative(f"The setting: {story.mystery_setting}")
+    add_narrative(f"The victim, {story.victim}, lies dead on the floor!")
+    add_narrative(f"Detective Detecto arrives at the scene of the crime. (Detecto is {story.detective_details})")
     characters = story.get_living_character_names_random()
-    outline += f"- There are only {len(characters)} people present: {', '.join(characters)}\n"
-    outline += f"- No one else could possibly have been here.\n"
-    outline += f"- The detective begins to poke around and ask questions.\n"
-    outline += f"- And this is what the detective learns, from clues and from talking to the people present:\n"
-    outline += "\n".join([f"- {element.text}" for element in story.new_story_details])
-    outline += "\n- It must be one of these suspects, and Detecto knows just who it is.\n"
+    add_narrative(f"There are only {len(characters)} people present: {', '.join(characters)}")
+    add_narrative("No one else could possibly have been here.")
+    add_narrative("The detective begins to poke around and ask questions.")
+    add_narrative("And this is what the detective learns, from clues and from talking to the people present:")
+    
+    for element in story.new_story_details:
+        outline.append(f"- {element.text}")
+    
+    add_narrative("It must be one of these suspects, and Detecto knows just who it is.")
+
+    outline = "\n".join(outline)
 
     # Fill in the prompt template
     prompt = full_prose_prompt.replace("{notes}", notes.strip()).replace("{outline}", outline.strip())
