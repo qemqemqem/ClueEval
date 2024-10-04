@@ -1,6 +1,7 @@
 import random
 import os
 import string
+import re
 from story.story import Story
 from utils.display_interface import display_narrative
 from utils.str_utils import unindent
@@ -79,9 +80,18 @@ def get_random_details() -> Story:
     display_narrative(story.summary, "Story summary before edit")
 
     # Refine the story summary using GPT
-    synopsis = refine_story_summary(story)
+    refined_summary = refine_story_summary(story)
 
-    display_narrative(synopsis, "Synopsis")
+    # Parse the title and synopsis
+    title_match = re.search(r"Title: (.+)", refined_summary)
+    synopsis_match = re.search(r"Synopsis: (.+)", refined_summary, re.DOTALL)
+
+    if title_match:
+        story.title = title_match.group(1).strip()
+    if synopsis_match:
+        story.synopsis = synopsis_match.group(1).strip()
+
+    display_narrative(f"Title: {story.title}\n\nSynopsis: {story.synopsis}", "Refined Story Details")
 
     return story
 

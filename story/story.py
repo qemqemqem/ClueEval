@@ -45,6 +45,7 @@ class Story:
     detective_details: str = ""
 
     title: str = ""
+    synopsis: str = ""
 
     # These are narratives within the story
     crime_story: Optional[CharacterStory] = None
