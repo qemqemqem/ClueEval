@@ -80,6 +80,13 @@ def stories_to_elements(story):
     story.crime_story.story_to_detective_elements = convert_story_to_story_elements(
         story.crime_story.story_to_detective)
     display_story_elements(story.crime_story.story_to_detective_elements, title="Crime Story Detective Story Elements")
+    
+    if story.crime_story.clues_that_prove_innocence:
+        story.crime_story.clues_that_prove_innocence_elements = convert_story_to_story_elements(
+            story.crime_story.clues_that_prove_innocence)
+        display_story_elements(story.crime_story.clues_that_prove_innocence_elements, 
+                               title="Crime Story Clues that Prove Innocence")
+    
     for i, distractor_story in enumerate(story.distractor_stories):
         distractor_story.real_story_elements = convert_story_to_story_elements(distractor_story.real_story)
         display_story_elements(distractor_story.real_story_elements,
@@ -89,20 +96,30 @@ def stories_to_elements(story):
             distractor_story.story_to_detective)
         display_story_elements(distractor_story.story_to_detective_elements,
                                title=f"Distractor Story {i + 1} Detective Story Elements")
+        
+        if distractor_story.clues_that_prove_innocence:
+            distractor_story.clues_that_prove_innocence_elements = convert_story_to_story_elements(
+                distractor_story.clues_that_prove_innocence)
+            display_story_elements(distractor_story.clues_that_prove_innocence_elements,
+                                   title=f"Distractor Story {i + 1} Clues that Prove Innocence")
 
     # Collect all proving elements
     proving_elements = []
     
     # From crime story
     proving_elements.extend([
-        element for element in story.crime_story.real_story_elements + story.crime_story.story_to_detective_elements
+        element for element in story.crime_story.real_story_elements + 
+                               story.crime_story.story_to_detective_elements + 
+                               getattr(story.crime_story, 'clues_that_prove_innocence_elements', [])
         if element.type_of_evidence in [TypeOfEvidence.PROVES_GUILT, TypeOfEvidence.PROVES_INNOCENCE]
     ])
     
     # From distractor stories
     for distractor_story in story.distractor_stories:
         proving_elements.extend([
-            element for element in distractor_story.real_story_elements + distractor_story.story_to_detective_elements
+            element for element in distractor_story.real_story_elements + 
+                                   distractor_story.story_to_detective_elements + 
+                                   getattr(distractor_story, 'clues_that_prove_innocence_elements', [])
             if element.type_of_evidence in [TypeOfEvidence.PROVES_GUILT, TypeOfEvidence.PROVES_INNOCENCE]
         ])
     
