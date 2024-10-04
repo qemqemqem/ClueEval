@@ -15,7 +15,7 @@ def get_random_details() -> Story:
     mystery_settings = load_elements('mystery_settings.txt')
 
     # Sample random people
-    random_people = random.sample(person_elements, 5)
+    random_people = random.sample(person_elements, 5)  # The first two are the killer and victim
     killer, victim = random_people[0], random_people[1]
 
     random_crimes = random.sample(crime_elements, 3)

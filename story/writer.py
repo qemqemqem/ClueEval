@@ -51,8 +51,8 @@ def write_stories(story: Story):
     display_narrative(story.crime_story.__str__(), speaker="Parsed Crime Story")
 
     # Generate distractor stories for other characters
-    other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
-    # other_characters = []  # Disabling for Development! TODO Reenable
+    # other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
+    other_characters = []  # Disabling for Development! TODO Reenable
     # murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
     murder_summary = story.crime_story.real_story
     
@@ -96,12 +96,23 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
     """
 
     json_response = prompt_completion_json([{"role": "user", "content": prompt}])
+
+    # print(json_response)
     
     if json_response:
         try:
+            story_elements = []
+
             elements = json.loads(json_response)
-            return [StoryElement(text=elem['text'], type_of_evidence=TypeOfEvidence(elem['type_of_evidence'])) 
-                    for elem in elements]
+            if "story_elements" in elements:
+                elements = elements["story_elements"]
+            for elem in elements:
+                # print(elem)
+                text = elem['text']
+                type_of_evidence = TypeOfEvidence(elem['type_of_evidence'])
+                story_elements.append(StoryElement(text=text, type_of_evidence=type_of_evidence))
+
+            return story_elements
         except json.JSONDecodeError:
             print("Error: Invalid JSON response")
         except KeyError:
