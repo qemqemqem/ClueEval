@@ -1,3 +1,4 @@
+import random
 from dataclasses import dataclass, field
 from typing import List, Optional
 
@@ -52,3 +53,8 @@ class Story:
 
     question: str = ""
     question_options: dict = field(default_factory=dict)
+
+    def get_living_character_names_random(self):
+        characters = [charo for charo in self.random_people if charo not in [self.victim]]
+        random.shuffle(characters)
+        return characters

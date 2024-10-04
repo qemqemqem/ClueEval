@@ -120,11 +120,22 @@ def write_prose(story: Story):
         full_prose_prompt = f.read()
 
     # Prepare the notes and outline
-    notes = story.summary + "\n\n" + "\n".join([str(cs) for cs in [story.crime_story] + story.distractor_stories])
-    outline = "\n".join([f"- {element.text}" for element in story.new_story_details])
+    notes = story.summary + "\n\n" + "\n\n".join([f"{cs.character_name}'s Story to the Detective: \n\n{cs.story_to_detective}" for cs in [story.crime_story] + story.distractor_stories])
+
+    outline = f"- The setting: {story.mystery_setting}"
+    outline += f"- The victim, {story.victim}, lies dead on the floor!"
+    outline += f"- Detective Detecto arrives at the scene of the crime."
+    characters = story.get_living_character_names_random()
+    outline += f"- There are only {len(characters)} people present: {', '.join(characters)}"
+    outline += f"- The detective begins to poke around and ask questions."
+    outline += f"- And this is what the detective learns, from clues and from talking to the people present:"
+    outline += "\n".join([f"- {element.text}" for element in story.new_story_details])
 
     # Fill in the prompt template
     prompt = full_prose_prompt.replace("{notes}", notes).replace("{outline}", outline)
+
+    # Print the full prompt
+    display_narrative(prompt, speaker="Full Prose Prompt")
 
     # Generate the full prose
     story.full_prose = prompt_completion_chat(prompt, model="gpt-4o")
