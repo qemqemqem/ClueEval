@@ -4,7 +4,7 @@ from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_narrative, display_bullet_points
 from story.bullet_classifier import Hypotheses, classify_evidence, Hypothesis, display_classified_evidence
 
-def parse_crime_story(story_text: str) -> CharacterStory:
+def parse_crime_story(character_name: str, story_text: str) -> CharacterStory:
     lines = story_text.strip().split('\n')
     details = {}
     current_section = None
@@ -24,6 +24,7 @@ def parse_crime_story(story_text: str) -> CharacterStory:
             details[current_section].append(line)
 
     return CharacterStory(
+        character_name=character_name,
         means=details['means'],
         motive=details['motive'],
         opportunity=details['opportunity'],
@@ -43,7 +44,7 @@ def write_stories(story: Story):
     central_prompt = central_prompt.replace('{{killer}}', story.killer)
     central_prompt = central_prompt.replace('{{victim}}', story.victim)
     crime_story_text = prompt_completion_chat(central_prompt)
-    story.crime_story = parse_crime_story(crime_story_text)
+    story.crime_story = parse_crime_story(story.killer, crime_story_text)
 
     display_narrative(crime_story_text, speaker="Crime Story")
     display_narrative(story.crime_story.__str__(), speaker="Parsed Crime Story")
@@ -61,7 +62,7 @@ def write_stories(story: Story):
         other_prompt = other_prompt.replace('{{other_stories}}', "\n".join([ds.real_story for ds in story.distractor_stories]))
         
         distractor_story_text = prompt_completion_chat(other_prompt)
-        distractor_story = parse_crime_story(distractor_story_text)
+        distractor_story = parse_crime_story(character, distractor_story_text)
         story.distractor_stories.append(distractor_story)
 
         display_narrative(distractor_story_text, speaker=f"Distractor Story {character}")
@@ -96,23 +97,23 @@ def main():
     # Write stories
     story = write_stories(story)
 
-    # Convert story to bullet points
-    story = convert_story_to_bullet_points(story)
-    display_bullet_points(story.bullet_points, title="Story Bullet Points")
-
-    # Create hypotheses based on story details
-    hypotheses = Hypotheses(
-        killers=[Hypothesis(name) for name in story.random_people],
-        weapons=[Hypothesis(weapon) for weapon in story.random_crimes],
-        locations=[Hypothesis(location) for location in story.random_places]
-    )
-
-    # Classify evidence
-    full_story = f"{story.crime_story.real_story}\n\n" + "\n\n".join([ds.real_story for ds in story.distractor_stories])
-    evidence_classification = classify_evidence(story.bullet_points, hypotheses)
-
-    # Display classified evidence
-    display_classified_evidence(evidence_classification)
+    # # Convert story to bullet points
+    # story = convert_story_to_bullet_points(story)
+    # display_bullet_points(story.bullet_points, title="Story Bullet Points")
+    #
+    # # Create hypotheses based on story details
+    # hypotheses = Hypotheses(
+    #     killers=[Hypothesis(name) for name in story.random_people],
+    #     weapons=[Hypothesis(weapon) for weapon in story.random_crimes],
+    #     locations=[Hypothesis(location) for location in story.random_places]
+    # )
+    #
+    # # Classify evidence
+    # full_story = f"{story.crime_story.real_story}\n\n" + "\n\n".join([ds.real_story for ds in story.distractor_stories])
+    # evidence_classification = classify_evidence(story.bullet_points, hypotheses)
+    #
+    # # Display classified evidence
+    # display_classified_evidence(evidence_classification)
 
 if __name__ == '__main__':
     main()
