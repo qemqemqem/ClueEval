@@ -64,11 +64,14 @@ def display_error(error_message: str) -> None:
     )
     console.print(panel)
 
-def display_json(json_data: dict, title: str = "JSON Data", style: str = "blue") -> None:
+def display_json(json_data: str, title: str = "JSON Data", style: str = "blue") -> None:
     """
     Display JSON data in a pretty format using Rich's built-in JSON formatting.
     """
-    print_json(data=json_data)
+    try:
+        print_json(json_data)
+    except Exception as e:
+        display_error(f"Failed to display JSON data: {str(e)}")
     # json_content = JSON(json_data)
     # panel = Panel(
     #     json_content,

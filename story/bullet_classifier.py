@@ -4,7 +4,8 @@ from typing import List, Dict
 import json
 
 from utils.gpt import prompt_completion_json
-from utils.display_interface import display_story_element, display_narrative, display_bullet_points, display_error
+from utils.display_interface import display_story_element, display_narrative, display_bullet_points, display_error, \
+    display_json
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -97,7 +98,7 @@ def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> Evide
     json_response = prompt_completion_json(messages)
 
     # Print the full JSON response
-    display_story_element(json_response, title="Full JSON Response from LLM")
+    display_json(json_response, title="Full JSON Response from LLM")
 
     # Parse the response
     if json_response:
@@ -119,7 +120,7 @@ def display_classified_evidence(evidence_classification):
         for c in bullet_point.classifications:
             classified_evidence_text += f"   - {c.category} {c.hypothesis_name} as {c.hypothesis_type.capitalize()}\n"
         classified_evidence_text += "\n"
-        logger.info(f"Added classifications for bullet point: {bullet_point.text[:30]}...")
+        # logger.info(f"Added classifications for bullet point: {bullet_point.text[:30]}...")
 
     display_narrative(classified_evidence_text, speaker="Evidence Classification")
     logger.info(f"Displayed classifications for {len(evidence_classification.classified_evidence)} bullet points")
