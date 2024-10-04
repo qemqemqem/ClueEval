@@ -1,6 +1,6 @@
 from story.story import Story, CharacterStory
 from story.random_details import get_random_details
-from story.story_elements import convert_story_to_story_elements
+from story.story_elements import convert_story_to_story_elements, generate_innocuous_details
 from story.evidence import TypeOfEvidence
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_narrative, display_story_elements

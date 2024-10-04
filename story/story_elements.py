@@ -55,3 +55,28 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
             print("Error: Invalid type_of_evidence value")
 
     return []
+def generate_innocuous_details(story: str) -> list[StoryElement]:
+    prompt = f"""
+    Given the following story, generate 5 innocuous details that don't suggest or prove anything about the crime. These should be minor, unrelated facts that add color to the story but aren't relevant to solving the mystery.
+
+    Story:
+    {story}
+
+    Provide the output as a JSON array of objects, where each object has a 'text' field for the innocuous detail.
+    """
+    
+    response = prompt_completion_json([{"role": "user", "content": prompt}])
+    
+    try:
+        details = json.loads(response)
+        return [
+            StoryElement(
+                text=detail['text'],
+                target="",
+                type_of_evidence=TypeOfEvidence.INNOCUOUS
+            )
+            for detail in details
+        ]
+    except json.JSONDecodeError:
+        print("Error decoding JSON response for innocuous details")
+        return []
