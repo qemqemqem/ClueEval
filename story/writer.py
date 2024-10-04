@@ -1,8 +1,9 @@
 from story.story import Story, CharacterStory
 from story.random_details import get_random_details
-from utils.gpt import prompt_completion_chat
-from utils.display_interface import display_story_element, display_narrative, display_bullet_points
-from story.bullet_classifier import Hypotheses, classify_evidence, Hypothesis, display_classified_evidence
+from story.evidence import StoryElement, TypeOfEvidence
+from utils.gpt import prompt_completion_chat, prompt_completion_json
+from utils.display_interface import display_story_element, display_narrative
+import json
 
 def parse_crime_story(character_name: str, story_text: str) -> CharacterStory:
     lines = story_text.strip().split('\n')
@@ -70,23 +71,45 @@ def write_stories(story: Story):
 
     return story
 
-def convert_story_to_bullet_points(story: Story):
-    # Load prompt template
-    with open('config/prompts/convert_story_to_bullets.txt', 'r') as f:
-        bullet_prompt = f.read()
+def convert_story_to_story_elements(story: str) -> list[StoryElement]:
+    prompt = f"""
+    Convert the following story into a list of story elements. Each element should be a single fact or event from the story, classified according to its relevance to the mystery.
 
-    # Convert crime story to bullet points
-    crime_prompt = bullet_prompt.replace('{{story}}', story.crime_story.real_story)
-    crime_bullets = prompt_completion_chat(crime_prompt)
-    story.bullet_points.extend([line.strip()[2:] for line in crime_bullets.split('\n') if line.strip().startswith('* ')])
+    Story:
+    {story}
 
-    # Convert distractor stories to bullet points
-    for distractor in story.distractor_stories:
-        distractor_prompt = bullet_prompt.replace('{{story}}', distractor.real_story)
-        distractor_bullets = prompt_completion_chat(distractor_prompt)
-        story.bullet_points.extend([line.strip()[2:] for line in distractor_bullets.split('\n') if line.strip().startswith('* ')])
+    Please return a JSON array of objects with the following structure:
+    [
+        {{
+            "text": "The fact or event from the story",
+            "type_of_evidence": "supports_guilt" | "proves_guilt" | "supports_innocence" | "proves_innocence"
+        }}
+    ]
 
-    return story
+    Classify each element based on how it relates to solving the mystery:
+    - "supports_guilt": Suggests but doesn't prove someone's guilt
+    - "proves_guilt": Provides definitive proof of guilt
+    - "supports_innocence": Suggests but doesn't prove someone's innocence
+    - "proves_innocence": Provides definitive proof of innocence
+
+    If an element doesn't clearly fit into these categories, omit it from the results.
+    """
+
+    json_response = prompt_completion_json([{"role": "user", "content": prompt}])
+    
+    if json_response:
+        try:
+            elements = json.loads(json_response)
+            return [StoryElement(text=elem['text'], type_of_evidence=TypeOfEvidence(elem['type_of_evidence'])) 
+                    for elem in elements]
+        except json.JSONDecodeError:
+            print("Error: Invalid JSON response")
+        except KeyError:
+            print("Error: JSON response missing required keys")
+        except ValueError:
+            print("Error: Invalid type_of_evidence value")
+    
+    return []
 
 
 def main():
