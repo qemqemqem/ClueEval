@@ -120,22 +120,26 @@ def main():
     # Write stories
     story = write_stories(story)
 
-    # Convert stories to story elements
+    # Convert stories to story elements and display them
     story.crime_story.real_story_elements = convert_story_to_story_elements(story.crime_story.real_story)
-    story.crime_story.story_to_detective_elements = convert_story_to_story_elements(story.crime_story.story_to_detective)
-    
-    for distractor_story in story.distractor_stories:
-        distractor_story.real_story_elements = convert_story_to_story_elements(distractor_story.real_story)
-        distractor_story.story_to_detective_elements = convert_story_to_story_elements(distractor_story.story_to_detective)
-
-    # Display story elements
-    display_narrative("Crime Story Elements:", speaker="Story Elements")
+    display_narrative("Crime Story Real Story Elements:", speaker="Story Elements")
     for element in story.crime_story.real_story_elements:
         display_story_element(f"{element.text} ({element.type_of_evidence.value})")
 
+    story.crime_story.story_to_detective_elements = convert_story_to_story_elements(story.crime_story.story_to_detective)
+    display_narrative("Crime Story Detective Story Elements:", speaker="Story Elements")
+    for element in story.crime_story.story_to_detective_elements:
+        display_story_element(f"{element.text} ({element.type_of_evidence.value})")
+    
     for i, distractor_story in enumerate(story.distractor_stories):
-        display_narrative(f"Distractor Story {i+1} Elements:", speaker="Story Elements")
+        distractor_story.real_story_elements = convert_story_to_story_elements(distractor_story.real_story)
+        display_narrative(f"Distractor Story {i+1} Real Story Elements:", speaker="Story Elements")
         for element in distractor_story.real_story_elements:
+            display_story_element(f"{element.text} ({element.type_of_evidence.value})")
+
+        distractor_story.story_to_detective_elements = convert_story_to_story_elements(distractor_story.story_to_detective)
+        display_narrative(f"Distractor Story {i+1} Detective Story Elements:", speaker="Story Elements")
+        for element in distractor_story.story_to_detective_elements:
             display_story_element(f"{element.text} ({element.type_of_evidence.value})")
 
 if __name__ == '__main__':
