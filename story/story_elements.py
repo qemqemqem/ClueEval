@@ -23,7 +23,7 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
     ]
 
     Classify each element based on how it relates to solving the mystery:
-    - "supports_guilt": Suggests but doesn't prove someone's guilt
+    - "supports_guilt": Suggests but doesn't prove someone's guilt (most common)
     - "proves_guilt": Provides definitive proof of guilt
     - "supports_innocence": Suggests but doesn't prove someone's innocence
     - "proves_innocence": Provides definitive proof of innocence

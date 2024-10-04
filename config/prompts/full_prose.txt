@@ -8,4 +8,10 @@ Here are my notes. It's a lot of background, most of which will not make its way
 
 # Outline
 
-Now, here's the outline of the story that I have. I want you to follow this outline strictly, but I want you to convert it into
+Now, here's the outline of the story that I have. I want you to follow this outline strictly, but I want you to convert it into prose.
+
+{outline}
+
+# Assignment
+
+Each element in the outline should be about one sentence. I want you to take this list and make it flow. The story you write should start with Detective Detecto's arrival, and be structured as Detecto's revelations as he investigates. The story you write will end just before Detecto announces who did it.
