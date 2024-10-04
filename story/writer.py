@@ -171,10 +171,25 @@ def present_question(story: Story):
 
     display_bullet_points([str(rfi) for rfi in story.reasons_for_innocence], title="Reasoning")
 
-def create_story():
+def create_story(interactive: bool = False) -> Story:
+    """
+    Create a mystery story.
+
+    This function generates a complete mystery story, including details, prose, and a question.
+    
+    Args:
+        interactive (bool, optional): If True, displays story elements to the console
+                                      and presents an interactive question. 
+                                      If False, silently generates the story.
+                                      Defaults to False.
+
+    Returns:
+        Story: The complete generated story object.
+    """
     # Get random story details
     story = get_random_details()
-    display_story_element(story.summary, title="Story Summary")
+    if interactive:
+        display_story_element(story.summary, title="Story Summary")
 
     # Write stories
     story = write_stories(story)
@@ -188,10 +203,14 @@ def create_story():
     # Write full prose
     write_prose(story)
 
-    # Create and present the question
+    # Create the question
     create_question(story)
-    present_question(story)
 
+    if interactive:
+        # Present the question only in interactive mode
+        present_question(story)
+    
+    return story
 
 if __name__ == '__main__':
     create_story()
