@@ -10,6 +10,9 @@ class CharacterStory:
     real_story: str
     story_to_detective: str
 
+    def __str__(self):
+        return f"Means: {self.means}\nMotive: {self.motive}\nOpportunity: {self.opportunity}\nReal Story: {self.real_story}\nStory to Detective: {self.story_to_detective}"
+
 
 @dataclass
 class Story:
