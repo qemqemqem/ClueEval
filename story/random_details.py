@@ -26,6 +26,15 @@ def get_random_details() -> Story:
     crime_location = random.choice(random_places)
     mystery_setting = random.choice(mystery_settings)
 
+    # Create character details
+    character_details = {}
+    for character in random_people:
+        gender = random.choice(["male", "female"])
+        age = random.randint(18, 75)
+        adjectives = random.sample(["tall", "short", "fat", "thin", "bald", "blonde", "brunette", "redhead", "stuttering", "elegant", "clumsy", "cheerful", "grumpy", "shy", "outgoing"], 2)
+        description = f"{age}-year-old {gender}, {adjectives[0]} and {adjectives[1]}"
+        character_details[character] = description
+
     # Create a Story object
     story = Story(
         summary="",
@@ -36,7 +45,8 @@ def get_random_details() -> Story:
         victim=victim,
         crime_weapon=crime_weapon,
         crime_location=crime_location,
-        mystery_setting=mystery_setting
+        mystery_setting=mystery_setting,
+        character_details=character_details
     )
 
     story.summary = f"This is a mystery story in the style of a golden age classic, set in a {story.mystery_setting}, and it features the following elements:"
