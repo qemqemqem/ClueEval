@@ -127,12 +127,14 @@ def write_prose(story: Story):
     outline += f"- Detective Detecto arrives at the scene of the crime. (Detecto is {story.detective_details})\n"
     characters = story.get_living_character_names_random()
     outline += f"- There are only {len(characters)} people present: {', '.join(characters)}\n"
+    outline += f"- No one else could possibly have been here.\n"
     outline += f"- The detective begins to poke around and ask questions.\n"
     outline += f"- And this is what the detective learns, from clues and from talking to the people present:\n"
     outline += "\n".join([f"- {element.text}" for element in story.new_story_details])
+    outline += "\n- It must be one of these suspects, and Detecto knows just who it is.\n"
 
     # Fill in the prompt template
-    prompt = full_prose_prompt.replace("{notes}", notes).replace("{outline}", outline)
+    prompt = full_prose_prompt.replace("{notes}", notes.strip()).replace("{outline}", outline.strip())
 
     # Print the full prompt
     display_narrative(prompt, speaker="Full Prose Prompt")
