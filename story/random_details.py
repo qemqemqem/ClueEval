@@ -2,6 +2,7 @@ import random
 import os
 import string
 from story.story import Story
+from utils.str_utils import unindent
 
 def load_elements(filename):
     with open(os.path.join('config', filename), 'r') as f:
@@ -51,21 +52,23 @@ def get_random_details() -> Story:
     other_places = [place for place in story.random_places if place != story.crime_location]
     other_items = [crime for crime in story.random_crimes if crime != story.crime_weapon]
 
-    story.summary = f"""This is a mystery story in the style of a golden age classic, set in a {story.mystery_setting}. The story features the following elements:
+    story.summary = unindent(f"""
+        This is a mystery story in the style of a golden age classic, set in a {story.mystery_setting}. The story features the following elements:
 
-Victim: {story.victim} ({character_details[story.victim]})
-Killer: {story.killer} ({character_details[story.killer]})
+        Victim: {story.victim} ({character_details[story.victim]})
+        Killer: {story.killer} ({character_details[story.killer]})
 
-Bystanders:
-{', '.join([f"{person} ({character_details[person]})" for person in bystanders])}
+        Bystanders:
+        {', '.join([f"{person} ({character_details[person]})" for person in bystanders])}
 
-Crime Location: {story.crime_location}
-Nearby Locations: {', '.join(other_places)}
+        Crime Location: {story.crime_location}
+        Nearby Locations: {', '.join(other_places)}
 
-Murder Weapon: {story.crime_weapon}
-Other Suspicious Items: {', '.join(other_items)}
+        Murder Weapon: {story.crime_weapon}
+        Other Suspicious Items: {', '.join(other_items)}
 
-The central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. The mystery is being investigated by detective Detecto ({story.detective_details})."""
+        The central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. The mystery is being investigated by detective Detecto ({story.detective_details}).
+    """)
 
     return story
 
