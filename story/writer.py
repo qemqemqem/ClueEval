@@ -47,12 +47,12 @@ def write_stories(story: Story):
     crime_story_text = prompt_completion_chat(central_prompt)
     story.crime_story = parse_crime_story(story.killer, crime_story_text)
 
-    display_narrative(crime_story_text, speaker="Crime Story")
+    # display_narrative(crime_story_text, speaker="Crime Story")
     display_narrative(story.crime_story.__str__(), speaker="Parsed Crime Story")
 
     # Generate distractor stories for other characters
-    # other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
-    other_characters = []  # Disabling for Development! TODO Reenable
+    other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
+    # other_characters = []  # Disabling for Development! TODO Reenable
     # murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
     murder_summary = story.crime_story.real_story
     
@@ -66,7 +66,7 @@ def write_stories(story: Story):
         distractor_story = parse_crime_story(character, distractor_story_text)
         story.distractor_stories.append(distractor_story)
 
-        display_narrative(distractor_story_text, speaker=f"Distractor Story {character}")
+        # display_narrative(distractor_story_text, speaker=f"Distractor Story {character}")
         display_narrative(distractor_story.__str__(), f"Parsed Story for {character}")
 
     return story
