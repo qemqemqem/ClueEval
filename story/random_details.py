@@ -78,8 +78,19 @@ def get_random_details() -> Story:
 def random_character_details():
     gender = random.choice(["man", "woman"])
     age = random.randint(18, 75)
-    adjectives = random.sample(
-        ["tall", "short", "fat", "thin", "friendly", "blonde", "brunette", "redhead", "stuttering", "elegant", "clumsy",
-         "cheerful", "grumpy", "shy", "outgoing"], 2)
-    description = f"a {age}-year-old {gender}, {adjectives[0]} and {adjectives[1]}"
+    physical_traits = ["tall", "short", "fat", "thin", "blonde", "brunette", "redhead"]
+    personality_traits = ["friendly", "stuttering", "elegant", "clumsy", "cheerful", "grumpy", "shy", "outgoing"]
+    
+    # Ensure we don't get both 'fat' and 'thin'
+    physical_trait = random.choice(physical_traits)
+    if physical_trait in ['fat', 'thin']:
+        physical_traits.remove('fat')
+        physical_traits.remove('thin')
+    
+    personality_trait = random.choice(personality_traits)
+    
+    speaking_styles = ["eloquent", "blunt", "verbose", "terse", "sarcastic", "formal", "casual", "dramatic"]
+    speaking_style = random.choice(speaking_styles)
+    
+    description = f"a {age}-year-old {gender}, {physical_trait} and {personality_trait}, who speaks in a {speaking_style} manner"
     return description
