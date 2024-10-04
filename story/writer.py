@@ -1,9 +1,9 @@
 from story.story import Story, CharacterStory
 from story.random_details import get_random_details
-from story.evidence import StoryElement, TypeOfEvidence
-from utils.gpt import prompt_completion_chat, prompt_completion_json
+from story.story_elements import convert_story_to_story_elements
+from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_narrative, display_story_elements
-import json
+
 
 def parse_crime_story(character_name: str, story_text: str) -> CharacterStory:
     lines = story_text.strip().split('\n')
@@ -51,8 +51,8 @@ def write_stories(story: Story):
     display_narrative(story.crime_story.__str__(), speaker="Parsed Crime Story")
 
     # Generate distractor stories for other characters
-    # other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
-    other_characters = []  # Disabling for Development! TODO Reenable
+    other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
+    # other_characters = []  # Disabling for Development! TODO Reenable
     # murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
     murder_summary = story.crime_story.real_story
     
@@ -70,58 +70,6 @@ def write_stories(story: Story):
         display_narrative(distractor_story.__str__(), f"Parsed Story for {character}")
 
     return story
-
-def convert_story_to_story_elements(story: str) -> list[StoryElement]:
-    prompt = f"""
-    Convert the following story into a list of story elements. Each element should be a single fact or event from the story, classified according to its relevance to the mystery.
-
-    Story:
-    {story}
-
-    Please return a JSON array of objects with the following structure:
-    [
-        {{
-            "text": "The fact or event from the story",
-            "type_of_evidence": "supports_guilt" | "proves_guilt" | "supports_innocence" | "proves_innocence",
-            "target": "The name of the character whose guilt or innocence is being supported"
-        }}
-    ]
-
-    Classify each element based on how it relates to solving the mystery:
-    - "supports_guilt": Suggests but doesn't prove someone's guilt
-    - "proves_guilt": Provides definitive proof of guilt
-    - "supports_innocence": Suggests but doesn't prove someone's innocence
-    - "proves_innocence": Provides definitive proof of innocence
-
-    The "target" should be the name of the character whose guilt or innocence is being supported by this piece of evidence.
-
-    If an element doesn't clearly fit into these categories or doesn't have a clear target, omit it from the results.
-    """
-
-    json_response = prompt_completion_json([{"role": "user", "content": prompt}])
-    
-    if json_response:
-        try:
-            story_elements = []
-
-            elements = json.loads(json_response)
-            if "story_elements" in elements:
-                elements = elements["story_elements"]
-            for elem in elements:
-                text = elem['text']
-                type_of_evidence = TypeOfEvidence(elem['type_of_evidence'])
-                target = elem['target']
-                story_elements.append(StoryElement(text=text, type_of_evidence=type_of_evidence, target=target))
-
-            return story_elements
-        except json.JSONDecodeError:
-            print("Error: Invalid JSON response")
-        except KeyError:
-            print("Error: JSON response missing required keys")
-        except ValueError:
-            print("Error: Invalid type_of_evidence value")
-    
-    return []
 
 
 def main():

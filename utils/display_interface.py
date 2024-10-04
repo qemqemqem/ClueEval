@@ -27,7 +27,7 @@ def display_story_elements(elements: list[StoryElement], title: str = "Story Ele
     """
     Display a list of StoryElements.
     """
-    content = "\n".join([f"• {element.text} ({element.type_of_evidence.value})" for element in elements])
+    content = "\n".join([f"• {element.text} ({element.type_of_evidence.value} of {element.target})" for element in elements])
     panel = Panel(
         Text(content),
         border_style=style,
