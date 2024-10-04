@@ -4,10 +4,12 @@ Analyze the following story and classify each piece of evidence (bullet point) a
 
 I'm going to give you a list of facts about the story, and I want you to classify each of them according to the scheme I'm giving you.
 
-Story:
+# Story:
+
 {bullet_points}
 
-Hypotheses:
+# Hypotheses:
+
 Killers: {killers}
 Weapons: {weapons}
 Locations: {locations}
@@ -17,7 +19,7 @@ Provide your analysis in the following JSON format:
 {{
   "classified_evidence": [
     {{
-      "id": "The butler was seen in the kitchen",
+      "text": "The butler was seen in the kitchen",
       "classifications": [
         {{
           "hypothesis_type": "killer/weapon/location/none",
@@ -29,7 +31,8 @@ Provide your analysis in the following JSON format:
   ]
 }}
 
-Important:
+# Important:
+
 1. Include EVERY bullet point ID in the "classified_evidence" array.
 2. For each bullet point, provide classifications for ALL relevant hypotheses it relates to.
 3. If a bullet point doesn't relate to any specific hypothesis type, use "none" as the hypothesis_type and "None" as the hypothesis_name.
@@ -38,7 +41,7 @@ Important:
 
 Example of a bullet point not related to any hypothesis:
 {{
-  "id": "the butler likes sandwiches",
+  "text": "the butler likes sandwiches",
   "classifications": [
     {{
       "hypothesis_type": "none",
