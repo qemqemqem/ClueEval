@@ -13,12 +13,13 @@ class CharacterStory:
     opportunity: str
     real_story: str
     story_to_detective: str
+    clues_that_prove_innocence: str = ""
 
     real_story_elements: list[StoryElement] = field(default_factory=list)
     story_to_detective_elements: list[StoryElement] = field(default_factory=list)
 
     def __str__(self):
-        return f"Means: {self.means}\nMotive: {self.motive}\nOpportunity: {self.opportunity}\n\nReal Story: \n\n{self.real_story}\n\nStory to Detective: \n\n{self.story_to_detective}"
+        return f"Means: {self.means}\nMotive: {self.motive}\nOpportunity: {self.opportunity}\n\nReal Story: \n\n{self.real_story}\n\nStory to Detective: \n\n{self.story_to_detective}\n\nClues that Prove Innocence: \n\n{self.clues_that_prove_innocence}"
 
 
 @dataclass

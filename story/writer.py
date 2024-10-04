@@ -31,7 +31,8 @@ def parse_crime_story(character_name: str, story_text: str) -> CharacterStory:
         motive=details['motive'],
         opportunity=details['opportunity'],
         real_story='\n'.join(details['what happened']),
-        story_to_detective='\n'.join(details['explanation to detective'])
+        story_to_detective='\n'.join(details['explanation to detective']),
+        clues_that_prove_innocence='\n'.join(details.get('clues that prove innocence', []))
     )
 
 def write_stories(story: Story):
