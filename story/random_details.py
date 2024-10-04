@@ -4,9 +4,11 @@ import string
 from story.story import Story
 from utils.str_utils import unindent
 
+
 def load_elements(filename):
     with open(os.path.join('config', filename), 'r') as f:
         return [line.strip() for line in f]
+
 
 def get_random_details() -> Story:
     # Load elements from files
@@ -68,6 +70,10 @@ def get_random_details() -> Story:
 
         The Murder Weapon: {story.crime_weapon}
         Other Suspicious Items: {', '.join(other_items)}
+        
+        Title: ...
+        
+        Synopsis: ...
 
         The central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. Detective Detecto is on the case!
     """).strip()
