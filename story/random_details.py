@@ -47,13 +47,25 @@ def get_random_details() -> Story:
         detective_details=random_character_details(),
     )
 
-    story.summary = f"This is a mystery story in the style of a golden age classic, set in a {story.mystery_setting}, and it features the following elements:"
-    for element in story.random_crimes + story.random_places + story.random_people:
-        if element in character_details:
-            element = f"{element} ({character_details[element]})"
-        story.summary += f"\n- {element}"
+    bystanders = [person for person in story.random_people if person not in [story.killer, story.victim]]
+    other_places = [place for place in story.random_places if place != story.crime_location]
+    other_items = [crime for crime in story.random_crimes if crime != story.crime_weapon]
 
-    story.summary += f"\n\nThe central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. The mystery is being investigated by detective Detecto."
+    story.summary = f"""This is a mystery story in the style of a golden age classic, set in a {story.mystery_setting}. The story features the following elements:
+
+Victim: {story.victim} ({character_details[story.victim]})
+Killer: {story.killer} ({character_details[story.killer]})
+
+Bystanders:
+{', '.join([f"{person} ({character_details[person]})" for person in bystanders])}
+
+Crime Location: {story.crime_location}
+Nearby Locations: {', '.join(other_places)}
+
+Murder Weapon: {story.crime_weapon}
+Other Suspicious Items: {', '.join(other_items)}
+
+The central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. The mystery is being investigated by detective Detecto ({story.detective_details})."""
 
     return story
 
