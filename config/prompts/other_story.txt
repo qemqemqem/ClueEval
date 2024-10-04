@@ -21,9 +21,9 @@ Fill out this form:
 # Details
 
 Secret: What secret is {{character}} trying to hide?
-Motive: Why did the character want the victim dead? (or None)
-Means: What weapon or method did they have available? (or None)
-Opportunity: When was the victim vulnerable to attack? (or None)
+Motive: Why did the character want the victim dead? (or simply write "None")
+Means: What weapon or method did they have available? (or simply write "None")
+Opportunity: When was the victim vulnerable to attack? (or simply write "None")
 
 # What Happened
 

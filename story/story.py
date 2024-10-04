@@ -11,7 +11,7 @@ class CharacterStory:
     story_to_detective: str
 
     def __str__(self):
-        return f"Means: {self.means}\nMotive: {self.motive}\nOpportunity: {self.opportunity}\nReal Story: {self.real_story}\nStory to Detective: {self.story_to_detective}"
+        return f"Means: {self.means}\nMotive: {self.motive}\nOpportunity: {self.opportunity}\n\nReal Story: \n\n{self.real_story}\n\nStory to Detective: \n\n{self.story_to_detective}"
 
 
 @dataclass

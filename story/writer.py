@@ -46,28 +46,26 @@ def write_stories(story: Story):
     story.crime_story = parse_crime_story(crime_story_text)
 
     display_narrative(crime_story_text, speaker="Crime Story")
-    print("Parsed Crime Story:")
-    print(str(story.crime_story))
+    display_narrative(story.crime_story.__str__(), speaker="Parsed Crime Story")
 
     # Generate distractor stories for other characters
     other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
     # other_characters = []  # Disabling for Development! TODO Reenable
     # murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
-    murder_summary = story.crime_story
+    murder_summary = story.crime_story.real_story
     
     for character in other_characters:
         other_prompt = other_story_prompt.replace('{{summary}}', story.summary)
         other_prompt = other_prompt.replace('{{murder_summary}}', murder_summary)
         other_prompt = other_prompt.replace('{{character}}', character)
-        other_prompt = other_prompt.replace('{{other_stories}}', "\n".join(story.distractor_stories))
+        other_prompt = other_prompt.replace('{{other_stories}}', "\n".join([ds.real_story for ds in story.distractor_stories]))
         
         distractor_story_text = prompt_completion_chat(other_prompt)
         distractor_story = parse_crime_story(distractor_story_text)
         story.distractor_stories.append(distractor_story)
 
         display_narrative(distractor_story_text, speaker=f"Distractor Story {character}")
-        print(f"Parsed Distractor Story for {character}:")
-        print(str(distractor_story))
+        display_narrative(distractor_story.__str__(), f"Parsed Story for {character}")
 
     return story
 
@@ -77,13 +75,13 @@ def convert_story_to_bullet_points(story: Story):
         bullet_prompt = f.read()
 
     # Convert crime story to bullet points
-    crime_prompt = bullet_prompt.replace('{{story}}', story.crime_story)
+    crime_prompt = bullet_prompt.replace('{{story}}', story.crime_story.real_story)
     crime_bullets = prompt_completion_chat(crime_prompt)
     story.bullet_points.extend([line.strip()[2:] for line in crime_bullets.split('\n') if line.strip().startswith('* ')])
 
     # Convert distractor stories to bullet points
     for distractor in story.distractor_stories:
-        distractor_prompt = bullet_prompt.replace('{{story}}', distractor)
+        distractor_prompt = bullet_prompt.replace('{{story}}', distractor.real_story)
         distractor_bullets = prompt_completion_chat(distractor_prompt)
         story.bullet_points.extend([line.strip()[2:] for line in distractor_bullets.split('\n') if line.strip().startswith('* ')])
 
@@ -110,7 +108,7 @@ def main():
     )
 
     # Classify evidence
-    full_story = f"{story.crime_story}\n\n" + "\n\n".join(story.distractor_stories)
+    full_story = f"{story.crime_story.real_story}\n\n" + "\n\n".join([ds.real_story for ds in story.distractor_stories])
     evidence_classification = classify_evidence(story.bullet_points, hypotheses)
 
     # Display classified evidence
