@@ -127,7 +127,6 @@ def write_prose(story: Story):
     story.new_story_details = []
 
     def add_narrative(text, position='end'):
-        outline.append(f"- {text}")
         new_element = StoryElement(text=text, target="", type_of_evidence=TypeOfEvidence.NARRATIVE, when=WhenInTime.UNKNOWN)
         if position == 'end':
             story.new_story_details.append(new_element)
