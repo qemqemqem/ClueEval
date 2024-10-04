@@ -80,8 +80,8 @@ def random_character_details():
     age = random.randint(18, 85)
     physical_traits = [
         "tall", "short", "average height", "fat", "thin", "muscular", "lanky",
-        "blonde", "brunette", "redhead", "grey-haired", "bald", "curly-haired",
-        "bearded", "clean-shaven", "freckled", "pale", "tanned", "scarred"
+        "blonde", "brunette", "redhead", "grey-haired", "curly-haired",
+        "freckled", "pale", "tanned", "scarred"
     ]
     personality_traits = [
         "friendly", "stuttering", "elegant", "clumsy", "cheerful", "grumpy", "shy",
