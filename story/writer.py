@@ -115,7 +115,22 @@ def stories_to_elements(story: Story):
 
 
 def write_prose(story: Story):
-    ...
+    # Load the full prose prompt
+    with open('config/prompts/full_prose.txt', 'r') as f:
+        full_prose_prompt = f.read()
+
+    # Prepare the notes and outline
+    notes = story.summary + "\n\n" + "\n".join([str(cs) for cs in [story.crime_story] + story.distractor_stories])
+    outline = "\n".join([f"- {element.text}" for element in story.new_story_details])
+
+    # Fill in the prompt template
+    prompt = full_prose_prompt.replace("{notes}", notes).replace("{outline}", outline)
+
+    # Generate the full prose
+    story.full_prose = prompt_completion_chat(prompt)
+
+    # Display the full prose
+    display_narrative(story.full_prose, speaker="Full Prose")
 
 
 def create_question(story: Story):
@@ -154,6 +169,9 @@ def main():
 
     # Assemble all details
     story.new_story_details = assemble_details(story)
+
+    # Write full prose
+    write_prose(story)
 
     # Create and present the question
     create_question(story)
