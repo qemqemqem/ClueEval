@@ -109,16 +109,18 @@ def classify_evidence(bullet_points: List[str], hypotheses: Hypotheses) -> Evide
 
 def display_classified_evidence(evidence_classification):
     logger.info("Displaying classified evidence")
-    display_story_element("Classified Evidence", title="Evidence Classification")
-
+    
+    classified_evidence_text = "Classified Evidence:\n\n"
+    
     for i, bullet_point in enumerate(evidence_classification.classified_evidence, 1):
-        display_narrative(f"{i}. {bullet_point.text}", speaker="Bullet Point")
-        classifications = []
+        classified_evidence_text += f"{i}. {bullet_point.text}\n"
+        classified_evidence_text += "   Classifications:\n"
         for c in bullet_point.classifications:
-            classifications.append(f"{c.hypothesis_type.capitalize()} ({c.hypothesis_name}): {c.category}")
-        display_bullet_points(classifications, title="Classifications")
-        logger.info(f"Displayed classifications for bullet point: {bullet_point.text[:30]}...")
+            classified_evidence_text += f"   - {c.hypothesis_type.capitalize()} ({c.hypothesis_name}): {c.category}\n"
+        classified_evidence_text += "\n"
+        logger.info(f"Added classifications for bullet point: {bullet_point.text[:30]}...")
 
+    display_narrative(classified_evidence_text, speaker="Evidence Classification")
     logger.info(f"Displayed classifications for {len(evidence_classification.classified_evidence)} bullet points")
 
 
