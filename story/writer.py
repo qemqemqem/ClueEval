@@ -114,6 +114,10 @@ def stories_to_elements(story: Story):
                                title=f"Distractor Story {i + 1} Innocuous Details")
 
 
+def write_prose(story: Story):
+    ...
+
+
 def create_question(story: Story):
     characters = [story.killer] + [ds.character_name for ds in story.distractor_stories]
     random.shuffle(characters)
