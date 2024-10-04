@@ -67,23 +67,25 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
 
 def generate_innocuous_details(story: str, central_character: str) -> list[StoryElement]:
     prompt = f"""
-    Given the following story, generate 5 innocuous details that don't suggest or prove anything about the crime. These should be minor, unrelated facts that add color to the story but aren't relevant to solving the mystery. Also, indicate when each detail occurred in relation to the crime.
+Given the following story, generate 5 innocuous details that don't suggest or prove anything about the crime. These should be minor, unrelated facts that add color to the story but aren't relevant to solving the mystery. Also, indicate when each detail occurred in relation to the crime.
 
-    Story:
-    {story}
+Story:
+{story}
 
-    Provide the output as a JSON array of objects, where each object has a 'text' field for the innocuous detail and a 'when' field indicating when it occurred.
-    
-    Example:
-    
-    ```json
-    {{
-        "details": [
-            {{"text": "When the detective arrived, it was raining.", "when": "after_crime"}},
-            {{"text": "The hot dog stand had a sign that said 'Best in Town'.", "when": "before_crime"}},
-        ]
-    }}
-    """
+Provide the output as a JSON array of objects, where each object has a 'text' field for the innocuous detail and a 'when' field indicating when it occurred.
+
+Example:
+
+```json
+{{
+    "details": [
+        {{"text": "When the detective arrived, it was raining.", "when": "after_crime"}},
+        {{"text": "The hot dog stand had a sign that said 'Best in Town'.", "when": "before_crime"}},
+    ]
+}}
+
+Innocuous details never introduce a new character or location, and they don't involve any significant actions or events related to the crime. They should be simple, everyday observations or background information that doesn't affect the mystery.
+""".strip()
     
     response = prompt_completion_json([{"role": "user", "content": prompt}])
     # print(response)

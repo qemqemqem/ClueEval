@@ -95,23 +95,23 @@ def stories_to_elements(story: Story):
     for i, distractor_story in enumerate(story.distractor_stories):
         distractor_story.real_story_elements = convert_story_to_story_elements(distractor_story.real_story)
         display_story_elements(distractor_story.real_story_elements,
-                               title=f"Distractor Story {i + 1} Real Story Elements")
+                               title=f"{distractor_story.character_name}'s Story, Real Story Elements")
 
         distractor_story.story_to_detective_elements = convert_story_to_story_elements(
             distractor_story.story_to_detective)
         display_story_elements(distractor_story.story_to_detective_elements,
-                               title=f"Distractor Story {i + 1} Detective Story Elements")
+                               title=f"{distractor_story.character_name}'s Story, Detective Story Elements")
         
         if distractor_story.clues_that_prove_innocence:
             distractor_story.clues_that_prove_innocence_elements = convert_story_to_story_elements(
                 distractor_story.clues_that_prove_innocence)
             display_story_elements(distractor_story.clues_that_prove_innocence_elements,
-                                   title=f"Distractor Story {i + 1} Clues that Prove Innocence")
+                                   title=f"{distractor_story.character_name}'s Story, Clues that Prove Innocence")
         
         # Generate innocuous details for each distractor story
         distractor_story.innocuous_elements = generate_innocuous_details(distractor_story.real_story, distractor_story.character_name)
         display_story_elements(distractor_story.innocuous_elements, 
-                               title=f"Distractor Story {i + 1} Innocuous Details")
+                               title=f"{distractor_story.character_name}'s Story, Innocuous Details")
 
 
 def write_prose(story: Story):
@@ -122,13 +122,13 @@ def write_prose(story: Story):
     # Prepare the notes and outline
     notes = story.summary + "\n\n" + "\n\n".join([f"{cs.character_name}'s Story to the Detective: \n\n{cs.story_to_detective}" for cs in [story.crime_story] + story.distractor_stories])
 
-    outline = f"- The setting: {story.mystery_setting}"
-    outline += f"- The victim, {story.victim}, lies dead on the floor!"
-    outline += f"- Detective Detecto arrives at the scene of the crime."
+    outline = f"- The setting: {story.mystery_setting}\n"
+    outline += f"- The victim, {story.victim}, lies dead on the floor!\n"
+    outline += f"- Detective Detecto arrives at the scene of the crime.\n"
     characters = story.get_living_character_names_random()
-    outline += f"- There are only {len(characters)} people present: {', '.join(characters)}"
-    outline += f"- The detective begins to poke around and ask questions."
-    outline += f"- And this is what the detective learns, from clues and from talking to the people present:"
+    outline += f"- There are only {len(characters)} people present: {', '.join(characters)}\n"
+    outline += f"- The detective begins to poke around and ask questions.\n"
+    outline += f"- And this is what the detective learns, from clues and from talking to the people present:\n"
     outline += "\n".join([f"- {element.text}" for element in story.new_story_details])
 
     # Fill in the prompt template
@@ -166,6 +166,11 @@ def present_question(story: Story):
             break
         else:
             display_narrative("Invalid input. Please enter A, B, C, or D.")
+
+    reasoning = ""
+    for reason_for_innocence in story.reasons_for_innocence:
+        reasoning += f"{reason_for_innocence}\n"
+    display_narrative(reasoning, speaker="Reasoning")
 
 def main():
     # Get random story details

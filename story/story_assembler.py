@@ -41,7 +41,9 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
     # Add elements proving innocence for non-guilty characters
     for character in characters:
         if character != story.killer:
-            final_elements.extend(random.sample(proves_innocence[character], min(num_proving_innocence, len(proves_innocence[character]))))
+            innocence_proving_details: list[StoryElement] = random.sample(proves_innocence[character], min(num_proving_innocence, len(proves_innocence[character])))
+            story.reasons_for_innocence.extend(innocence_proving_details)
+            final_elements.extend(innocence_proving_details)
 
     # Add distracting elements
     final_elements.extend(random.sample(distracting, min(num_distracting, len(distracting))))

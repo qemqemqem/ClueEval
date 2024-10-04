@@ -23,3 +23,6 @@ class StoryElement:
     target: str
     type_of_evidence: TypeOfEvidence
     when: WhenInTime = WhenInTime.UNKNOWN
+
+    def __str__(self):
+        return f"{self.text} ({self.type_of_evidence.name} for {self.target} {self.when.name})"
