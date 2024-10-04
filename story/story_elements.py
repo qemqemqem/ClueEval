@@ -49,18 +49,27 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
                 elements = elements["story_elements"]
             for elem in elements:
                 text = elem['text']
-                type_of_evidence = TypeOfEvidence(elem['type_of_evidence'])
                 target = elem['target']
-                when = WhenInTime(elem['when'])
+                
+                try:
+                    type_of_evidence = TypeOfEvidence(elem['type_of_evidence'])
+                except ValueError:
+                    print(f"Warning: Invalid type_of_evidence value '{elem['type_of_evidence']}'. Using default.")
+                    type_of_evidence = TypeOfEvidence.SUGGESTS_GUILT
+                
+                try:
+                    when = WhenInTime(elem['when'])
+                except ValueError:
+                    print(f"Warning: Invalid when value '{elem['when']}'. Using default.")
+                    when = WhenInTime.UNKNOWN
+                
                 story_elements.append(StoryElement(text=text, type_of_evidence=type_of_evidence, target=target, when=when))
 
             return story_elements
         except json.JSONDecodeError:
             print("Error: Invalid JSON response")
-        except KeyError:
-            print("Error: JSON response missing required keys")
-        except ValueError:
-            print("Error: Invalid type_of_evidence or when value")
+        except KeyError as e:
+            print(f"Error: JSON response missing required key: {e}")
 
     return []
 
