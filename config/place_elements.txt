@@ -20,7 +20,10 @@ porch
 shed
 greenhouse
 pool
+hot tub
+gym
 office
+studio
 workshop
 classroom
 auditorium

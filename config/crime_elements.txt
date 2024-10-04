@@ -1,4 +1,12 @@
-gun
+pistol
+rifle
+grenade
+blowgun
+bow and arrow
+antique sword
+machete
+crossbow
+screwdriver
 poison
 knife
 rope
@@ -18,3 +26,4 @@ axe
 crowbar
 syringe
 razor
+garrote
