@@ -2,7 +2,18 @@ I'm writing a murder mystery story. I've written up my story in the form of some
 
 Analyze the following story and classify each piece of evidence (bullet point) according to how it relates to the hypotheses about the killer, weapon, and location of the crime. For each bullet point, determine if it proves, suggests, suggests against, or proves against any hypothesis.
 
-I'm going to give you a list of facts about the story, and I want you to classify each of them according to the scheme I'm giving you.
+For example, if a bullet point shows a character picking up a knife, then that suggests that that character might be the killer.
+
+I want to know whether each bullet point is suggestive or conclusive, and whether it suggests for or against. So here are the four categories which we might be able to classify a piece of evidence with.
+
+* proves -- use this only if the evidence is conclusive proof
+* suggests -- suggests that this character is the killer, or this location is where the murder occurred, but circumstantially
+* suggests_against -- suggests that it isn't true
+* proves_against -- conclusive proof that something isn't true
+
+The hypothesis_type is what part of the story the bullet point relates to -- the killer, the location, or the murder weapon.
+
+The hypothesis_name is the specific individual, like one of the characters who might be the killer, or one of the named locations.
 
 # Story:
 

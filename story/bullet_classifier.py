@@ -61,11 +61,12 @@ class EvidenceClassification:
             bullet_point = BulletPoint(text=item['text'])
             for classification in item['classifications']:
                 if classification['hypothesis_type'] == 'none':
-                    bullet_point.classifications.append(BulletPointClassification(
-                        hypothesis_type='none',
-                        hypothesis_name='None',
-                        category='unrelated'
-                    ))
+                    pass
+                    # bullet_point.classifications.append(BulletPointClassification(
+                    #     hypothesis_type='none',
+                    #     hypothesis_name='None',
+                    #     category='unrelated'
+                    # ))
                 else:
                     bullet_point.classifications.append(BulletPointClassification(**classification))
             evidence_classification.classified_evidence.append(bullet_point)
@@ -114,9 +115,9 @@ def display_classified_evidence(evidence_classification):
     
     for i, bullet_point in enumerate(evidence_classification.classified_evidence, 1):
         classified_evidence_text += f"{i}. {bullet_point.text}\n"
-        classified_evidence_text += "   Classifications:\n"
+        # classified_evidence_text += "   Classifications:\n"
         for c in bullet_point.classifications:
-            classified_evidence_text += f"   - {c.hypothesis_type.capitalize()} ({c.hypothesis_name}): {c.category}\n"
+            classified_evidence_text += f"   - {c.category} {c.hypothesis_name} as {c.hypothesis_type.capitalize()}\n"
         classified_evidence_text += "\n"
         logger.info(f"Added classifications for bullet point: {bullet_point.text[:30]}...")
 
