@@ -46,6 +46,12 @@ def write_stories(story: Story):
     story.crime_story = parse_crime_story(crime_story_text)
 
     display_narrative(crime_story_text, speaker="Crime Story")
+    print("Parsed Crime Story:")
+    print(f"Means: {story.crime_story.means}")
+    print(f"Motive: {story.crime_story.motive}")
+    print(f"Opportunity: {story.crime_story.opportunity}")
+    print(f"Real Story: {story.crime_story.real_story}")
+    print(f"Story to Detective: {story.crime_story.story_to_detective}")
 
     # Generate distractor stories for other characters
     other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
@@ -59,10 +65,17 @@ def write_stories(story: Story):
         other_prompt = other_prompt.replace('{{character}}', character)
         other_prompt = other_prompt.replace('{{other_stories}}', "\n".join(story.distractor_stories))
         
-        distractor_story = prompt_completion_chat(other_prompt)
+        distractor_story_text = prompt_completion_chat(other_prompt)
+        distractor_story = parse_crime_story(distractor_story_text)
         story.distractor_stories.append(distractor_story)
 
-        display_narrative(distractor_story, speaker=f"Distractor Story {character}")
+        display_narrative(distractor_story_text, speaker=f"Distractor Story {character}")
+        print(f"Parsed Distractor Story for {character}:")
+        print(f"Means: {distractor_story.means}")
+        print(f"Motive: {distractor_story.motive}")
+        print(f"Opportunity: {distractor_story.opportunity}")
+        print(f"Real Story: {distractor_story.real_story}")
+        print(f"Story to Detective: {distractor_story.story_to_detective}")
 
     return story
 
