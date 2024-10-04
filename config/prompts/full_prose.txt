@@ -18,4 +18,4 @@ Each element in the outline should be about one sentence. I want you to take thi
 
 Everything should be narrated from Detecto's point of view, recounted in dialog and description by interviewing the assembled characters. Remember that Detecto doesn't have any special knowledge of what really occurred, and we see things only through their eyes.
 
-Write nothing except for a story. Write a story which closely follows my outline. Use good writing at the sentence level.
+Write nothing except for a story. Write a story which closely follows my outline. Use good writing at the sentence level. Aim for exactly 10 paragraphs.
