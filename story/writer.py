@@ -124,7 +124,7 @@ def write_prose(story: Story):
 
     outline = f"- The setting: {story.mystery_setting}\n"
     outline += f"- The victim, {story.victim}, lies dead on the floor!\n"
-    outline += f"- Detective Detecto arrives at the scene of the crime.\n"
+    outline += f"- Detective Detecto arrives at the scene of the crime. (Detecto is {story.detective_details})\n"
     characters = story.get_living_character_names_random()
     outline += f"- There are only {len(characters)} people present: {', '.join(characters)}\n"
     outline += f"- The detective begins to poke around and ask questions.\n"

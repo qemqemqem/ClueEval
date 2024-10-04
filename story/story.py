@@ -42,6 +42,7 @@ class Story:
 
     # Flavor
     character_details: dict[str, str] = field(default_factory=dict)
+    detective_details: str = ""
 
     # These are narratives within the story
     crime_story: Optional[CharacterStory] = None
