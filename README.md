@@ -57,8 +57,8 @@ We welcome contributions to ClueEval! Please feel free to submit issues, feature
 
 ## Acknowledgments
 
-- Inspired by the works of Agatha Christie and other classic mystery authors.
-- Powered by OpenAI's GPT models.
-- Anthropic Claude wrote most of the code, although I did some of the work too.
+- Inspired by golden age mystery authors.
+- Narrative generation uses OpenAI's GPT models.
+- Anthropic Claude wrote most of the code, although I did some of the work too. I take responsibility for all the bugs.
 
 Happy mystery solving!
