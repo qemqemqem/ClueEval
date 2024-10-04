@@ -80,7 +80,7 @@ def get_random_details() -> Story:
     display_narrative(story.summary, "Story summary before edit")
 
     # Refine the story summary using GPT
-    refined_summary = refine_story_summary(story)
+    refined_summary = get_title_and_synopsis(story)
 
     # Parse the title and synopsis
     title_match = re.search(r"Title: (.+)", refined_summary)
@@ -90,13 +90,14 @@ def get_random_details() -> Story:
         story.title = title_match.group(1).strip()
     if synopsis_match:
         story.synopsis = synopsis_match.group(1).strip()
+        story.summary += f"\n\nSynopsis: {story.synopsis}"
 
     display_narrative(f"Title: {story.title}\n\nSynopsis: {story.synopsis}", "Refined Story Details")
 
     return story
 
 
-def refine_story_summary(story: Story) -> str:
+def get_title_and_synopsis(story: Story) -> str:
     prompt = unindent(f"""
         I'm going to show you the summary for my mystery story. I want you to help me choose a title and a synopsis. 
         
