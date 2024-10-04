@@ -51,8 +51,8 @@ def write_stories(story: Story):
     display_narrative(story.crime_story.__str__(), speaker="Parsed Crime Story")
 
     # Generate distractor stories for other characters
-    other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
-    # other_characters = []  # Disabling for Development! TODO Reenable
+    # other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
+    other_characters = []  # Disabling for Development! TODO Reenable
     # murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
     murder_summary = story.crime_story.real_story
     

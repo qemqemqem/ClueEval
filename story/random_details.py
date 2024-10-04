@@ -43,6 +43,6 @@ def get_random_details() -> Story:
     for element in story.random_crimes + story.random_places + story.random_people:
         story.summary += f"\n- {element}"
 
-    story.summary += f"\n\nThe central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too."
+    story.summary += f"\n\nThe central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. The mystery is being investigated by detective Detecto."
 
     return story

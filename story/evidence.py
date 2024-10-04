@@ -10,6 +10,6 @@ class TypeOfEvidence(Enum):
 
 @dataclass
 class StoryElement:
-    # This replaces the BulletPoint class from story/bullet_classifier.py
     text: str
+    target: str
     type_of_evidence: TypeOfEvidence
