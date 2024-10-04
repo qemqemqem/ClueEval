@@ -3,6 +3,7 @@ import os
 import string
 from story.story import Story
 from utils.str_utils import unindent
+from utils.gpt import prompt_completion_chat
 
 
 def load_elements(filename):
@@ -78,6 +79,28 @@ def get_random_details() -> Story:
         The central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. Detective Detecto is on the case!
     """).strip()
 
+    return story
+
+
+def refine_story_summary(story: Story) -> Story:
+    prompt = f"""
+    Please refine the following story summary by filling out the Title and Synopsis. 
+    You may also change the details of one character, one location, and one item if you think they don't fit well.
+    Here's the current summary:
+
+    {story.summary}
+
+    Please provide the refined summary in the same format, ensuring to fill out the Title and Synopsis sections.
+    """
+
+    refined_summary = prompt_completion_chat(
+        question=prompt,
+        model="gpt-4",
+        temperature=0.7,
+        max_tokens=1000
+    )
+
+    story.summary = refined_summary
     return story
 
 
