@@ -4,4 +4,20 @@ I'm writing a mystery story. Here's a summary of what it involves:
 
 I want to have a true story of what happened when {{killer}} killed {{victim}}. This story won't be presented to the reader clearly, but I want to have it in my mind so that I can write the story with more depth and detail. I want to know what happened, why it happened, and how it happened. I want to know the killer's motive, the victim's personality, and the circumstances. The deed should not be obvious to other characters in the story, as befits a good murder mystery story.
 
-Write a three paragraph story detailing how the killer killed the victim. Write nothing else, just a three paragraph story. Write clearly and stick to the facts, because this is for my notes, not for the reader.
+Write a three paragraph story detailing how the killer killed the victim. Write clearly and stick to the facts, because this is for my notes, not for the reader.
+
+Fill out this form:
+
+# Details
+
+Motive: Why did {{killer}} want {{victim}} dead?
+Means: What weapon or method was used for the murder?
+Opportunity: When was {{victim}} vulnerable to attack?
+
+# What Happened
+
+Then write a three paragraph story explaining what happened. The first paragraph should outline what they were doing before the murder, the second paragraph should explain where they were when the murder occurred, and the third paragraph should explain what they did afterward.
+
+# Explanation to Detective
+
+The detective in my story interviews each of the characters. Write a 3 paragraph story which {{killer}} would give to the detective, in which they try to explain themself. Keep this as an outline and don't use dialog.

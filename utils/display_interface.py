@@ -3,6 +3,7 @@ from rich.panel import Panel
 from rich.text import Text
 from rich.box import DOUBLE
 from rich.json import JSON
+from rich import print_json
 
 console = Console(width=100)
 
@@ -67,13 +68,14 @@ def display_json(json_data: dict, title: str = "JSON Data", style: str = "blue")
     """
     Display JSON data in a pretty format using Rich's built-in JSON formatting.
     """
-    json_content = JSON(json_data)
-    panel = Panel(
-        json_content,
-        border_style=style,
-        box=DOUBLE,
-        expand=False,
-        title=title,
-        title_align="center"
-    )
-    console.print(panel)
+    print_json(data=json_data)
+    # json_content = JSON(json_data)
+    # panel = Panel(
+    #     json_content,
+    #     border_style=style,
+    #     box=DOUBLE,
+    #     expand=False,
+    #     title=title,
+    #     title_align="center"
+    # )
+    # console.print(panel)

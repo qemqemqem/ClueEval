@@ -18,16 +18,19 @@ def get_random_details() -> Story:
     random_people = random.sample(person_elements, 5)
     killer, victim = random_people[0], random_people[1]
 
+    random_crimes = random.sample(crime_elements, 3)
+    random_places = random.sample(place_elements, 3)
+
     # Select specific crime weapon, location, and setting
-    crime_weapon = random.choice(crime_elements)
-    crime_location = random.choice(place_elements)
+    crime_weapon = random.choice(random_crimes)
+    crime_location = random.choice(random_places)
     mystery_setting = random.choice(mystery_settings)
 
     # Create a Story object
     story = Story(
         summary="",
-        random_crimes=random.sample(crime_elements, 3),
-        random_places=random.sample(place_elements, 3),
+        random_crimes=random_crimes,
+        random_places=random_places,
         random_people=random_people,
         killer=killer,
         victim=victim,

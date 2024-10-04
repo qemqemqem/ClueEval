@@ -17,9 +17,11 @@ def write_stories(story: Story):
     central_prompt = central_prompt.replace('{{victim}}', story.victim)
     story.crime_story = prompt_completion_chat(central_prompt)
 
+    display_narrative(story.crime_story, speaker="Crime Story")
+
     # Generate distractor stories for other characters
     other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
-    other_characters = []  # Disabling for Development! TODO Reenable
+    # other_characters = []  # Disabling for Development! TODO Reenable
     # murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
     murder_summary = story.crime_story
     
@@ -31,6 +33,8 @@ def write_stories(story: Story):
         
         distractor_story = prompt_completion_chat(other_prompt)
         story.distractor_stories.append(distractor_story)
+
+        display_narrative(distractor_story, speaker=f"Distractor Story {character}")
 
     return story
 
@@ -60,9 +64,6 @@ def main():
 
     # Write stories
     story = write_stories(story)
-    display_narrative(story.crime_story, speaker="Crime Story")
-    for i, distractor in enumerate(story.distractor_stories, 1):
-        display_narrative(distractor, speaker=f"Distractor Story {i}")
 
     # Convert story to bullet points
     story = convert_story_to_bullet_points(story)

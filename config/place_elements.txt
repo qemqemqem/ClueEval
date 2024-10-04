@@ -52,8 +52,6 @@ apartment
 condo
 townhouse
 duplex
-triplex
-fourplex
 hotel
 motel
 inn
