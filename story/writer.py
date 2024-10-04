@@ -167,10 +167,7 @@ def present_question(story: Story):
         else:
             display_narrative("Invalid input. Please enter A, B, C, or D.")
 
-    reasoning = ""
-    for reason_for_innocence in story.reasons_for_innocence:
-        reasoning += f"{reason_for_innocence}\n"
-    display_narrative(reasoning, speaker="Reasoning")
+    display_bullet_points([str(rfi) for rfi in story.reasons_for_innocence], title="Reasoning")
 
 def main():
     # Get random story details

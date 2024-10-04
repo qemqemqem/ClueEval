@@ -29,10 +29,10 @@ def get_random_details() -> Story:
     # Create character details
     character_details = {}
     for character in random_people:
-        gender = random.choice(["male", "female"])
+        gender = random.choice(["man", "woman"])
         age = random.randint(18, 75)
-        adjectives = random.sample(["tall", "short", "fat", "thin", "bald", "blonde", "brunette", "redhead", "stuttering", "elegant", "clumsy", "cheerful", "grumpy", "shy", "outgoing"], 2)
-        description = f"{age}-year-old {gender}, {adjectives[0]} and {adjectives[1]}"
+        adjectives = random.sample(["tall", "short", "fat", "thin", "friendly", "blonde", "brunette", "redhead", "stuttering", "elegant", "clumsy", "cheerful", "grumpy", "shy", "outgoing"], 2)
+        description = f"a {age}-year-old {gender}, {adjectives[0]} and {adjectives[1]}"
         character_details[character] = description
 
     # Create a Story object
@@ -51,6 +51,8 @@ def get_random_details() -> Story:
 
     story.summary = f"This is a mystery story in the style of a golden age classic, set in a {story.mystery_setting}, and it features the following elements:"
     for element in story.random_crimes + story.random_places + story.random_people:
+        if element in character_details:
+            element = f"{element} ({character_details[element]})"
         story.summary += f"\n- {element}"
 
     story.summary += f"\n\nThe central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. The mystery is being investigated by detective Detecto."

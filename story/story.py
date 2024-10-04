@@ -40,6 +40,9 @@ class Story:
     crime_location: str
     mystery_setting: str
 
+    # Flavor
+    character_details: dict[str, str] = field(default_factory=dict)
+
     # These are narratives within the story
     crime_story: Optional[CharacterStory] = None
     distractor_stories: List[CharacterStory] = field(default_factory=list)
