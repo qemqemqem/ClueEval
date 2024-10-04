@@ -76,16 +76,26 @@ def get_random_details() -> Story:
 
 
 def random_character_details():
-    gender = random.choice(["man", "woman"])
-    age = random.randint(18, 75)
-    physical_traits = ["tall", "short", "fat", "thin", "blonde", "brunette", "redhead"]
-    personality_traits = ["friendly", "stuttering", "elegant", "clumsy", "cheerful", "grumpy", "shy", "outgoing", "mean", "awkward"]
+    gender = random.choice(["man", "woman", "non-binary person"])
+    age = random.randint(18, 85)
+    physical_traits = [
+        "tall", "short", "average height", "fat", "thin", "muscular", "lanky",
+        "blonde", "brunette", "redhead", "grey-haired", "bald", "curly-haired",
+        "bearded", "clean-shaven", "freckled", "pale", "tanned", "scarred"
+    ]
+    personality_traits = [
+        "friendly", "stuttering", "elegant", "clumsy", "cheerful", "grumpy", "shy",
+        "outgoing", "mean", "awkward", "confident", "nervous", "eccentric", "charming",
+        "suspicious", "absent-minded", "meticulous", "laid-back", "energetic", "stoic"
+    ]
+    speaking_styles = [
+        "eloquent", "blunt", "verbose", "terse", "sarcastic", "formal", "casual",
+        "dramatic", "monotone", "enthusiastic", "whispered", "booming", "rapid-fire",
+        "drawling", "articulate", "mumbling", "sing-song", "gravelly", "squeaky"
+    ]
 
     physical_trait = random.choice(physical_traits)
-    
     personality_trait = random.choice(personality_traits)
-    
-    speaking_styles = ["eloquent", "blunt", "verbose", "terse", "sarcastic", "formal", "casual", "dramatic"]
     speaking_style = random.choice(speaking_styles)
     
     description = f"a {age}-year-old {gender}, {physical_trait} and {personality_trait}, who speaks in a {speaking_style} manner"
