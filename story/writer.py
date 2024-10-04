@@ -126,23 +126,27 @@ def write_prose(story: Story):
     outline = []
     story.new_story_details = []
 
-    def add_narrative(text):
+    def add_narrative(text, position='end'):
         outline.append(f"- {text}")
-        story.new_story_details.append(StoryElement(text=text, target="", type_of_evidence=TypeOfEvidence.NARRATIVE, when=WhenInTime.UNKNOWN))
+        new_element = StoryElement(text=text, target="", type_of_evidence=TypeOfEvidence.NARRATIVE, when=WhenInTime.UNKNOWN)
+        if position == 'end':
+            story.new_story_details.append(new_element)
+        elif position == 'beginning':
+            story.new_story_details.insert(0, new_element)
 
-    add_narrative(f"The setting: {story.mystery_setting}")
-    add_narrative(f"The victim, {story.victim}, lies dead on the floor!")
-    add_narrative(f"Detective Detecto arrives at the scene of the crime. (Detecto is {story.detective_details})")
+    add_narrative(f"The setting: {story.mystery_setting}", 'beginning')
+    add_narrative(f"The victim, {story.victim}, lies dead on the floor!", 'beginning')
+    add_narrative(f"Detective Detecto arrives at the scene of the crime. (Detecto is {story.detective_details})", 'beginning')
     characters = story.get_living_character_names_random()
-    add_narrative(f"There are only {len(characters)} people present: {', '.join(characters)}")
-    add_narrative("No one else could possibly have been here.")
-    add_narrative("The detective begins to poke around and ask questions.")
-    add_narrative("And this is what the detective learns, from clues and from talking to the people present:")
+    add_narrative(f"There are only {len(characters)} people present: {', '.join(characters)}", 'beginning')
+    add_narrative("No one else could possibly have been here.", 'beginning')
+    add_narrative("The detective begins to poke around and ask questions.", 'beginning')
+    add_narrative("And this is what the detective learns, from clues and from talking to the people present:", 'beginning')
     
     for element in story.new_story_details:
         outline.append(f"- {element.text}")
     
-    add_narrative("It must be one of these suspects, and Detecto knows just who it is.")
+    add_narrative("It must be one of these suspects, and Detecto knows just who it is.", 'end')
 
     outline = "\n".join(outline)
 
