@@ -10,6 +10,7 @@ def parse_crime_story(story_text: str) -> CharacterStory:
     current_section = None
 
     for line in lines:
+        line = line.replace('**', '')  # Remove all instances of "**"
         if line.startswith('# '):
             current_section = line[2:].lower()
             details[current_section] = []
