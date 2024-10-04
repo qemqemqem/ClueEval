@@ -79,12 +79,12 @@ def generate_innocuous_details(story: str, central_character: str) -> list[Story
     """
     
     response = prompt_completion_json([{"role": "user", "content": prompt}])
-    print(response)
+    # print(response)
     try:
         details = json.loads(response)
         if "details" in details:
             details = details["details"]
-        print(details)
+        # print(details)
         return [
             StoryElement(
                 text=detail['text'],

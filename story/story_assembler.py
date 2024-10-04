@@ -46,9 +46,6 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
     # Add distracting elements
     final_elements.extend(random.sample(distracting, min(num_distracting, len(distracting))))
 
-    # Shuffle the final list to mix up the order
-    random.shuffle(final_elements)
-
     # Display the final list of elements
     display_story_elements(final_elements, title="Assembled Story Elements")
 

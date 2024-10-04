@@ -21,7 +21,7 @@ class CharacterStory:
     innocuous_elements: list[StoryElement] = field(default_factory=list)
 
     def __str__(self):
-        return f"Means: {self.means}\nMotive: {self.motive}\nOpportunity: {self.opportunity}\n\nReal Story: \n\n{self.real_story}\n\nStory to Detective: \n\n{self.story_to_detective}\n\nClues that Prove Innocence: \n\n{self.clues_that_prove_innocence}"
+        return f"Means: {self.means}\nMotive: {self.motive}\nOpportunity: {self.opportunity}\n\nReal Story: \n\n{self.real_story}\n\nStory to Detective: \n\n{self.story_to_detective}"
 
 
 @dataclass
