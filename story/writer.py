@@ -149,12 +149,12 @@ def present_question(story: Story):
         user_input = input("Enter your answer (A, B, C, or D): ").upper()
         if user_input in story.question_options:
             if story.question_options[user_input] == story.killer:
-                print("Correct! You've identified the killer.")
+                display_narrative("Correct! You've identified the killer.")
             else:
-                print(f"Incorrect. The killer was {story.killer}.")
+                display_narrative(f"Incorrect. The killer was {story.killer}.")
             break
         else:
-            print("Invalid input. Please enter A, B, C, or D.")
+            display_narrative("Invalid input. Please enter A, B, C, or D.")
 
 def main():
     # Get random story details
