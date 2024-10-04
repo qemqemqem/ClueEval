@@ -1,8 +1,34 @@
-from story.story import Story
+from story.story import Story, CharacterStory
 from story.random_details import get_random_details
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_narrative, display_bullet_points
 from story.bullet_classifier import Hypotheses, classify_evidence, Hypothesis, display_classified_evidence
+
+def parse_crime_story(story_text: str) -> CharacterStory:
+    lines = story_text.strip().split('\n')
+    details = {}
+    current_section = None
+
+    for line in lines:
+        if line.startswith('# '):
+            current_section = line[2:].lower()
+            details[current_section] = []
+        elif line.startswith('Motive:'):
+            details['motive'] = line.split(':', 1)[1].strip()
+        elif line.startswith('Means:'):
+            details['means'] = line.split(':', 1)[1].strip()
+        elif line.startswith('Opportunity:'):
+            details['opportunity'] = line.split(':', 1)[1].strip()
+        elif current_section:
+            details[current_section].append(line)
+
+    return CharacterStory(
+        means=details['means'],
+        motive=details['motive'],
+        opportunity=details['opportunity'],
+        real_story='\n'.join(details['what happened']),
+        story_to_detective='\n'.join(details['explanation to detective'])
+    )
 
 def write_stories(story: Story):
     # Load prompt templates
@@ -15,9 +41,10 @@ def write_stories(story: Story):
     central_prompt = central_story_prompt.replace('{{summary}}', story.summary)
     central_prompt = central_prompt.replace('{{killer}}', story.killer)
     central_prompt = central_prompt.replace('{{victim}}', story.victim)
-    story.crime_story = prompt_completion_chat(central_prompt)
+    crime_story_text = prompt_completion_chat(central_prompt)
+    story.crime_story = parse_crime_story(crime_story_text)
 
-    display_narrative(story.crime_story, speaker="Crime Story")
+    display_narrative(crime_story_text, speaker="Crime Story")
 
     # Generate distractor stories for other characters
     other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
