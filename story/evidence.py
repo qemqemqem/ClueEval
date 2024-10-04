@@ -13,6 +13,7 @@ class TypeOfEvidence(Enum):
 
 class WhenInTime(Enum):
     UNKNOWN = "unknown"
+    NARRATIVE = "narrative"
     BEFORE_CRIME = "before_crime"
     DURING_CRIME = "during_crime"
     AFTER_CRIME = "after_crime"
@@ -27,5 +28,5 @@ class StoryElement:
 
     def __str__(self):
         if self.type_of_evidence == TypeOfEvidence.NARRATIVE:
-            return f"{self.text} ({self.type_of_evidence.name}, {self.when.name})"
-        return f"{self.text} ({self.type_of_evidence.name} for {self.target}, {self.when.name})"
+            return f"[{self.when.name.upper()}]\t{self.text}"
+        return f"[{self.when.name.upper()}]\t{self.text} ({self.type_of_evidence.name} for {self.target})"
