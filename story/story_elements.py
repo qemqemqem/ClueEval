@@ -2,6 +2,7 @@ import json
 
 from story.evidence import StoryElement, TypeOfEvidence
 from utils.gpt import prompt_completion_json
+import json
 
 
 def convert_story_to_story_elements(story: str) -> list[StoryElement]:
