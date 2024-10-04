@@ -18,7 +18,7 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
             "text": "The fact or event from the story",
             "type_of_evidence": "supports_guilt" | "proves_guilt" | "supports_innocence" | "proves_innocence",
             "target": "The name of the character whose guilt or innocence is being supported or proven. This must be a character named or clearly identified in the story.",
-            "when": "unknown" | "before_crime" | "during_crime" | "after_crime"
+            "when": "before_crime" | "during_crime" | "after_crime"
         }}
     ]
 
@@ -30,9 +30,8 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
 
     The "target" should be the name of the character whose guilt or innocence is being supported by this piece of evidence.
 
-    The "when" field should indicate when the event occurred in relation to the crime:
-    - "unknown": If it's not clear when the event occurred
-    - "before_crime": If the event happened before the crime
+    The "when" field should indicate when the event occurred or the detail was revealed in relation to the crime:
+    - "before_crime": If the event happened before the crime (most common)
     - "during_crime": If the event happened during the crime
     - "after_crime": If the event happened after the crime
 
@@ -81,7 +80,7 @@ def generate_innocuous_details(story: str, central_character: str) -> list[Story
     {{
         "details": [
             {{"text": "When the detective arrived, it was raining.", "when": "after_crime"}},
-            {{"text": "The hot dog stand had a sign that said 'Best in Town'.", "when": "unknown"}},
+            {{"text": "The hot dog stand had a sign that said 'Best in Town'.", "when": "before_crime"}},
         ]
     }}
     """
