@@ -14,7 +14,6 @@ def get_random_details() -> Story:
     place_elements = [string.capwords(elem) for elem in load_elements('place_elements.txt')]
     person_elements = [string.capwords(elem) for elem in load_elements('person_elements.txt')]
     mystery_settings = load_elements('mystery_settings.txt')
-    twists = load_elements('twists.txt')
 
     # Sample random people
     random_people = random.sample(person_elements, 5)  # The first two are the killer and victim
@@ -53,8 +52,6 @@ def get_random_details() -> Story:
     other_places = [place for place in story.random_places if place != story.crime_location]
     other_items = [crime for crime in story.random_crimes if crime != story.crime_weapon]
 
-    twist = random.choice(twists)
-    
     story.summary = unindent(f"""
         This is a mystery story in the style of a golden age classic. The story features the following elements:
 
@@ -73,8 +70,6 @@ def get_random_details() -> Story:
         Other Suspicious Items: {', '.join(other_items)}
 
         The central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. Detective Detecto is on the case!
-
-        Twist: {twist}
     """).strip()
 
     return story
