@@ -2,7 +2,7 @@ from story.story import Story, CharacterStory
 from story.random_details import get_random_details
 from story.evidence import StoryElement, TypeOfEvidence
 from utils.gpt import prompt_completion_chat, prompt_completion_json
-from utils.display_interface import display_story_element, display_narrative
+from utils.display_interface import display_story_element, display_narrative, display_story_elements
 import json
 
 def parse_crime_story(character_name: str, story_text: str) -> CharacterStory:
@@ -122,25 +122,17 @@ def main():
 
     # Convert stories to story elements and display them
     story.crime_story.real_story_elements = convert_story_to_story_elements(story.crime_story.real_story)
-    display_narrative("Crime Story Real Story Elements:", speaker="Story Elements")
-    for element in story.crime_story.real_story_elements:
-        display_story_element(f"{element.text} ({element.type_of_evidence.value})")
+    display_story_elements(story.crime_story.real_story_elements, title="Crime Story Real Story Elements")
 
     story.crime_story.story_to_detective_elements = convert_story_to_story_elements(story.crime_story.story_to_detective)
-    display_narrative("Crime Story Detective Story Elements:", speaker="Story Elements")
-    for element in story.crime_story.story_to_detective_elements:
-        display_story_element(f"{element.text} ({element.type_of_evidence.value})")
+    display_story_elements(story.crime_story.story_to_detective_elements, title="Crime Story Detective Story Elements")
     
     for i, distractor_story in enumerate(story.distractor_stories):
         distractor_story.real_story_elements = convert_story_to_story_elements(distractor_story.real_story)
-        display_narrative(f"Distractor Story {i+1} Real Story Elements:", speaker="Story Elements")
-        for element in distractor_story.real_story_elements:
-            display_story_element(f"{element.text} ({element.type_of_evidence.value})")
+        display_story_elements(distractor_story.real_story_elements, title=f"Distractor Story {i+1} Real Story Elements")
 
         distractor_story.story_to_detective_elements = convert_story_to_story_elements(distractor_story.story_to_detective)
-        display_narrative(f"Distractor Story {i+1} Detective Story Elements:", speaker="Story Elements")
-        for element in distractor_story.story_to_detective_elements:
-            display_story_element(f"{element.text} ({element.type_of_evidence.value})")
+        display_story_elements(distractor_story.story_to_detective_elements, title=f"Distractor Story {i+1} Detective Story Elements")
 
 if __name__ == '__main__':
     main()

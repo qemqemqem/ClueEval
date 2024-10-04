@@ -4,6 +4,7 @@ from rich.text import Text
 from rich.box import DOUBLE
 from rich.json import JSON
 from rich import print_json
+from story.evidence import StoryElement
 
 console = Console(width=100)
 
@@ -14,6 +15,21 @@ def display_story_element(text: str, title: str = None, style: str = "cyan") -> 
     content = Text(text.strip())
     panel = Panel(
         content,
+        border_style=style,
+        box=DOUBLE,
+        expand=False,
+        title=title,
+        title_align="center"
+    )
+    console.print(panel)
+
+def display_story_elements(elements: list[StoryElement], title: str = "Story Elements", style: str = "cyan") -> None:
+    """
+    Display a list of StoryElements.
+    """
+    content = "\n".join([f"• {element.text} ({element.type_of_evidence.value})" for element in elements])
+    panel = Panel(
+        Text(content),
         border_style=style,
         box=DOUBLE,
         expand=False,
