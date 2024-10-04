@@ -79,13 +79,9 @@ def random_character_details():
     gender = random.choice(["man", "woman"])
     age = random.randint(18, 75)
     physical_traits = ["tall", "short", "fat", "thin", "blonde", "brunette", "redhead"]
-    personality_traits = ["friendly", "stuttering", "elegant", "clumsy", "cheerful", "grumpy", "shy", "outgoing"]
-    
-    # Ensure we don't get both 'fat' and 'thin'
+    personality_traits = ["friendly", "stuttering", "elegant", "clumsy", "cheerful", "grumpy", "shy", "outgoing", "mean", "awkward"]
+
     physical_trait = random.choice(physical_traits)
-    if physical_trait in ['fat', 'thin']:
-        physical_traits.remove('fat')
-        physical_traits.remove('thin')
     
     personality_trait = random.choice(personality_traits)
     
