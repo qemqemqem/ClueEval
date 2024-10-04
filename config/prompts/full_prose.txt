@@ -15,3 +15,5 @@ Now, here's the outline of the story that I have. I want you to follow this outl
 # Assignment
 
 Each element in the outline should be about one sentence. I want you to take this list and make it flow. The story you write should start with Detective Detecto's arrival, and be structured as Detecto's revelations as he investigates. The story you write will end just before Detecto announces who did it.
+
+Write nothing except for a story. Write a story which closely follows my outline.

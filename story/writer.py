@@ -127,7 +127,7 @@ def write_prose(story: Story):
     prompt = full_prose_prompt.replace("{notes}", notes).replace("{outline}", outline)
 
     # Generate the full prose
-    story.full_prose = prompt_completion_chat(prompt)
+    story.full_prose = prompt_completion_chat(prompt, model="gpt-4o")
 
     # Display the full prose
     display_narrative(story.full_prose, speaker="Full Prose")
@@ -168,7 +168,7 @@ def main():
     stories_to_elements(story)
 
     # Assemble all details
-    story.new_story_details = assemble_details(story)
+    assemble_details(story)
 
     # Write full prose
     write_prose(story)

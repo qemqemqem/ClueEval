@@ -4,7 +4,7 @@ from utils.display_interface import display_story_elements
 from collections import defaultdict
 import random
 
-def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int = 1, num_distracting: int = 5) -> list[StoryElement]:
+def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int = 1, num_distracting: int = 5):
     all_elements = []
     characters = [story.killer] + [ds.character_name for ds in story.distractor_stories]
 
@@ -52,4 +52,4 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
     # Display the final list of elements
     display_story_elements(final_elements, title="Assembled Story Elements")
 
-    return final_elements
+    story.new_story_details = final_elements
