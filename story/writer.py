@@ -131,7 +131,9 @@ def write_prose(story: Story):
         if position == 'end':
             story.new_story_details.append(new_element)
         elif position == 'beginning':
-            story.new_story_details.insert(0, new_element)
+            # Find the index of the first non-narrative element
+            insert_index = next((i for i, e in enumerate(story.new_story_details) if e.type_of_evidence != TypeOfEvidence.NARRATIVE), len(story.new_story_details))
+            story.new_story_details.insert(insert_index, new_element)
 
     add_narrative(f"The setting: {story.mystery_setting}", 'beginning')
     add_narrative(f"The victim, {story.victim}, lies dead on the floor!", 'beginning')
