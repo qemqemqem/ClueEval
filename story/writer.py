@@ -82,7 +82,8 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
     [
         {{
             "text": "The fact or event from the story",
-            "type_of_evidence": "supports_guilt" | "proves_guilt" | "supports_innocence" | "proves_innocence"
+            "type_of_evidence": "supports_guilt" | "proves_guilt" | "supports_innocence" | "proves_innocence",
+            "target": "The name of the character whose guilt or innocence is being supported"
         }}
     ]
 
@@ -92,12 +93,12 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
     - "supports_innocence": Suggests but doesn't prove someone's innocence
     - "proves_innocence": Provides definitive proof of innocence
 
-    If an element doesn't clearly fit into these categories, omit it from the results.
+    The "target" should be the name of the character whose guilt or innocence is being supported by this piece of evidence.
+
+    If an element doesn't clearly fit into these categories or doesn't have a clear target, omit it from the results.
     """
 
     json_response = prompt_completion_json([{"role": "user", "content": prompt}])
-
-    # print(json_response)
     
     if json_response:
         try:
@@ -107,10 +108,10 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
             if "story_elements" in elements:
                 elements = elements["story_elements"]
             for elem in elements:
-                # print(elem)
                 text = elem['text']
                 type_of_evidence = TypeOfEvidence(elem['type_of_evidence'])
-                story_elements.append(StoryElement(text=text, type_of_evidence=type_of_evidence))
+                target = elem['target']
+                story_elements.append(StoryElement(text=text, type_of_evidence=type_of_evidence, target=target))
 
             return story_elements
         except json.JSONDecodeError:
