@@ -58,7 +58,7 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
     return []
 
 
-def generate_innocuous_details(story: str) -> list[StoryElement]:
+def generate_innocuous_details(story: str, central_character: str) -> list[StoryElement]:
     prompt = f"""
     Given the following story, generate 5 innocuous details that don't suggest or prove anything about the crime. These should be minor, unrelated facts that add color to the story but aren't relevant to solving the mystery.
 
@@ -88,7 +88,7 @@ def generate_innocuous_details(story: str) -> list[StoryElement]:
         return [
             StoryElement(
                 text=detail['text'],
-                target="",
+                target=central_character,
                 type_of_evidence=TypeOfEvidence.INNOCUOUS
             )
             for detail in details

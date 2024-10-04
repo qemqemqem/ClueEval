@@ -1,7 +1,7 @@
 from story.story import Story, CharacterStory
 from story.random_details import get_random_details
+from story.story_assembler import assemble_details
 from story.story_elements import convert_story_to_story_elements, generate_innocuous_details
-from story.evidence import TypeOfEvidence
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_narrative, display_story_elements
 
@@ -88,7 +88,7 @@ def stories_to_elements(story: Story):
                                title="Crime Story Clues that Prove Innocence")
     
     # Generate innocuous details for the crime story
-    story.crime_story.innocuous_elements = generate_innocuous_details(story.crime_story.real_story)
+    story.crime_story.innocuous_elements = generate_innocuous_details(story.crime_story.real_story, story.killer)
     display_story_elements(story.crime_story.innocuous_elements, title="Crime Story Innocuous Details")
     
     for i, distractor_story in enumerate(story.distractor_stories):
@@ -108,27 +108,9 @@ def stories_to_elements(story: Story):
                                    title=f"Distractor Story {i + 1} Clues that Prove Innocence")
         
         # Generate innocuous details for each distractor story
-        distractor_story.innocuous_elements = generate_innocuous_details(distractor_story.real_story)
+        distractor_story.innocuous_elements = generate_innocuous_details(distractor_story.real_story, distractor_story.character_name)
         display_story_elements(distractor_story.innocuous_elements, 
                                title=f"Distractor Story {i + 1} Innocuous Details")
-
-
-def assemble_details(story):
-    # Collect all proving elements
-    proving_elements = []
-    # From crime story
-    proving_elements.extend([
-        element for element in story.crime_story.real_story_elements + story.crime_story.story_to_detective_elements
-        if element.type_of_evidence in [TypeOfEvidence.PROVES_GUILT, TypeOfEvidence.PROVES_INNOCENCE]
-    ])
-    # From distractor stories
-    for distractor_story in story.distractor_stories:
-        proving_elements.extend([
-            element for element in distractor_story.real_story_elements + distractor_story.story_to_detective_elements + distractor_story.clues_that_prove_innocence_elements
-            if element.type_of_evidence in [TypeOfEvidence.PROVES_GUILT, TypeOfEvidence.PROVES_INNOCENCE]
-        ])
-    # Print out the proving elements
-    display_story_elements(proving_elements, title="Proving Elements (Guilt or Innocence)")
 
 
 def main():
