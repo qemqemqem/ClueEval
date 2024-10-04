@@ -65,11 +65,11 @@ def display_error(error_message: str) -> None:
 
 def display_json(json_data: dict, title: str = "JSON Data", style: str = "blue") -> None:
     """
-    Display JSON data in a pretty format.
+    Display JSON data in a pretty format using Rich's built-in JSON formatting.
     """
-    content = JSON(json_data)
+    json_content = JSON(json_data)
     panel = Panel(
-        content,
+        json_content,
         border_style=style,
         box=DOUBLE,
         expand=False,
