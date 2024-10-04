@@ -120,23 +120,23 @@ def main():
     # Write stories
     story = write_stories(story)
 
-    # # Convert story to bullet points
-    # story = convert_story_to_bullet_points(story)
-    # display_bullet_points(story.bullet_points, title="Story Bullet Points")
-    #
-    # # Create hypotheses based on story details
-    # hypotheses = Hypotheses(
-    #     killers=[Hypothesis(name) for name in story.random_people],
-    #     weapons=[Hypothesis(weapon) for weapon in story.random_crimes],
-    #     locations=[Hypothesis(location) for location in story.random_places]
-    # )
-    #
-    # # Classify evidence
-    # full_story = f"{story.crime_story.real_story}\n\n" + "\n\n".join([ds.real_story for ds in story.distractor_stories])
-    # evidence_classification = classify_evidence(story.bullet_points, hypotheses)
-    #
-    # # Display classified evidence
-    # display_classified_evidence(evidence_classification)
+    # Convert stories to story elements
+    story.crime_story.real_story_elements = convert_story_to_story_elements(story.crime_story.real_story)
+    story.crime_story.story_to_detective_elements = convert_story_to_story_elements(story.crime_story.story_to_detective)
+    
+    for distractor_story in story.distractor_stories:
+        distractor_story.real_story_elements = convert_story_to_story_elements(distractor_story.real_story)
+        distractor_story.story_to_detective_elements = convert_story_to_story_elements(distractor_story.story_to_detective)
+
+    # Display story elements
+    display_narrative("Crime Story Elements:", speaker="Story Elements")
+    for element in story.crime_story.real_story_elements:
+        display_story_element(f"{element.text} ({element.type_of_evidence.value})")
+
+    for i, distractor_story in enumerate(story.distractor_stories):
+        display_narrative(f"Distractor Story {i+1} Elements:", speaker="Story Elements")
+        for element in distractor_story.real_story_elements:
+            display_story_element(f"{element.text} ({element.type_of_evidence.value})")
 
 if __name__ == '__main__':
     main()
