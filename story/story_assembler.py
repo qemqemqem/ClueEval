@@ -1,4 +1,4 @@
-from story.evidence import TypeOfEvidence, StoryElement
+from story.evidence import TypeOfEvidence, StoryElement, WhenInTime
 from story.story import Story
 from utils.display_interface import display_story_elements
 from collections import defaultdict
@@ -45,6 +45,9 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
 
     # Add distracting elements
     final_elements.extend(random.sample(distracting, min(num_distracting, len(distracting))))
+
+    # Sort the final elements by their WhenInTime value
+    final_elements.sort(key=lambda x: [WhenInTime.UNKNOWN, WhenInTime.BEFORE_CRIME, WhenInTime.DURING_CRIME, WhenInTime.AFTER_CRIME].index(x.when))
 
     # Display the final list of elements
     display_story_elements(final_elements, title="Assembled Story Elements")
