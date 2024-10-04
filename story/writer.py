@@ -72,6 +72,23 @@ def write_stories(story: Story):
     return story
 
 
+def stories_to_elements(story):
+    story.crime_story.real_story_elements = convert_story_to_story_elements(story.crime_story.real_story)
+    display_story_elements(story.crime_story.real_story_elements, title="Crime Story Real Story Elements")
+    story.crime_story.story_to_detective_elements = convert_story_to_story_elements(
+        story.crime_story.story_to_detective)
+    display_story_elements(story.crime_story.story_to_detective_elements, title="Crime Story Detective Story Elements")
+    for i, distractor_story in enumerate(story.distractor_stories):
+        distractor_story.real_story_elements = convert_story_to_story_elements(distractor_story.real_story)
+        display_story_elements(distractor_story.real_story_elements,
+                               title=f"Distractor Story {i + 1} Real Story Elements")
+
+        distractor_story.story_to_detective_elements = convert_story_to_story_elements(
+            distractor_story.story_to_detective)
+        display_story_elements(distractor_story.story_to_detective_elements,
+                               title=f"Distractor Story {i + 1} Detective Story Elements")
+
+
 def main():
     # Get random story details
     story = get_random_details()
@@ -81,18 +98,8 @@ def main():
     story = write_stories(story)
 
     # Convert stories to story elements and display them
-    story.crime_story.real_story_elements = convert_story_to_story_elements(story.crime_story.real_story)
-    display_story_elements(story.crime_story.real_story_elements, title="Crime Story Real Story Elements")
+    stories_to_elements(story)
 
-    story.crime_story.story_to_detective_elements = convert_story_to_story_elements(story.crime_story.story_to_detective)
-    display_story_elements(story.crime_story.story_to_detective_elements, title="Crime Story Detective Story Elements")
-    
-    for i, distractor_story in enumerate(story.distractor_stories):
-        distractor_story.real_story_elements = convert_story_to_story_elements(distractor_story.real_story)
-        display_story_elements(distractor_story.real_story_elements, title=f"Distractor Story {i+1} Real Story Elements")
-
-        distractor_story.story_to_detective_elements = convert_story_to_story_elements(distractor_story.story_to_detective)
-        display_story_elements(distractor_story.story_to_detective_elements, title=f"Distractor Story {i+1} Detective Story Elements")
 
 if __name__ == '__main__':
     main()
