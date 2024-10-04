@@ -33,18 +33,20 @@ Provide your analysis in the following JSON format:
 
 # Important:
 
-1. Include EVERY bullet point ID in the "classified_evidence" array.
+1. Include EVERY bullet point in the "classified_evidence" array.
 2. For each bullet point, provide classifications for ALL relevant hypotheses it relates to.
 3. If a bullet point doesn't relate to any specific hypothesis type, use "none" as the hypothesis_type and "None" as the hypothesis_name.
 4. Use the categories "proves", "suggests", "suggests_against", "proves_against", or "unrelated" as appropriate.
-5. Use the provided bullet point IDs instead of including the full text of the bullet point.
+5. Use the full text of the bullet point in the "text" field, not just an ID or number.
 
 Example of a bullet point not related to any hypothesis:
 {{
-  "text": "the butler likes sandwiches",
+  "text": "The butler likes sandwiches",
   "classifications": [
     {{
       "hypothesis_type": "none",
+      "hypothesis_name": "None",
+      "category": "unrelated"
     }}
   ]
 }}
