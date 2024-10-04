@@ -3,7 +3,7 @@ import os
 import string
 import re
 from story.story import Story
-from utils.display_interface import display_narrative
+from utils.display_interface import display_text
 from utils.str_utils import unindent
 from utils.gpt import prompt_completion_chat
 
@@ -77,7 +77,7 @@ def get_random_details() -> Story:
         The central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. Detective Detecto is on the case!
     """).strip()
 
-    display_narrative(story.summary, "Story summary before edit")
+    # display_narrative(story.summary, "Story summary before edit")
 
     # Refine the story summary using GPT
     refined_summary = get_title_and_synopsis(story)
@@ -92,7 +92,7 @@ def get_random_details() -> Story:
         story.synopsis = synopsis_match.group(1).strip()
         story.summary += f"\n\nSynopsis: {story.synopsis}"
 
-    display_narrative(f"Title: {story.title}\n\nSynopsis: {story.synopsis}", "Refined Story Details")
+    # display_narrative(f"Title: {story.title}\n\nSynopsis: {story.synopsis}", "Refined Story Details")
 
     return story
 

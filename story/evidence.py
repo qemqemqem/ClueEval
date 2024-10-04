@@ -8,6 +8,7 @@ class TypeOfEvidence(Enum):
     SUGGESTS_INNOCENCE = "supports_innocence"
     PROVES_INNOCENCE = "proves_innocence"
     INNOCUOUS = "innocuous"
+    NARRATIVE = "narrative"
 
 
 class WhenInTime(Enum):
@@ -25,4 +26,6 @@ class StoryElement:
     when: WhenInTime = WhenInTime.UNKNOWN
 
     def __str__(self):
-        return f"{self.text} ({self.type_of_evidence.name} for {self.target} {self.when.name})"
+        if self.type_of_evidence == TypeOfEvidence.NARRATIVE:
+            return f"{self.text} ({self.type_of_evidence.name}, {self.when.name})"
+        return f"{self.text} ({self.type_of_evidence.name} for {self.target}, {self.when.name})"

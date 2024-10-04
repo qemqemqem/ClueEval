@@ -4,7 +4,7 @@ from story.story_assembler import assemble_details
 from story.story_elements import convert_story_to_story_elements, generate_innocuous_details
 from story.evidence import StoryElement, TypeOfEvidence, WhenInTime
 from utils.gpt import prompt_completion_chat
-from utils.display_interface import display_story_element, display_narrative, display_story_elements, display_bullet_points
+from utils.display_interface import display_story_element, display_text, display_story_elements, display_bullet_points
 import random
 
 
@@ -52,7 +52,7 @@ def write_stories(story: Story):
     story.crime_story = parse_crime_story(story.killer, crime_story_text)
 
     # display_narrative(crime_story_text, speaker="Crime Story")
-    display_narrative(story.crime_story.__str__(), speaker="Parsed Crime Story")
+    display_text(story.crime_story.__str__(), speaker="Parsed Crime Story")
 
     # Generate distractor stories for other characters
     other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
@@ -71,7 +71,7 @@ def write_stories(story: Story):
         story.distractor_stories.append(distractor_story)
 
         # display_narrative(distractor_story_text, speaker=f"Distractor Story {character}")
-        display_narrative(distractor_story.__str__(), f"Parsed Story for {character}")
+        display_text(distractor_story.__str__(), f"Parsed Story for {character}")
 
     return story
 
@@ -123,9 +123,6 @@ def write_prose(story: Story):
     # Prepare the notes and outline
     notes = story.summary + "\n\n" + "\n\n".join([f"{cs.character_name}'s Story to the Detective: \n\n{cs.story_to_detective}" for cs in [story.crime_story] + story.distractor_stories])
 
-    outline = []
-    story.new_story_details = []
-
     def add_narrative(text, position='end'):
         new_element = StoryElement(text=text, target="", type_of_evidence=TypeOfEvidence.NARRATIVE, when=WhenInTime.UNKNOWN)
         if position == 'end':
@@ -143,11 +140,13 @@ def write_prose(story: Story):
     add_narrative("No one else could possibly have been here.", 'beginning')
     add_narrative("The detective begins to poke around and ask questions.", 'beginning')
     add_narrative("And this is what the detective learns, from clues and from talking to the people present:", 'beginning')
-    
+    add_narrative("It must be one of these suspects, and Detecto knows just who it is.", 'end')
+
+    display_story_elements(story.new_story_details, title="New Story Details")
+
+    outline = []
     for element in story.new_story_details:
         outline.append(f"- {element.text}")
-    
-    add_narrative("It must be one of these suspects, and Detecto knows just who it is.", 'end')
 
     outline = "\n".join(outline)
 
@@ -155,13 +154,13 @@ def write_prose(story: Story):
     prompt = full_prose_prompt.replace("{notes}", notes.strip()).replace("{outline}", outline.strip())
 
     # Print the full prompt
-    display_narrative(prompt, speaker="Full Prose Prompt")
+    display_text(prompt, speaker="Full Prose Prompt")
 
     # Generate the full prose
     story.full_prose = prompt_completion_chat(prompt, model="gpt-4o")
 
     # Display the full prose
-    display_narrative(story.full_prose, speaker="Full Prose")
+    display_text(story.full_prose, speaker="Full Prose")
 
 
 def create_question(story: Story):
@@ -180,19 +179,19 @@ def present_question(story: Story):
         user_input = input("Enter your answer (A, B, C, or D): ").upper()
         if user_input in story.question_options:
             if story.question_options[user_input] == story.killer:
-                display_narrative("Correct! You've identified the killer.")
+                display_text("Correct! You've identified the killer.")
             else:
-                display_narrative(f"Incorrect. The killer was {story.killer}.")
+                display_text(f"Incorrect. The killer was {story.killer}.")
             break
         else:
-            display_narrative("Invalid input. Please enter A, B, C, or D.")
+            display_text("Invalid input. Please enter A, B, C, or D.")
 
     display_bullet_points([str(rfi) for rfi in story.reasons_for_innocence], title="Reasoning")
 
 def create_story():
     # Get random story details
     story = get_random_details()
-    display_story_element(story.summary, title="Story Summary")
+    display_story_element(story.summary, title="Story Summary " + story.title)
 
     # Write stories
     story = write_stories(story)

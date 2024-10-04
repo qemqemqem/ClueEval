@@ -28,7 +28,7 @@ def display_story_elements(elements: list[StoryElement], title: str = "Story Ele
     """
     Display a list of StoryElements.
     """
-    content = "\n".join([f"• [{element.when}]\t {element.text} ({element.type_of_evidence.value} of {element.target})" for element in elements])
+    content = "\n".join([f"• [{element.when.name}]\t {element.text} ({element.type_of_evidence.value} of {element.target})" for element in elements])
     panel = Panel(
         Text(content),
         border_style=style,
@@ -39,7 +39,7 @@ def display_story_elements(elements: list[StoryElement], title: str = "Story Ele
     )
     console.print(panel)
 
-def display_narrative(text: str, speaker: str = None, style: str = "green") -> None:
+def display_text(text: str, speaker: str = None, style: str = "green") -> None:
     """
     Display narrative text with an optional speaker.
     """
