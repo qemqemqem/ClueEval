@@ -1,8 +1,9 @@
-from story.evidence import TypeOfEvidence
+from story.evidence import TypeOfEvidence, StoryElement
+from story.story import Story
 from utils.display_interface import display_story_elements
 
 
-def assemble_details(story):
+def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int = 1, num_distracting: int = 5) -> list[StoryElement]:
     # Collect all proving elements
     proving_elements = []
     # From crime story
