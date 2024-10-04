@@ -40,7 +40,7 @@ ClueEval creates mystery stories that theoretically test deductive reasoning abi
 
 5. Run the main script:
    ```
-   python story/writer.py
+   python main.py
    ```
    
    This will give you a mystery to solve. Read it and decide who you think is the killer!

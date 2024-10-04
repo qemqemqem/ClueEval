@@ -171,7 +171,7 @@ def present_question(story: Story):
 
     display_bullet_points([str(rfi) for rfi in story.reasons_for_innocence], title="Reasoning")
 
-def main():
+def create_story():
     # Get random story details
     story = get_random_details()
     display_story_element(story.summary, title="Story Summary")
@@ -194,4 +194,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    create_story()
