@@ -106,10 +106,7 @@ def stories_to_elements(story):
         ])
     
     # Print out the proving elements
-    if proving_elements:
-        display_story_elements(proving_elements, title="Proving Elements (Guilt or Innocence)")
-    else:
-        display_narrative("No proving elements found.", speaker="System")
+    display_story_elements(proving_elements, title="Proving Elements (Guilt or Innocence)")
 
 
 def main():
