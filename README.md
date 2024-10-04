@@ -1,31 +1,26 @@
-# ClueEval: Investigating LLM Reasoning through Mystery Solving
+# ClueEval: Murder Mysteries as LLM Evals
 
-ClueEval is a project designed to evaluate the reasoning capabilities of Large Language Models (LLMs) by challenging them to solve generated mystery stories. This tool creates complex, Agatha Christie-style murder mysteries and presents them to LLMs, testing their ability to follow clues, make logical deductions, and arrive at correct conclusions.
+ClueEval is a project designed to evaluate the reasoning capabilities of Large Language Models (LLMs) by challenging them to solve generated mystery stories. 
 
 ## Purpose
 
-The main objectives of ClueEval are:
-
-1. To assess LLMs' capacity for complex reasoning and deduction.
-2. To evaluate LLMs' ability to process and synthesize information from multiple sources.
-3. To test LLMs' understanding of cause and effect in narrative contexts.
-4. To explore LLMs' potential for creative problem-solving within structured scenarios.
+ClueEval creates mystery stories that theoretically test deductive reasoning abilities in solving.
 
 ## How It Works
 
-1. **Story Generation**: The system creates a unique murder mystery, complete with a killer, victim, murder weapon, location, and a cast of characters with their own motives and alibis.
+1. **Story Generation**: The system randomly generates a basic mystery, including a killer and victim, in `story/random_details.py`. Then, `story/writer.py` uses an LLM to create a unique murder mystery, giving each character their own story and perspective.
 
 2. **Narrative Creation**: A detailed narrative is generated, including both the true events and misleading information.
 
 3. **Clue Assembly**: The system compiles a set of clues, some relevant to solving the mystery and others serving as red herrings.
 
-4. **LLM Challenge**: The generated mystery, along with its clues, is presented to an LLM for solving.
+4. **Prose**: The set of clues is turned into prose.
 
-5. **Evaluation**: The LLM's solution is compared to the actual solution, assessing its reasoning process and accuracy.
+5. **Evaluation**: Whodunnit? The clues contained in the prose should be enough to figure it out. These are fair play mysteries.
 
 ## How to Run
 
-1. Ensure you have Python 3.7+ installed on your system.
+1. Ensure you have Python 3.10+ installed on your system.
 
 2. Clone this repository:
    ```
@@ -47,8 +42,8 @@ The main objectives of ClueEval are:
    ```
    python story/writer.py
    ```
-
-This will generate a new mystery, create the narrative, and present it to the LLM for solving.
+   
+   This will give you a mystery to solve. Read it and decide who you think is the killer!
 
 ## Project Structure
 
@@ -60,13 +55,10 @@ This will generate a new mystery, create the narrative, and present it to the LL
 
 We welcome contributions to ClueEval! Please feel free to submit issues, feature requests, or pull requests.
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Acknowledgments
 
 - Inspired by the works of Agatha Christie and other classic mystery authors.
 - Powered by OpenAI's GPT models.
+- Anthropic Claude wrote most of the code, although I did some of the work too.
 
 Happy mystery solving!
