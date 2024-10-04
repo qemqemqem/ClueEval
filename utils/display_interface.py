@@ -2,6 +2,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
 from rich.box import DOUBLE
+from rich.json import JSON
 
 console = Console(width=100)
 
@@ -59,5 +60,20 @@ def display_error(error_message: str) -> None:
         title="Error",
         title_align="center",
         expand=False
+    )
+    console.print(panel)
+
+def display_json(json_data: dict, title: str = "JSON Data", style: str = "blue") -> None:
+    """
+    Display JSON data in a pretty format.
+    """
+    content = JSON(json_data)
+    panel = Panel(
+        content,
+        border_style=style,
+        box=DOUBLE,
+        expand=False,
+        title=title,
+        title_align="center"
     )
     console.print(panel)
