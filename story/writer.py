@@ -50,13 +50,8 @@ def write_stories(story: Story):
     crime_story_text = prompt_completion_chat(central_prompt)
     story.crime_story = parse_crime_story(story.killer, crime_story_text)
 
-    # display_narrative(crime_story_text, speaker="Crime Story")
-    display_narrative(story.crime_story.__str__(), speaker="Parsed Crime Story")
-
     # Generate distractor stories for other characters
     other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
-    # other_characters = []  # Disabling for Development! TODO Reenable
-    # murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
     murder_summary = story.crime_story.real_story
     
     for character in other_characters:
@@ -69,49 +64,32 @@ def write_stories(story: Story):
         distractor_story = parse_crime_story(character, distractor_story_text)
         story.distractor_stories.append(distractor_story)
 
-        # display_narrative(distractor_story_text, speaker=f"Distractor Story {character}")
-        display_narrative(distractor_story.__str__(), f"Parsed Story for {character}")
-
     return story
 
 
 def stories_to_elements(story: Story):
     story.crime_story.real_story_elements = convert_story_to_story_elements(story.crime_story.real_story)
-    display_story_elements(story.crime_story.real_story_elements, title="Crime Story Real Story Elements")
     story.crime_story.story_to_detective_elements = convert_story_to_story_elements(
         story.crime_story.story_to_detective)
-    display_story_elements(story.crime_story.story_to_detective_elements, title="Crime Story Detective Story Elements")
     
     if story.crime_story.clues_that_prove_innocence:
         story.crime_story.clues_that_prove_innocence_elements = convert_story_to_story_elements(
             story.crime_story.clues_that_prove_innocence)
-        display_story_elements(story.crime_story.clues_that_prove_innocence_elements, 
-                               title="Crime Story Clues that Prove Innocence")
     
     # Generate innocuous details for the crime story
     story.crime_story.innocuous_elements = generate_innocuous_details(story.crime_story.real_story, story.killer)
-    display_story_elements(story.crime_story.innocuous_elements, title="Crime Story Innocuous Details")
     
-    for i, distractor_story in enumerate(story.distractor_stories):
+    for distractor_story in story.distractor_stories:
         distractor_story.real_story_elements = convert_story_to_story_elements(distractor_story.real_story)
-        display_story_elements(distractor_story.real_story_elements,
-                               title=f"{distractor_story.character_name}'s Story, Real Story Elements")
-
         distractor_story.story_to_detective_elements = convert_story_to_story_elements(
             distractor_story.story_to_detective)
-        display_story_elements(distractor_story.story_to_detective_elements,
-                               title=f"{distractor_story.character_name}'s Story, Detective Story Elements")
         
         if distractor_story.clues_that_prove_innocence:
             distractor_story.clues_that_prove_innocence_elements = convert_story_to_story_elements(
                 distractor_story.clues_that_prove_innocence)
-            display_story_elements(distractor_story.clues_that_prove_innocence_elements,
-                                   title=f"{distractor_story.character_name}'s Story, Clues that Prove Innocence")
         
         # Generate innocuous details for each distractor story
         distractor_story.innocuous_elements = generate_innocuous_details(distractor_story.real_story, distractor_story.character_name)
-        display_story_elements(distractor_story.innocuous_elements, 
-                               title=f"{distractor_story.character_name}'s Story, Innocuous Details")
 
 
 def write_prose(story: Story):
@@ -136,14 +114,8 @@ def write_prose(story: Story):
     # Fill in the prompt template
     prompt = full_prose_prompt.replace("{notes}", notes.strip()).replace("{outline}", outline.strip())
 
-    # Print the full prompt
-    display_narrative(prompt, speaker="Full Prose Prompt")
-
     # Generate the full prose
     story.full_prose = prompt_completion_chat(prompt, model="gpt-4o")
-
-    # Display the full prose
-    display_narrative(story.full_prose, speaker="Full Prose")
 
 
 def create_question(story: Story):
@@ -154,44 +126,85 @@ def create_question(story: Story):
     story.question_options = {chr(65 + i): character for i, character in enumerate(characters)}
 
 def present_question(story: Story):
-    display_story_element(story.question, title="Question")
-    options = [f"{key}: {value}" for key, value in story.question_options.items()]
-    display_bullet_points(options, title="Suspects")
-    
     while True:
         user_input = input("Enter your answer (A, B, C, or D): ").upper()
         if user_input in story.question_options:
             if story.question_options[user_input] == story.killer:
-                display_narrative("Correct! You've identified the killer.")
+                return "Correct! You've identified the killer."
             else:
-                display_narrative(f"Incorrect. The killer was {story.killer}.")
-            break
+                return f"Incorrect. The killer was {story.killer}."
         else:
-            display_narrative("Invalid input. Please enter A, B, C, or D.")
+            print("Invalid input. Please enter A, B, C, or D.")
 
-    display_bullet_points([str(rfi) for rfi in story.reasons_for_innocence], title="Reasoning")
+def create_story(interactive: bool = False) -> Story:
+    """
+    Create a mystery story.
 
-def create_story():
+    This function generates a complete mystery story, including details, prose, and a question.
+    
+    Args:
+        interactive (bool, optional): If True, displays story elements to the console
+                                      and presents an interactive question. 
+                                      If False, silently generates the story.
+                                      Defaults to False.
+
+    Returns:
+        Story: The complete generated story object.
+    """
     # Get random story details
     story = get_random_details()
-    display_story_element(story.summary, title="Story Summary")
+    if interactive:
+        display_story_element(story.summary, title="Story Summary")
 
     # Write stories
     story = write_stories(story)
+    if interactive:
+        display_narrative(story.crime_story.__str__(), speaker="Parsed Crime Story")
+        for distractor_story in story.distractor_stories:
+            display_narrative(distractor_story.__str__(), f"Parsed Story for {distractor_story.character_name}")
 
     # Convert stories to story elements and display them
     stories_to_elements(story)
+    if interactive:
+        display_story_elements(story.crime_story.real_story_elements, title="Crime Story Real Story Elements")
+        display_story_elements(story.crime_story.story_to_detective_elements, title="Crime Story Detective Story Elements")
+        if story.crime_story.clues_that_prove_innocence:
+            display_story_elements(story.crime_story.clues_that_prove_innocence_elements, 
+                                   title="Crime Story Clues that Prove Innocence")
+        display_story_elements(story.crime_story.innocuous_elements, title="Crime Story Innocuous Details")
+        
+        for distractor_story in story.distractor_stories:
+            display_story_elements(distractor_story.real_story_elements,
+                                   title=f"{distractor_story.character_name}'s Story, Real Story Elements")
+            display_story_elements(distractor_story.story_to_detective_elements,
+                                   title=f"{distractor_story.character_name}'s Story, Detective Story Elements")
+            if distractor_story.clues_that_prove_innocence:
+                display_story_elements(distractor_story.clues_that_prove_innocence_elements,
+                                       title=f"{distractor_story.character_name}'s Story, Clues that Prove Innocence")
+            display_story_elements(distractor_story.innocuous_elements, 
+                                   title=f"{distractor_story.character_name}'s Story, Innocuous Details")
 
     # Assemble all details
     assemble_details(story)
 
     # Write full prose
     write_prose(story)
+    if interactive:
+        display_narrative(story.full_prose, speaker="Full Prose")
 
-    # Create and present the question
+    # Create the question
     create_question(story)
-    present_question(story)
 
+    if interactive:
+        # Present the question only in interactive mode
+        display_story_element(story.question, title="Question")
+        options = [f"{key}: {value}" for key, value in story.question_options.items()]
+        display_bullet_points(options, title="Suspects")
+        result = present_question(story)
+        display_narrative(result)
+        display_bullet_points([str(rfi) for rfi in story.reasons_for_innocence], title="Reasoning")
+    
+    return story
 
 if __name__ == '__main__':
     create_story()
