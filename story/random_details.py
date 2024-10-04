@@ -88,8 +88,10 @@ def get_random_details() -> Story:
 
     if title_match:
         story.title = title_match.group(1).strip()
+        story.title = story.title.replace("\"", "")
     if synopsis_match:
         story.synopsis = synopsis_match.group(1).strip()
+        story.synopsis = story.synopsis.replace("\"", "")
         story.summary += f"\n\nSynopsis: {story.synopsis}"
 
     # display_narrative(f"Title: {story.title}\n\nSynopsis: {story.synopsis}", "Refined Story Details")

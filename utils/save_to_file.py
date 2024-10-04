@@ -1,4 +1,5 @@
 import os
+import json
 from story.story import Story
 from story.evidence import StoryElement
 
@@ -9,7 +10,7 @@ def save_story_to_file(story: Story):
     Args:
     story (Story): The Story object to be saved.
     """
-    filename = f"{story.title.replace(' ', '_')}.md"
+    filename = f"generated_questions/{story.title.replace(' ', '_')}.md"
     
     with open(filename, 'w') as f:
         f.write(f"# {story.title}\n\n")
@@ -32,11 +33,13 @@ def save_story_to_file(story: Story):
         
         f.write("## Reasoning\n\n")
         for reason in story.reasons_for_innocence:
-            f.write(f"- {reason.text}\n")
+            f.write(f"- {reason}\n")
         f.write("\n")
         
         f.write("## Story Details\n\n")
-        for detail in story.new_story_details:
-            f.write(f"- {detail.text} (Type: {detail.type_of_evidence.value}, Target: {detail.target}, When: {detail.when.value})\n")
+        f.write("```json\n[\n")
+        f.write(json.dumps([element.__dict__ for element in story.new_story_details], indent=4))
+        f.write("\n]\n```")
+
         
     print(f"Story saved to {filename}")
