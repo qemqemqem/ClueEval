@@ -5,6 +5,7 @@ from story.story_elements import convert_story_to_story_elements, generate_innoc
 from story.evidence import StoryElement, TypeOfEvidence, WhenInTime
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_text, display_story_elements, display_bullet_points
+from utils.save_to_file import save_story_to_file
 import random
 
 
@@ -208,6 +209,9 @@ def create_story():
     # Create and present the question
     create_question(story)
     present_question(story)
+
+    # Save the story to a file
+    save_story_to_file(story)
 
 
 if __name__ == '__main__':
