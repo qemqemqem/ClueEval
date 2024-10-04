@@ -79,6 +79,9 @@ def get_random_details() -> Story:
         The central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. Detective Detecto is on the case!
     """).strip()
 
+    # Refine the story summary using GPT
+    story = refine_story_summary(story)
+
     return story
 
 
