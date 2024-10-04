@@ -9,11 +9,13 @@ class TypeOfEvidence(Enum):
     PROVES_INNOCENCE = "proves_innocence"
     INNOCUOUS = "innocuous"
 
+
 class WhenInTime(Enum):
     UNKNOWN = "unknown"
     BEFORE_CRIME = "before_crime"
     DURING_CRIME = "during_crime"
     AFTER_CRIME = "after_crime"
+
 
 @dataclass
 class StoryElement:

@@ -125,7 +125,7 @@ def main():
     stories_to_elements(story)
 
     # Assemble all details
-    new_story_details = assemble_details(story)
+    story.new_story_details = assemble_details(story)
 
 
 if __name__ == '__main__':

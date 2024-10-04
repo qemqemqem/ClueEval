@@ -45,3 +45,7 @@ class Story:
 
     # This is an attempt to summarize the facts of the story
     bullet_points: List[str] = field(default_factory=list)
+
+    # This is for converting the story into prose
+    new_story_details: list[StoryElement] = field(default_factory=list)
+    full_prose: str = ""
