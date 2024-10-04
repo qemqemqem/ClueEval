@@ -51,3 +51,4 @@ class Story:
     full_prose: str = ""
 
     question: str = ""
+    question_options: dict = field(default_factory=dict)

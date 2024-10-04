@@ -3,7 +3,8 @@ from story.random_details import get_random_details
 from story.story_assembler import assemble_details
 from story.story_elements import convert_story_to_story_elements, generate_innocuous_details
 from utils.gpt import prompt_completion_chat
-from utils.display_interface import display_story_element, display_narrative, display_story_elements
+from utils.display_interface import display_story_element, display_narrative, display_story_elements, display_bullet_points
+import random
 
 
 def parse_crime_story(character_name: str, story_text: str) -> CharacterStory:
@@ -113,6 +114,29 @@ def stories_to_elements(story: Story):
                                title=f"Distractor Story {i + 1} Innocuous Details")
 
 
+def create_question(story: Story):
+    characters = [story.killer] + [ds.character_name for ds in story.distractor_stories]
+    random.shuffle(characters)
+    
+    story.question = f"Given the story you have just read, who is guilty of killing {story.victim}?"
+    story.question_options = {chr(65 + i): character for i, character in enumerate(characters)}
+
+def present_question(story: Story):
+    display_story_element(story.question, title="Question")
+    options = [f"{key}: {value}" for key, value in story.question_options.items()]
+    display_bullet_points(options, title="Suspects")
+    
+    while True:
+        user_input = input("Enter your answer (A, B, C, or D): ").upper()
+        if user_input in story.question_options:
+            if story.question_options[user_input] == story.killer:
+                print("Correct! You've identified the killer.")
+            else:
+                print(f"Incorrect. The killer was {story.killer}.")
+            break
+        else:
+            print("Invalid input. Please enter A, B, C, or D.")
+
 def main():
     # Get random story details
     story = get_random_details()
@@ -126,6 +150,10 @@ def main():
 
     # Assemble all details
     story.new_story_details = assemble_details(story)
+
+    # Create and present the question
+    create_question(story)
+    present_question(story)
 
 
 if __name__ == '__main__':
