@@ -53,22 +53,24 @@ def get_random_details() -> Story:
     other_items = [crime for crime in story.random_crimes if crime != story.crime_weapon]
 
     story.summary = unindent(f"""
-        This is a mystery story in the style of a golden age classic, set in a {story.mystery_setting}. The story features the following elements:
+        This is a mystery story in the style of a golden age classic. The story features the following elements:
 
         Victim: {story.victim} ({character_details[story.victim]})
         Killer: {story.killer} ({character_details[story.killer]})
+        The Detective: Detecto ({story.detective_details})
 
-        Bystanders:
+        Other Characters:
         {', '.join([f"{person} ({character_details[person]})" for person in bystanders])}
 
-        Crime Location: {story.crime_location}
-        Nearby Locations: {', '.join(other_places)}
+        It Takes Place In: {story.mystery_setting}
+        The Crime Happened In: {story.crime_location}
+        Other Locations in the Story: {', '.join(other_places)}
 
-        Murder Weapon: {story.crime_weapon}
+        The Murder Weapon: {story.crime_weapon}
         Other Suspicious Items: {', '.join(other_items)}
 
-        The central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. The mystery is being investigated by detective Detecto ({story.detective_details}).
-    """)
+        The central story is that a crime was committed with a {story.crime_weapon} in the {story.crime_location} by {story.killer}, killing {story.victim}. But there's shenanigans going on with the other stuff, too. Detective Detecto is on the case!
+    """).strip()
 
     return story
 
