@@ -12,6 +12,13 @@ class StoryEncoder(json.JSONEncoder):
             return obj.value
         return super().default(obj)
 
+def create_simple_data(story: Story):
+    return {
+        "question": f"{story.full_prose}\n\n{story.question}",
+        "choices": list(story.question_options.values()),
+        "answer": list(story.question_options.values()).index(story.killer)
+    }
+
 def save_story_to_file(story: Story, creation_steps: str = ""):
     """
     Save a Story object to a Markdown file and append a JSON object to all_questions.jsonl.
@@ -90,3 +97,11 @@ def save_story_to_file(story: Story, creation_steps: str = ""):
         f.write("\n")
 
     print("Question added to generated_questions/all_questions.jsonl")
+
+    # Save simple JSON object to simple_questions.jsonl
+    simple_data = create_simple_data(story)
+    with open("generated_questions/simple_questions.jsonl", "a") as f:
+        json.dump(simple_data, f)
+        f.write("\n")
+
+    print("Simple question added to generated_questions/simple_questions.jsonl")
