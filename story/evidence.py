@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 
 from enum import Enum, auto
+from typing import Optional
+
 
 class TypeOfEvidence(Enum):
     SUGGESTS_GUILT = "supports_guilt"
@@ -32,7 +34,7 @@ class StoryElement:
     speaker: str = ""  # Whose story does this belong to?
     type_of_evidence: TypeOfEvidence = TypeOfEvidence.NARRATIVE
     when: WhenInTime = WhenInTime.UNKNOWN
-    murder_element: MurderElement = None
+    murder_element: Optional[MurderElement] = None
     concealed: bool = False  # True if it's an element that shows up in the true story, False if it's in the story told to the detective
 
     def __str__(self):

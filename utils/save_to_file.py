@@ -39,7 +39,7 @@ def save_story_to_file(story: Story):
         f.write(f"The killer is {story.killer}\n\n")
         
         f.write("## Reasoning\n\n")
-        for reason in story.reasons_for_innocence:
+        for reason in story.reasons_for_guilt_and_innocence:
             f.write(f"- {reason}\n")
         f.write("\n")
         

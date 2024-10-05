@@ -56,7 +56,7 @@ class Story:
 
     # This is for converting the story into prose
     new_story_details: list[StoryElement] = field(default_factory=list)
-    reasons_for_innocence: list[StoryElement] = field(default_factory=list)
+    reasons_for_guilt_and_innocence: list[StoryElement] = field(default_factory=list)
     full_prose: str = ""
 
     question: str = ""
