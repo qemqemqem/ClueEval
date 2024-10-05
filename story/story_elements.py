@@ -5,7 +5,9 @@ from utils.gpt import prompt_completion_json
 import json
 
 
-def convert_story_to_story_elements(story: str, speaking_character: str) -> list[StoryElement]:
+def get_elements(story: str, speaking_character: str, first_person: bool = False) -> list[StoryElement]:
+    which_person = f"Write in the first person, from {speaking_character}'s perspective. " if first_person else "Write in the third person."
+
     prompt = f"""
     Convert the following story into a list of story elements. Each element should be a single fact or event from the story, classified according to its relevance to the mystery and when it occurred in relation to the crime.
 
@@ -15,7 +17,7 @@ def convert_story_to_story_elements(story: str, speaking_character: str) -> list
     Please return a JSON array of objects with the following structure:
     [
         {{
-            "text": "The fact or event from the story",
+            "text": "The fact or event from the story. {which_person}",
             "type_of_evidence": "supports_guilt" | "proves_guilt" | "supports_innocence" | "proves_innocence",
             "target": "The name of the character whose guilt or innocence is being supported or proven. This must be a character named or clearly identified in the story.",
             "when": "before_crime" | "during_crime" | "after_crime"

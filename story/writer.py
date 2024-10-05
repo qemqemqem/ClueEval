@@ -1,7 +1,7 @@
 from story.story import Story, CharacterStory
 from story.random_details import get_random_details
 from story.story_assembler import assemble_details
-from story.story_elements import convert_story_to_story_elements, generate_innocuous_details
+from story.story_elements import get_elements, generate_innocuous_details
 from story.evidence import StoryElement, TypeOfEvidence, WhenInTime
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_text, display_story_elements, display_bullet_points
@@ -78,10 +78,9 @@ def write_stories(story: Story):
 
 
 def stories_to_elements(story: Story):
-    story.crime_story.real_story_elements = convert_story_to_story_elements(story.crime_story.real_story, story.killer)
+    story.crime_story.real_story_elements = get_elements(story.crime_story.real_story, story.killer)
     display_story_elements(story.crime_story.real_story_elements, title="Crime Story Real Story Elements")
-    story.crime_story.story_to_detective_elements = convert_story_to_story_elements(
-        story.crime_story.story_to_detective, story.killer)
+    story.crime_story.story_to_detective_elements = get_elements(story.crime_story.story_to_detective, story.killer, first_person=True)
     display_story_elements(story.crime_story.story_to_detective_elements, title="Crime Story Detective Story Elements")
 
     assert not story.crime_story.clues_that_prove_innocence, "The crime story has no clues that prove innocence, as it is the true story of the crime."
@@ -91,14 +90,14 @@ def stories_to_elements(story: Story):
     display_story_elements(story.crime_story.innocuous_elements, title="Crime Story Innocuous Details")
     
     for i, ds in enumerate(story.distractor_stories):
-        ds.real_story_elements = convert_story_to_story_elements(ds.real_story, ds.character_name)
+        ds.real_story_elements = get_elements(ds.real_story, ds.character_name)
         display_story_elements(ds.real_story_elements, title=f"{ds.character_name}'s Story, Real Story Elements")
 
-        ds.story_to_detective_elements = convert_story_to_story_elements(ds.story_to_detective, ds.character_name)
+        ds.story_to_detective_elements = get_elements(ds.story_to_detective, ds.character_name, first_person=True)
         display_story_elements(ds.story_to_detective_elements, title=f"{ds.character_name}'s Story, Detective Story Elements")
         
         if ds.clues_that_prove_innocence:
-            ds.clues_that_prove_innocence_elements = convert_story_to_story_elements(ds.clues_that_prove_innocence, ds.character_name)
+            ds.clues_that_prove_innocence_elements = get_elements(ds.clues_that_prove_innocence, ds.character_name)
             display_story_elements(ds.clues_that_prove_innocence_elements, title=f"{ds.character_name}'s Story, Clues that Prove Innocence")
         
         # Generate innocuous details for each distractor story
@@ -134,7 +133,7 @@ def write_prose(story: Story):
 
     outline = []
     for element in story.new_story_details:
-        outline.append(f"- {element.text}")
+        outline.append(f"- {element.speaker}:\t{element.text}")
 
     outline = "\n".join(outline)
 

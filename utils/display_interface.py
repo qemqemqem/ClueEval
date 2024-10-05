@@ -5,7 +5,7 @@ from rich.box import DOUBLE
 from rich.json import JSON
 from rich import print_json
 from story.evidence import StoryElement, TypeOfEvidence
-from story.story_elements import convert_story_to_story_elements
+from story.story_elements import get_elements
 
 console = Console(width=100)
 
