@@ -208,17 +208,17 @@ def present_question(story: Story, interactive_mode: bool = False):
         else:
             display_text("Invalid input. Please enter A, B, C, or D.")
 
-    display_bullet_points([str(rfi) for rfi in story.reasons_for_innocence], title="Reasoning")
+    display_bullet_points([str(rfi) for rfi in story.reasons_for_guilt_and_innocence], title="Reasoning")
 
 def add_killer_note(story: Story):
     killer_elements = [element for element in story.crime_story.real_story_elements 
                        if element.target == story.killer and element.murder_element is not None]
     
     note = "Note: Only one character had a means, motive, and opportunity. Here are the details for the killer:"
-    story.reasons_for_innocence.insert(0, note)
+    story.reasons_for_guilt_and_innocence.insert(0, note)
     
     for element in killer_elements:
-        story.reasons_for_innocence.insert(1, str(element))
+        story.reasons_for_guilt_and_innocence.insert(1, str(element))
 
 def create_story(interactive_mode: bool = False):
     # Get random story details
