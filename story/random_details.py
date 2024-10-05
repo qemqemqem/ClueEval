@@ -124,7 +124,7 @@ def get_title_and_synopsis(story: Story) -> str:
 
 
 def random_character_details():
-    gender = random.choice(["man", "woman", "non-binary person"])
+    gender = random.choice(["man", "woman"] * 20 + ["non-binary person"])
     age = random.randint(18, 70)
     physical_traits = [
         "tall", "short", "average height", "fat", "thin", "muscular", "lanky",
