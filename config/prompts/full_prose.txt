@@ -18,6 +18,7 @@ Each element in the outline should be converted into exactly one sentence (or di
 
 Everything should be narrated from Detecto's point of view, recounted in dialog and description by interviewing the assembled characters.
 Remember that Detecto doesn't have any special knowledge of what really occurred, and we see things only through the detective's eyes.
+Some items in the outline were concealed from the detective, meaning the character didn't outright say them. However, the detective was able to figure it out. For each of these, you should write a sentence or two describing what gave the character away, and how the detective figured it out.
 The Detective does not pass judgement until the end of the story, and refrains from pronouncing anyone guilty or innocent throughout their retelling, only describing the evidence.
 
 Write nothing except for a story. Write a short story which closely follows my outline, one sentence per bullet point.
