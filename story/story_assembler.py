@@ -46,7 +46,21 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
             final_elements.extend(innocence_proving_details)
 
     # Add the means, motive, and opportunity for all characters
-    ...
+    killer_elements = []
+    for character in characters:
+        character_story = story.crime_story if character == story.killer else next((ds for ds in story.distractor_stories if ds.character_name == character), None)
+        if character_story:
+            character_elements = [element for element in character_story.real_story_elements 
+                                  if element.target == character and element.murder_element is not None]
+            final_elements.extend(character_elements)
+            if character == story.killer:
+                killer_elements = character_elements
+
+    # Add note about killer's means, motive, and opportunity
+    note = "Note: Only one character had a means, motive, and opportunity. Here are the details for the killer:"
+    story.reasons_for_guilt_and_innocence.insert(0, note)
+    for element in killer_elements:
+        story.reasons_for_guilt_and_innocence.insert(1, str(element))
 
     # Add distracting elements
     final_elements.extend(random.sample(distracting, min(num_distracting, len(distracting))))
