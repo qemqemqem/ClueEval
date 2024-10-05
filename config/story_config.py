@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 
 @dataclass
 class StoryConfig:
@@ -12,10 +12,4 @@ class StoryConfig:
     # Add more configurable parameters here
 
     def __str__(self):
-        return (f"StoryConfig(interactive_mode={self.interactive_mode}, "
-                f"num_suspicious_elements={self.num_suspicious_elements}, "
-                f"num_proving_innocence_elements={self.num_proving_innocence_elements}, "
-                f"num_distracting_elements={self.num_distracting_elements}, "
-                f"num_random_people={self.num_random_people}, "
-                f"num_random_items={self.num_random_items}, "
-                f"num_random_places={self.num_random_places})")
+        return "StoryConfig(" + ", ".join(f"{field.name}={getattr(self, field.name)}" for field in fields(self)) + ")"
