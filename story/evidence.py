@@ -19,6 +19,12 @@ class WhenInTime(Enum):
     AFTER_CRIME = "after_crime"
 
 
+class MurderElement(Enum):
+    MOTIVE = "motive"
+    OPPORTUNITY = "opportunity"
+    MEANS = "means"
+
+
 @dataclass
 class StoryElement:
     text: str  # Prose
@@ -26,8 +32,10 @@ class StoryElement:
     speaker: str = ""  # Whose story does this belong to?
     type_of_evidence: TypeOfEvidence = TypeOfEvidence.NARRATIVE
     when: WhenInTime = WhenInTime.UNKNOWN
+    murder_element: MurderElement = None
 
     def __str__(self):
         if self.type_of_evidence == TypeOfEvidence.NARRATIVE:
             return f"[{self.when.name.upper()}]\t{self.text}"
-        return f"[{self.when.name.upper()}]\t{self.text} ({self.type_of_evidence.name} for {self.target})"
+        me_txt = f"{self.murder_element.name} -- " if self.murder_element else ""
+        return f"[{self.when.name.upper()}]\t{self.text} ({me_txt}{self.type_of_evidence.name} for {self.target})"
