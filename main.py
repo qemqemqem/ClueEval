@@ -2,6 +2,7 @@ import argparse
 from story.writer import create_story
 from config.story_config import StoryConfig
 
+
 def main():
     parser = argparse.ArgumentParser(description="Create mystery stories.")
     parser.add_argument("num_stories", type=int, nargs="?", default=1,
@@ -23,7 +24,6 @@ def main():
     args = parser.parse_args()
 
     config = StoryConfig(
-        num_stories=args.num_stories,
         interactive_mode=args.interactive_mode,
         num_suspicious_elements=args.num_suspicious,
         num_proving_innocence_elements=args.num_innocence,
@@ -33,8 +33,9 @@ def main():
         num_random_places=args.num_random_places,
     )
 
-    for i in range(config.num_stories):
+    for i in range(args.num_stories):
         create_story(config)
+
 
 if __name__ == '__main__':
     main()
