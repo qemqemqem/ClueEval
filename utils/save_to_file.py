@@ -1,7 +1,13 @@
 import os
 import json
 from story.story import Story
-from story.evidence import StoryElement
+from story.evidence import StoryElement, TypeOfEvidence, WhenInTime
+
+class StoryEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (TypeOfEvidence, WhenInTime)):
+            return obj.value
+        return super().default(obj)
 
 def save_story_to_file(story: Story):
     """
@@ -37,9 +43,8 @@ def save_story_to_file(story: Story):
         f.write("\n")
         
         f.write("## Story Details\n\n")
-        f.write("```json\n[\n")
-        f.write(json.dumps([element.__dict__ for element in story.new_story_details], indent=4))
-        f.write("\n]\n```")
+        f.write("```json\n")
+        f.write(json.dumps([element.__dict__ for element in story.new_story_details], indent=4, cls=StoryEncoder))
+        f.write("\n```")
 
-        
     print(f"Story saved to {filename}")
