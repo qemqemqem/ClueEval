@@ -26,13 +26,7 @@ def save_story_to_file(story: Story):
     
     with open(filename, 'w') as f:
         f.write(f"# {story.title}\n\n")
-        
-        f.write("## Story Configuration\n\n")
-        f.write("```python\n")
-        for key, value in vars(story.config).items():
-            f.write(f"{key} = {value}\n")
-        f.write("```\n\n")
-        
+
         f.write("## Full Story\n\n")
         f.write(story.full_prose)
         f.write("\n\n")
@@ -59,6 +53,12 @@ def save_story_to_file(story: Story):
         for element in story.new_story_details:
             f.write(json.dumps(element.__dict__, cls=StoryEncoder) + "\n")
         f.write("```")
+
+        f.write("## Story Configuration\n\n")
+        f.write("```python\n")
+        for key, value in vars(story.config).items():
+            f.write(f"{key} = {value}\n")
+        f.write("```\n\n")
 
     print(f"Story saved to {filename}")
 
