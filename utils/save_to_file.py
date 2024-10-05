@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import datetime
 from enum import Enum
 from story.story import Story
 from story.evidence import StoryElement, TypeOfEvidence, WhenInTime
@@ -12,11 +13,15 @@ class StoryEncoder(json.JSONEncoder):
 
 def save_story_to_file(story: Story):
     """
-    Save a Story object to a Markdown file.
+    Save a Story object to a Markdown file and append a JSON object to all_questions.jsonl.
     
     Args:
     story (Story): The Story object to be saved.
     """
+    # Create directories
+    os.makedirs("generated_questions", exist_ok=True)
+    
+    # Save to Markdown file
     filename = f"generated_questions/{story.title.replace(' ', '_')}.md"
     
     with open(filename, 'w') as f:
@@ -50,3 +55,20 @@ def save_story_to_file(story: Story):
         f.write("```")
 
     print(f"Story saved to {filename}")
+
+    # Save JSON object to all_questions.jsonl
+    question_data = {
+        "title": story.title,
+        "full_prose": story.full_prose,
+        "question": story.question,
+        "options": story.question_options,
+        "killer": story.killer,
+        "reasoning": [str(reason) for reason in story.reasons_for_guilt_and_innocence],
+        "story_details": [element.__dict__ for element in story.new_story_details]
+    }
+    
+    with open("generated_questions/all_questions.jsonl", "a") as f:
+        json.dump(question_data, f, cls=StoryEncoder)
+        f.write("\n")
+
+    print("Question added to generated_questions/all_questions.jsonl")
