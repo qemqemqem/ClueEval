@@ -58,9 +58,9 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
 
     # Add note about killer's means, motive, and opportunity
     note = "Note: Only one character had a means, motive, and opportunity. Here are the details for the killer:"
-    story.reasons_for_guilt_and_innocence.insert(0, note)
+    story.reasons_for_guilt_and_innocence.append(note)
     for element in killer_elements:
-        story.reasons_for_guilt_and_innocence.insert(1, str(element))
+        story.reasons_for_guilt_and_innocence.append(str(element))
 
     # Add distracting elements
     final_elements.extend(random.sample(distracting, min(num_distracting, len(distracting))))
