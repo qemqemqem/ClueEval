@@ -13,7 +13,7 @@ def load_elements(filename):
         return [line.strip() for line in f]
 
 
-def get_random_details() -> Story:
+def get_random_details(config: StoryConfig) -> Story:
     # Load elements from files
     crime_elements = [string.capwords(elem) for elem in load_elements('crime_elements.txt')]
     place_elements = [string.capwords(elem) for elem in load_elements('place_elements.txt')]
@@ -21,11 +21,11 @@ def get_random_details() -> Story:
     mystery_settings = load_elements('mystery_settings.txt')
 
     # Sample random people
-    random_people = random.sample(person_elements, 5)  # The first two are the killer and victim
+    random_people = random.sample(person_elements, config.num_random_people)  # The first two are the killer and victim
     killer, victim = random_people[0], random_people[1]
 
-    random_crimes = random.sample(crime_elements, 3)
-    random_places = random.sample(place_elements, 3)
+    random_crimes = random.sample(crime_elements, config.num_random_crimes)
+    random_places = random.sample(place_elements, config.num_random_places)
 
     # Select specific crime weapon, location, and setting
     crime_weapon = random.choice(random_crimes)

@@ -213,7 +213,7 @@ def present_question(story: Story, interactive_mode: bool = False):
 
 def create_story(config: StoryConfig):
     # Get random story details
-    story = get_random_details()
+    story = get_random_details(config)
     display_story_element(story.summary, title="Story Summary: " + story.title)
 
     # Write stories

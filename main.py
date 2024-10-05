@@ -14,6 +14,12 @@ def main():
                         help="Number of elements proving innocence for the bystanders (capped at the number that are generated)")
     parser.add_argument("--num_distracting", type=int, default=5,
                         help="Number of distracting elements per character")
+    parser.add_argument("--num_random_people", type=int, default=5,
+                        help="Number of random people to select")
+    parser.add_argument("--num_random_crimes", type=int, default=3,
+                        help="Number of random crimes to select")
+    parser.add_argument("--num_random_places", type=int, default=3,
+                        help="Number of random places to select")
     args = parser.parse_args()
 
     config = StoryConfig(
@@ -22,6 +28,9 @@ def main():
         num_suspicious_elements=args.num_suspicious,
         num_proving_innocence_elements=args.num_innocence,
         num_distracting_elements=args.num_distracting,
+        num_random_people=args.num_random_people,
+        num_random_crimes=args.num_random_crimes,
+        num_random_places=args.num_random_places,
     )
 
     for i in range(config.num_stories):
