@@ -189,7 +189,7 @@ def create_question(story: Story):
     characters = [story.killer] + [ds.character_name for ds in story.distractor_stories]
     random.shuffle(characters)
     
-    story.question = f"Given the story you have just read, who is guilty of killing {story.victim}?"
+    story.question = f"Given the story you have just read, who is guilty of killing {story.victim}?\n\nOnly one character had motive, means, and opportunity, and the other characters have successfully demonstrated their innocence."
     story.question_options = {chr(65 + i): character for i, character in enumerate(characters)}
 
 def present_question(story: Story, interactive_mode: bool = False):
