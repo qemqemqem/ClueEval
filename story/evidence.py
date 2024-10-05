@@ -33,9 +33,11 @@ class StoryElement:
     type_of_evidence: TypeOfEvidence = TypeOfEvidence.NARRATIVE
     when: WhenInTime = WhenInTime.UNKNOWN
     murder_element: MurderElement = None
+    concealed: bool = False  # True if it's an element that shows up in the true story, False if it's in the story told to the detective
 
     def __str__(self):
+        concealed_txt = "[CONCEALED] " if self.concealed else ""
         if self.type_of_evidence == TypeOfEvidence.NARRATIVE:
-            return f"[{self.when.name.upper()}]\t{self.text}"
+            return f"{concealed_txt}[{self.when.name.upper()}]\t{self.text}"
         me_txt = f"{self.murder_element.name} -- " if self.murder_element else ""
-        return f"[{self.when.name.upper()}]\t{self.text} ({me_txt}{self.type_of_evidence.name} for {self.target})"
+        return f"{concealed_txt}[{self.when.name.upper()}]\t{self.text} ({me_txt}{self.type_of_evidence.name} for {self.target})"
