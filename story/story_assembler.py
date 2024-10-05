@@ -88,7 +88,7 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
                 type_of_evidence=TypeOfEvidence.SUGGESTS_INNOCENCE,
                 when=character_element.when,
             )
-            final_elements.insert(insert_index, protest_element)
+            final_elements.insert(insert_index + 1, protest_element)
 
     # Display the final list of elements
     display_story_elements(final_elements, title="Assembled Story Elements")
