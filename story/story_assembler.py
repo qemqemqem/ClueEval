@@ -78,21 +78,17 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
     # Add narrative elements for each character protesting their innocence
     for character in characters:
         character_elements = [e for e in final_elements if e.speaker == character]
+        character_element = random.choice(character_elements)
         if character_elements:
-            insert_index = final_elements.index(character_elements[0])
+            insert_index = final_elements.index(character_element)
             protest_element = StoryElement(
                 text=f"{character} protests that they are innocent.",
-                target="",
-                type_of_evidence=TypeOfEvidence.NARRATIVE,
-                when=character_elements[0].when,
-                speaker=character
+                speaker=character,
+                target=character,
+                type_of_evidence=TypeOfEvidence.SUGGESTS_INNOCENCE,
+                when=character_element.when,
             )
             final_elements.insert(insert_index, protest_element)
-
-    # Get a random character element
-    random_character_element = get_random_character_element(final_elements)
-    if random_character_element:
-        display_story_elements([random_character_element], title="Random Character Element")
 
     # Display the final list of elements
     display_story_elements(final_elements, title="Assembled Story Elements")
