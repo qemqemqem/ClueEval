@@ -123,14 +123,11 @@ def write_prose(story: Story):
             insert_index = next((i for i, e in enumerate(story.new_story_details) if e.type_of_evidence != TypeOfEvidence.NARRATIVE), len(story.new_story_details))
             story.new_story_details.insert(insert_index, new_element)
 
-    add_narrative(f"The setting: {story.mystery_setting}", 'beginning')
-    add_narrative(f"The victim, {story.victim}, lies dead on the floor!", 'beginning')
+    add_narrative(f"The setting: {story.mystery_setting}. The victim, {story.victim}, lies dead on the floor!", 'beginning')
     add_narrative(f"Detective Detecto arrives at the scene of the crime. (Detecto is {story.detective_details})", 'beginning')
     characters = story.get_living_character_names_random()
-    add_narrative(f"There are only {len(characters)} people present: {', '.join(characters)}", 'beginning')
-    add_narrative("No one else could possibly have been here.", 'beginning')
-    add_narrative("The detective begins to poke around and ask questions.", 'beginning')
-    add_narrative("And this is what the detective learns, from clues and from talking to the people present:", 'beginning')
+    add_narrative(f"There are only {len(characters)} people present: {', '.join(characters)}. No one else could possibly have been here.", 'beginning')
+    add_narrative("The detective begins to poke around and ask questions. And this is what the detective learns, from clues and from talking to the people present:", 'beginning')
     add_narrative("It must be one of these suspects, and Detecto knows just who it is.", 'end')
 
     display_story_elements(story.new_story_details, title="New Story Details")
@@ -161,13 +158,16 @@ def create_question(story: Story):
     story.question = f"Given the story you have just read, who is guilty of killing {story.victim}?"
     story.question_options = {chr(65 + i): character for i, character in enumerate(characters)}
 
-def present_question(story: Story):
+def present_question(story: Story, interactive_mode: bool = False):
     display_story_element(story.question, title="Question")
     options = [f"{key}: {value}" for key, value in story.question_options.items()]
     display_bullet_points(options, title="Suspects")
     
     while True:
         user_input = input("Enter your answer (A, B, C, or D): ").upper()
+        if not interactive_mode:
+            display_text("Interactive mode disabled. Answering automatically.")
+            break
         if user_input in story.question_options:
             if story.question_options[user_input] == story.killer:
                 display_text("Correct! You've identified the killer.")
@@ -179,7 +179,7 @@ def present_question(story: Story):
 
     display_bullet_points([str(rfi) for rfi in story.reasons_for_innocence], title="Reasoning")
 
-def create_story():
+def create_story(interactive_mode: bool = False):
     # Get random story details
     story = get_random_details()
     display_story_element(story.summary, title="Story Summary " + story.title)
@@ -198,7 +198,7 @@ def create_story():
 
     # Create and present the question
     create_question(story)
-    present_question(story)
+    present_question(story, interactive_mode)
 
     # Save the story to a file
     save_story_to_file(story)
