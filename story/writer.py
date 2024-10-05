@@ -2,7 +2,7 @@ from story.story import Story, CharacterStory
 from story.random_details import get_random_details
 from story.story_assembler import assemble_details
 from story.story_elements import get_elements, generate_innocuous_details
-from story.evidence import StoryElement, TypeOfEvidence, WhenInTime
+from story.evidence import StoryElement, TypeOfEvidence, WhenInTime, MurderElement
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_text, display_story_elements, display_bullet_points
 from utils.save_to_file import save_story_to_file
