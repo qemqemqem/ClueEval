@@ -77,7 +77,7 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
         if character_elements:
             insert_index = final_elements.index(character_elements[0])
             protest_element = StoryElement(
-                text=f"{character} vehemently protests their innocence.",
+                text=f"{character} protests that they are innocent.",
                 target="",
                 type_of_evidence=TypeOfEvidence.NARRATIVE,
                 when=character_elements[0].when,
