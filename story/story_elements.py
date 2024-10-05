@@ -5,7 +5,7 @@ from utils.gpt import prompt_completion_json
 import json
 
 
-def get_elements(story: str, speaking_character: str, first_person: bool = False) -> list[StoryElement]:
+def get_elements(story: str, speaking_character: str, first_person: bool = False, concealed: bool = False) -> list[StoryElement]:
     which_person = f"Write in the first person, from {speaking_character}'s perspective. " if first_person else "Write in the third person."
 
     prompt = f"""
@@ -65,7 +65,7 @@ def get_elements(story: str, speaking_character: str, first_person: bool = False
                     print(f"Warning: Invalid when value '{elem['when']}'. Using default.")
                     when = WhenInTime.UNKNOWN
                 
-                story_elements.append(StoryElement(text=text, type_of_evidence=type_of_evidence, target=target, when=when, speaker=speaking_character))
+                story_elements.append(StoryElement(text=text, type_of_evidence=type_of_evidence, target=target, when=when, speaker=speaking_character, concealed=concealed))
 
             return story_elements
         except json.JSONDecodeError:

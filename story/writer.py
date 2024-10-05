@@ -102,9 +102,7 @@ def add_murder_elements(elements: List[StoryElement], character_story: Character
             )
 
 def stories_to_elements(story: Story):
-    story.crime_story.real_story_elements = get_elements(story.crime_story.real_story, story.killer)
-    for element in story.crime_story.real_story_elements:
-        element.concealed = True
+    story.crime_story.real_story_elements = get_elements(story.crime_story.real_story, story.killer, concealed=True)
     display_story_elements(story.crime_story.real_story_elements, title="Crime Story Real Story Elements")
     
     story.crime_story.story_to_detective_elements = get_elements(story.crime_story.story_to_detective, story.killer, first_person=True)
@@ -120,9 +118,7 @@ def stories_to_elements(story: Story):
     add_murder_elements(story.crime_story.real_story_elements, story.crime_story, story.killer)
     
     for i, ds in enumerate(story.distractor_stories):
-        ds.real_story_elements = get_elements(ds.real_story, ds.character_name)
-        for element in ds.real_story_elements:
-            element.concealed = True
+        ds.real_story_elements = get_elements(ds.real_story, ds.character_name, concealed=True)
         display_story_elements(ds.real_story_elements, title=f"{ds.character_name}'s Story, Real Story Elements")
 
         ds.story_to_detective_elements = get_elements(ds.story_to_detective, ds.character_name, first_person=True)
