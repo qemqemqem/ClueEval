@@ -1,11 +1,12 @@
 import os
 import json
+from enum import Enum
 from story.story import Story
 from story.evidence import StoryElement, TypeOfEvidence, WhenInTime
 
 class StoryEncoder(json.JSONEncoder):
     def default(self, obj):
-        if isinstance(obj, (TypeOfEvidence, WhenInTime)):
+        if isinstance(obj, Enum):
             return obj.value
         return super().default(obj)
 
