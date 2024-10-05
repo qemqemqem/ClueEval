@@ -59,7 +59,6 @@ def write_stories(story: Story, config: StoryConfig):
 
     # Generate distractor stories for other characters
     other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
-    other_characters = other_characters[:config.max_distractor_stories]  # Limit the number of distractor stories
     murder_summary = story.crime_story.real_story
     
     for character in other_characters:
