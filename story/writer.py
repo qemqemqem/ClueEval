@@ -5,7 +5,7 @@ from story.story_elements import get_elements, generate_innocuous_details
 from story.evidence import StoryElement, TypeOfEvidence, WhenInTime, MurderElement
 from typing import List
 from utils.gpt import prompt_completion_chat
-from utils.display_interface import display_story_element, display_text, display_story_elements, display_bullet_points
+from utils.display_interface import display_story_element, display_text, display_story_elements, display_bullet_points, start_recording, end_recording, get_recording
 from utils.save_to_file import save_story_to_file
 from config.story_config import StoryConfig
 import random
@@ -212,6 +212,8 @@ def present_question(story: Story, interactive_mode: bool = False):
     display_bullet_points([str(rfi) for rfi in story.reasons_for_guilt_and_innocence], title="Reasoning")
 
 def create_story(config: StoryConfig):
+    start_recording()
+    
     # Get random story details
     story = get_random_details(config)
     story.config = config
@@ -232,6 +234,10 @@ def create_story(config: StoryConfig):
     # Create and present the question
     create_question(story)
     present_question(story, config.interactive_mode)
+
+    # Get the recording
+    story.creation_steps = get_recording()
+    end_recording()
 
     # Save the story to a file
     save_story_to_file(story)
