@@ -21,9 +21,10 @@ class WhenInTime(Enum):
 
 @dataclass
 class StoryElement:
-    text: str
-    target: str
-    type_of_evidence: TypeOfEvidence
+    text: str  # Prose
+    target: str  # Who the evidence is about
+    speaker: str = ""  # Whose story does this belong to?
+    type_of_evidence: TypeOfEvidence = TypeOfEvidence.NARRATIVE
     when: WhenInTime = WhenInTime.UNKNOWN
 
     def __str__(self):

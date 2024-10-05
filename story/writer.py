@@ -78,42 +78,32 @@ def write_stories(story: Story):
 
 
 def stories_to_elements(story: Story):
-    story.crime_story.real_story_elements = convert_story_to_story_elements(story.crime_story.real_story)
+    story.crime_story.real_story_elements = convert_story_to_story_elements(story.crime_story.real_story, story.killer)
     display_story_elements(story.crime_story.real_story_elements, title="Crime Story Real Story Elements")
     story.crime_story.story_to_detective_elements = convert_story_to_story_elements(
-        story.crime_story.story_to_detective)
+        story.crime_story.story_to_detective, story.killer)
     display_story_elements(story.crime_story.story_to_detective_elements, title="Crime Story Detective Story Elements")
-    
-    if story.crime_story.clues_that_prove_innocence:
-        story.crime_story.clues_that_prove_innocence_elements = convert_story_to_story_elements(
-            story.crime_story.clues_that_prove_innocence)
-        display_story_elements(story.crime_story.clues_that_prove_innocence_elements, 
-                               title="Crime Story Clues that Prove Innocence")
-    
+
+    assert not story.crime_story.clues_that_prove_innocence, "The crime story has no clues that prove innocence, as it is the true story of the crime."
+
     # Generate innocuous details for the crime story
     story.crime_story.innocuous_elements = generate_innocuous_details(story.crime_story.real_story, story.killer)
     display_story_elements(story.crime_story.innocuous_elements, title="Crime Story Innocuous Details")
     
-    for i, distractor_story in enumerate(story.distractor_stories):
-        distractor_story.real_story_elements = convert_story_to_story_elements(distractor_story.real_story)
-        display_story_elements(distractor_story.real_story_elements,
-                               title=f"{distractor_story.character_name}'s Story, Real Story Elements")
+    for i, ds in enumerate(story.distractor_stories):
+        ds.real_story_elements = convert_story_to_story_elements(ds.real_story, ds.character_name)
+        display_story_elements(ds.real_story_elements, title=f"{ds.character_name}'s Story, Real Story Elements")
 
-        distractor_story.story_to_detective_elements = convert_story_to_story_elements(
-            distractor_story.story_to_detective)
-        display_story_elements(distractor_story.story_to_detective_elements,
-                               title=f"{distractor_story.character_name}'s Story, Detective Story Elements")
+        ds.story_to_detective_elements = convert_story_to_story_elements(ds.story_to_detective, ds.character_name)
+        display_story_elements(ds.story_to_detective_elements, title=f"{ds.character_name}'s Story, Detective Story Elements")
         
-        if distractor_story.clues_that_prove_innocence:
-            distractor_story.clues_that_prove_innocence_elements = convert_story_to_story_elements(
-                distractor_story.clues_that_prove_innocence)
-            display_story_elements(distractor_story.clues_that_prove_innocence_elements,
-                                   title=f"{distractor_story.character_name}'s Story, Clues that Prove Innocence")
+        if ds.clues_that_prove_innocence:
+            ds.clues_that_prove_innocence_elements = convert_story_to_story_elements(ds.clues_that_prove_innocence, ds.character_name)
+            display_story_elements(ds.clues_that_prove_innocence_elements, title=f"{ds.character_name}'s Story, Clues that Prove Innocence")
         
         # Generate innocuous details for each distractor story
-        distractor_story.innocuous_elements = generate_innocuous_details(distractor_story.real_story, distractor_story.character_name)
-        display_story_elements(distractor_story.innocuous_elements, 
-                               title=f"{distractor_story.character_name}'s Story, Innocuous Details")
+        ds.innocuous_elements = generate_innocuous_details(ds.real_story, ds.character_name)
+        display_story_elements(ds.innocuous_elements, title=f"{ds.character_name}'s Story, Innocuous Details")
 
 
 def write_prose(story: Story):

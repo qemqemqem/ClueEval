@@ -45,7 +45,7 @@ def save_story_to_file(story: Story):
         
         f.write("## Story Details\n\n")
         f.write("```json\n")
-        f.write(json.dumps([element.__dict__ for element in story.new_story_details], indent=4, cls=StoryEncoder))
+        f.write(json.dumps([element.__dict__ for element in story.new_story_details], cls=StoryEncoder))
         f.write("\n```")
 
     print(f"Story saved to {filename}")
