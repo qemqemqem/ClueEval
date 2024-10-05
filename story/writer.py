@@ -139,8 +139,6 @@ def stories_to_elements(story: Story):
         # Add means, motive, and opportunity as StoryElements for each distractor story
         add_murder_elements(ds.real_story_elements, ds, ds.character_name)
 
-    # display_bullet_points()
-
 
 def write_prose(story: Story):
     # Load the full prose prompt
