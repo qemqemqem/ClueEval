@@ -122,7 +122,7 @@ def write_prose(story: Story):
             insert_index = next((i for i, e in enumerate(story.new_story_details) if e.type_of_evidence != TypeOfEvidence.NARRATIVE), len(story.new_story_details))
             story.new_story_details.insert(insert_index, new_element)
 
-    add_narrative(f"The setting: {story.mystery_setting}. The victim, {story.victim}, lies dead on the floor!", 'beginning')
+    add_narrative(f"The setting: {story.mystery_setting}. The victim, {story.victim}, lies dead on the floor in the {story.crime_location}! They were clearly murdered with {story.crime_weapon} (describe blood, etc).", 'beginning')
     add_narrative(f"Detective Detecto arrives at the scene of the crime. (Detecto is {story.detective_details})", 'beginning')
     characters = story.get_living_character_names_random()
     add_narrative(f"There are only {len(characters)} people present: {', '.join(characters)}. No one else could possibly have been here.", 'beginning')
@@ -164,7 +164,7 @@ def present_question(story: Story, interactive_mode: bool = False):
     
     while True:
         if not interactive_mode:
-            display_text("Interactive mode disabled.")
+            display_text(f"Interactive mode disabled. The killer was {story.killer}.")
             break
         user_input = input("Enter your answer (A, B, C, or D): ").upper()
         if user_input in story.question_options:

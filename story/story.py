@@ -36,9 +36,9 @@ class Story:
     random_people: List[str]
     killer: str
     victim: str
-    crime_weapon: str
-    crime_location: str
-    mystery_setting: str
+    crime_weapon: str  # The murder weapon
+    crime_location: str  # Where the murder occurred
+    mystery_setting: str  # The general setting, like a remote town
 
     # Flavor
     character_details: dict[str, str] = field(default_factory=dict)
