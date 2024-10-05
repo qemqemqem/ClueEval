@@ -26,11 +26,11 @@ def get_recording():
 def _record(content: str, title: str = None):
     if _is_recording:
         if "\n#" in content:
-            content = content.replace("\n#", "\n####")
+            content = content.replace("\n#", "\n##")
         if title:
-            _recording.append(f"### {title}\n\n{content}")
+            _recording.append(f"# {title}\n\n{content}")
         else:
-            _recording.append(f"### Note\n\n{content}")
+            _recording.append(f"# Note\n\n{content}")
 
 def display_story_element(text: str, title: str = None, style: str = "cyan") -> None:
     """

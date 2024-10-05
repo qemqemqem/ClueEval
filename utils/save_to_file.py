@@ -22,15 +22,12 @@ def save_story_to_file(story: Story, creation_steps: str = ""):
     # Create directories
     os.makedirs("generated_questions", exist_ok=True)
     os.makedirs("story_creation_logs", exist_ok=True)
-    
-    # Generate a unique identifier for the story
-    story_id = hashlib.md5(story.title.encode()).hexdigest()[:8]
-    
+
     # Save to Markdown file
-    filename = f"generated_questions/{story_id}_{story.title.replace(' ', '_')}.md"
+    filename = f"generated_questions/{story.title.replace(' ', '_')}.md"
     
     # Save full creation steps to a separate file
-    creation_steps_filename = f"story_creation_logs/{story_id}_creation_steps.txt"
+    creation_steps_filename = f"story_creation_logs/{story.title.replace(' ', '_')}.md"
     with open(creation_steps_filename, 'w') as f:
         f.write(creation_steps)
     
