@@ -7,11 +7,14 @@ def create_simple_jsonl():
     with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
         for line in infile:
             data = json.loads(line)
-            
+
+            print(data["options"])
+            print(list(data["options"].values()))
+
             simple_data = {
                 "question": data["question"],
                 "choices": list(data["options"].values()),
-                "answer": list(data["options"].keys()).index(data["killer"])
+                "answer": list(data["options"].values()).index(data["killer"])
             }
             
             json.dump(simple_data, outfile)
