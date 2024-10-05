@@ -14,6 +14,12 @@ client = OpenAI(
 # Set up your OpenAI API key
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
+default_model = "gpt-4o-mini"
+
+def set_default_model(model_name: str):
+    global default_model
+    default_model = model_name
+
 
 def prompt_completion(question, engine="davinci-instruct-beta", max_tokens=64, temperature=1.0, n=1, stop=None, return_top_n: int = None, ideal_length=None, collapse_newlines=True, throwaway_empties=True):
     if stop is None:

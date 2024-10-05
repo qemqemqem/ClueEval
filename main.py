@@ -1,6 +1,7 @@
 import argparse
 from story.writer import create_story
 from config.story_config import StoryConfig
+from utils.gpt import set_default_model
 
 
 def main():
@@ -21,7 +22,11 @@ def main():
                         help="Number of random suspicious items to be in the story. One of them will be the murder weapon. I find that a high value tends to cause too much discussion of random distracting items.")
     parser.add_argument("--num_random_places", type=int, default=3,
                         help="Number of random places to select, like rooms or other settings")
+    parser.add_argument("--default_model", type=str, default="gpt-4o-mini",
+                        help="Default model to use for GPT completions")
     args = parser.parse_args()
+
+    set_default_model(args.default_model)
 
     config = StoryConfig(
         interactive_mode=args.interactive_mode,
