@@ -38,12 +38,19 @@ ClueEval creates mystery stories that theoretically test deductive reasoning abi
    export OPENAI_API_KEY='your-api-key-here'
    ```
 
-5. Run the main script:
+5. Run the main script (interactive mode):
    ```
-   python main.py
+   python main.py --interactive_mode
    ```
    
    This will give you a mystery to solve. Read it and decide who you think is the killer!
+
+6. Run the main script (generation mode):
+   ```
+   python main.py 10
+   ```
+   
+   This will generate 10 mysteries, and store them in `generated_questions`. Beware that each generation will take a couple of minutes, as there is a lot of back and forth with an LLM.
 
 ## Project Structure
 
