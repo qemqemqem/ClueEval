@@ -80,7 +80,7 @@ def write_stories(story: Story):
 
 def add_murder_elements(elements: List[StoryElement], character_story: CharacterStory, character_name: str) -> None:
     def is_valid_text(text: str) -> bool:
-        return text and text.lower() != "none" and "none" not in text.lower()
+        return text and text.lower() != "none" and "None" not in text[:20]
 
     murder_elements = [
         (character_story.motive, MurderElement.MOTIVE),
@@ -133,6 +133,8 @@ def stories_to_elements(story: Story):
 
         # Add means, motive, and opportunity as StoryElements for each distractor story
         add_murder_elements(ds.real_story_elements, ds, ds.character_name)
+
+    # display_bullet_points()
 
 
 def write_prose(story: Story):
