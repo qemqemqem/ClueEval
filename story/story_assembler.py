@@ -57,10 +57,15 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
                 killer_elements = character_elements
 
     # Add note about killer's means, motive, and opportunity
-    note = "Note: Only one character had a means, motive, and opportunity. Here are the details for the killer:"
+    note = StoryElement(
+        text="Note: Only one character had a means, motive, and opportunity. Here are the details for the killer:",
+        target="",
+        type_of_evidence=TypeOfEvidence.NARRATIVE,
+        when=WhenInTime.UNKNOWN,
+        speaker=""
+    )
     story.reasons_for_guilt_and_innocence.append(note)
-    for element in killer_elements:
-        story.reasons_for_guilt_and_innocence.append(str(element))
+    story.reasons_for_guilt_and_innocence.extend(killer_elements)
 
     # Add distracting elements
     final_elements.extend(random.sample(distracting, min(num_distracting, len(distracting))))
