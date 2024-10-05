@@ -88,6 +88,34 @@ def stories_to_elements(story: Story):
     # Generate innocuous details for the crime story
     story.crime_story.innocuous_elements = generate_innocuous_details(story.crime_story.real_story, story.killer)
     display_story_elements(story.crime_story.innocuous_elements, title="Crime Story Innocuous Details")
+
+    # Add means, motive, and opportunity as StoryElements for the crime story
+    story.crime_story.real_story_elements.extend([
+        StoryElement(
+            text=story.crime_story.motive,
+            target=story.killer,
+            type_of_evidence=TypeOfEvidence.SUGGESTS_GUILT,
+            when=WhenInTime.BEFORE_CRIME,
+            speaker=story.killer,
+            murder_element=MurderElement.MOTIVE
+        ),
+        StoryElement(
+            text=story.crime_story.means,
+            target=story.killer,
+            type_of_evidence=TypeOfEvidence.SUGGESTS_GUILT,
+            when=WhenInTime.BEFORE_CRIME,
+            speaker=story.killer,
+            murder_element=MurderElement.MEANS
+        ),
+        StoryElement(
+            text=story.crime_story.opportunity,
+            target=story.killer,
+            type_of_evidence=TypeOfEvidence.SUGGESTS_GUILT,
+            when=WhenInTime.BEFORE_CRIME,
+            speaker=story.killer,
+            murder_element=MurderElement.OPPORTUNITY
+        )
+    ])
     
     for i, ds in enumerate(story.distractor_stories):
         ds.real_story_elements = get_elements(ds.real_story, ds.character_name)
@@ -103,6 +131,34 @@ def stories_to_elements(story: Story):
         # Generate innocuous details for each distractor story
         ds.innocuous_elements = generate_innocuous_details(ds.real_story, ds.character_name)
         display_story_elements(ds.innocuous_elements, title=f"{ds.character_name}'s Story, Innocuous Details")
+
+        # Add means, motive, and opportunity as StoryElements for each distractor story
+        ds.real_story_elements.extend([
+            StoryElement(
+                text=ds.motive,
+                target=ds.character_name,
+                type_of_evidence=TypeOfEvidence.SUGGESTS_GUILT,
+                when=WhenInTime.BEFORE_CRIME,
+                speaker=ds.character_name,
+                murder_element=MurderElement.MOTIVE
+            ),
+            StoryElement(
+                text=ds.means,
+                target=ds.character_name,
+                type_of_evidence=TypeOfEvidence.SUGGESTS_GUILT,
+                when=WhenInTime.BEFORE_CRIME,
+                speaker=ds.character_name,
+                murder_element=MurderElement.MEANS
+            ),
+            StoryElement(
+                text=ds.opportunity,
+                target=ds.character_name,
+                type_of_evidence=TypeOfEvidence.SUGGESTS_GUILT,
+                when=WhenInTime.BEFORE_CRIME,
+                speaker=ds.character_name,
+                murder_element=MurderElement.OPPORTUNITY
+            )
+        ])
 
 
 def write_prose(story: Story):
