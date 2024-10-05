@@ -181,7 +181,7 @@ def present_question(story: Story, interactive_mode: bool = False):
 def create_story(interactive_mode: bool = False):
     # Get random story details
     story = get_random_details()
-    display_story_element(story.summary, title="Story Summary " + story.title)
+    display_story_element(story.summary, title="Story Summary: " + story.title)
 
     # Write stories
     story = write_stories(story)
