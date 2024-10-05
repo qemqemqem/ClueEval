@@ -60,9 +60,7 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
     note = StoryElement(
         text="Note: Only one character had a means, motive, and opportunity. Here are the details for the killer:",
         target="",
-        type_of_evidence=TypeOfEvidence.NARRATIVE,
-        when=WhenInTime.UNKNOWN,
-        speaker=""
+        type_of_evidence=TypeOfEvidence.NARRATIVE
     )
     story.reasons_for_guilt_and_innocence.append(note)
     story.reasons_for_guilt_and_innocence.extend(killer_elements)
