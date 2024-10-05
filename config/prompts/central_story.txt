@@ -4,7 +4,9 @@ I'm writing a mystery story. Here's a summary of what it involves:
 
 I want to have a true story of what happened when {{killer}} killed {{victim}}. This story won't be presented to the reader clearly, but I want to have it in my mind so that I can write the story with more depth and detail. I want to know what happened, why it happened, and how it happened. I want to know the killer's motive, the victim's personality, and the circumstances. The deed should not be obvious to other characters in the story, as befits a good murder mystery story.
 
-Write a three paragraph story detailing how the killer killed the victim. Write clearly and stick to the facts, because this is for my notes, not for the reader.
+Guidance:
+
+* In the Motive, Means, and Opportunity, don't comment on the murder, and don't outright say that {{killer}} committed a crime. Instead, just speak to the motive, just the means, or just the opportunity, using simple, non-flowery language.
 
 Fill out this form:
 
@@ -16,7 +18,7 @@ Opportunity: When was {{victim}} vulnerable to attack?
 
 # What Happened
 
-Then write a three paragraph story explaining what happened. The first paragraph should outline what they were doing before the murder, the second paragraph should explain where they were when the murder occurred, and the third paragraph should explain what they did afterward.
+Write a three paragraph story detailing how the killer killed the victim. Write clearly and stick to the facts, because this is for my notes, not for the reader. The first paragraph should outline what they were doing before the murder, the second paragraph should explain where they were when the murder occurred, and the third paragraph should explain what they did afterward.
 
 # Explanation to Detective
 

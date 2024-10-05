@@ -12,9 +12,11 @@ I also know a little bit about what happens to some of the other characters.
 
 Now, I want to focus on {{character}}. What were they doing in all this? They were innocent, but their actions make them seem suspicious.
 
-Write a three paragraph story detailing what {{character}} was doing in all this. Write a summary of their actions, keeping in mind that they are innocent but suspicious. Write clearly and stick to the facts, because this is for my notes, not for the reader. {{character}} has either a Motive and Means but no Opportunity, or an Opportunity and Means but no Motive, or an Opportunity and Motive but no Means. They do not have all three.
+Guidance
 
-Make sure this character acts suspiciously, as befits a real murder mystery!
+* {{character}} has either a Motive and Means but no Opportunity, or an Opportunity and Means but no Motive, or an Opportunity and Motive but no Means. They do not have all three.
+* In the Motive, Means, and Opportunity, use simple, non-flowery language.
+* Make sure this character acts suspiciously, as befits a real murder mystery!
 
 Fill out this form:
 
@@ -27,7 +29,7 @@ Opportunity: When was the victim vulnerable to attack? (or simply write "None")
 
 # What Happened
 
-Then write a three paragraph story describing what {{character}} was up to in all this. The first paragraph should outline what they were doing before the murder, the second paragraph should explain where they were when the murder occurred, and the third paragraph should explain what they did afterward.
+Write a three paragraph story detailing what {{character}} was doing in all this. Write a summary of their actions, keeping in mind that they are innocent but suspicious. Write clearly and stick to the facts, because this is for my notes, not for the reader. The first paragraph should outline what they were doing before the murder, the second paragraph should explain where they were when the murder occurred, and the third paragraph should explain what they did afterward.
 
 # Explanation to Detective
 
