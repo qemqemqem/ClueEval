@@ -41,3 +41,11 @@ class StoryElement:
             return f"{concealed_txt}[{self.when.name.upper()}]\t{self.text}"
         me_txt = f"{self.murder_element.name} -- " if self.murder_element else ""
         return f"{concealed_txt}[{self.when.name.upper()}]\t{self.text} ({me_txt}{self.type_of_evidence.name} for {self.target})"
+
+    def __post_init__(self):
+        if self.type_of_evidence == TypeOfEvidence.NARRATIVE:
+            self.target = ""
+            self.speaker = ""
+            self.when = WhenInTime.NARRATIVE
+            self.murder_element = None
+            self.concealed = False
