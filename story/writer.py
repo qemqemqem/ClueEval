@@ -164,10 +164,10 @@ def present_question(story: Story, interactive_mode: bool = False):
     display_bullet_points(options, title="Suspects")
     
     while True:
-        user_input = input("Enter your answer (A, B, C, or D): ").upper()
         if not interactive_mode:
-            display_text("Interactive mode disabled. Answering automatically.")
+            display_text("Interactive mode disabled.")
             break
+        user_input = input("Enter your answer (A, B, C, or D): ").upper()
         if user_input in story.question_options:
             if story.question_options[user_input] == story.killer:
                 display_text("Correct! You've identified the killer.")
