@@ -2,6 +2,8 @@ import random
 import os
 import string
 import re
+
+from config.story_config import StoryConfig
 from story.story import Story
 from utils.display_interface import display_text
 from utils.str_utils import unindent
@@ -21,10 +23,10 @@ def get_random_details(config: StoryConfig) -> Story:
     mystery_settings = load_elements('mystery_settings.txt')
 
     # Sample random people
-    random_people = random.sample(person_elements, config.num_random_people)  # The first two are the killer and victim
+    random_people = random.sample(person_elements, config.num_random_people + 2)  # The first two are the killer and victim
     killer, victim = random_people[0], random_people[1]
 
-    random_crimes = random.sample(crime_elements, config.num_random_crimes)
+    random_crimes = random.sample(crime_elements, config.num_random_crimes)  # One of these will be the murder weapon
     random_places = random.sample(place_elements, config.num_random_places)
 
     # Select specific crime weapon, location, and setting
