@@ -5,7 +5,7 @@ from utils.gpt import prompt_completion_json
 import json
 
 
-def convert_story_to_story_elements(story: str) -> list[StoryElement]:
+def convert_story_to_story_elements(story: str, speaking_character: str) -> list[StoryElement]:
     prompt = f"""
     Convert the following story into a list of story elements. Each element should be a single fact or event from the story, classified according to its relevance to the mystery and when it occurred in relation to the crime.
 
@@ -63,7 +63,7 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
                     print(f"Warning: Invalid when value '{elem['when']}'. Using default.")
                     when = WhenInTime.UNKNOWN
                 
-                story_elements.append(StoryElement(text=text, type_of_evidence=type_of_evidence, target=target, when=when, speaker=""))
+                story_elements.append(StoryElement(text=text, type_of_evidence=type_of_evidence, target=target, when=when, speaker=speaking_character))
 
             return story_elements
         except json.JSONDecodeError:
@@ -109,7 +109,7 @@ Innocuous details never introduce a new character or location, and they don't in
                 target=central_character,
                 type_of_evidence=TypeOfEvidence.INNOCUOUS,
                 when=WhenInTime(detail['when']),
-                speaker=""
+                speaker=central_character,
             )
             for detail in details
         ]
