@@ -4,6 +4,10 @@ from utils.display_interface import display_story_elements
 from collections import defaultdict
 import random
 
+def get_random_character_element(elements):
+    character_elements = [e for e in elements if e.speaker != "Narrator"]
+    return random.choice(character_elements) if character_elements else None
+
 def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int = 1, num_distracting: int = 5):
     all_elements = []
     characters = [story.killer] + [ds.character_name for ds in story.distractor_stories]
@@ -84,6 +88,11 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
                 speaker=character
             )
             final_elements.insert(insert_index, protest_element)
+
+    # Get a random character element
+    random_character_element = get_random_character_element(final_elements)
+    if random_character_element:
+        display_story_elements([random_character_element], title="Random Character Element")
 
     # Display the final list of elements
     display_story_elements(final_elements, title="Assembled Story Elements")
