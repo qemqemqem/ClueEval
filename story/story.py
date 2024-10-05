@@ -58,6 +58,7 @@ class Story:
     new_story_details: list[StoryElement] = field(default_factory=list)
     reasons_for_guilt_and_innocence: list[StoryElement] = field(default_factory=list)
     full_prose: str = ""
+    full_prose_prefix: str = ""  # A helpful summary at the top, for the reader
 
     question: str = ""
     question_options: dict = field(default_factory=dict)

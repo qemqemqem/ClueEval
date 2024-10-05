@@ -165,7 +165,8 @@ def write_prose(story: Story):
 
     outline = []
     for element in story.new_story_details:
-        concealed_text = " (concealed from detective)" if element.concealed and element.murder_element else ""
+        # concealed_text = " (concealed from detective)" if element.concealed and element.murder_element else ""
+        concealed_text = ""  # This seems to confuse the output
         outline.append(f"- {element.speaker}{concealed_text}:\t{element.text}")
 
     outline = "\n".join(outline)
