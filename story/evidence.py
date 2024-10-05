@@ -47,7 +47,7 @@ class StoryElement:
     def __post_init__(self):
         if self.type_of_evidence == TypeOfEvidence.NARRATIVE:
             self.target = ""
-            self.speaker = ""
+            self.speaker = "Narrator"
             self.when = WhenInTime.NARRATIVE
             self.murder_element = None
             self.concealed = False

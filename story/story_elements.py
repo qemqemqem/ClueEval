@@ -78,7 +78,7 @@ def get_elements(story: str, speaking_character: str, first_person: bool = False
 
 def generate_innocuous_details(story: str, central_character: str) -> list[StoryElement]:
     prompt = f"""
-Given the following story, generate 5 innocuous details that don't suggest or prove anything about the crime. These should be minor, unrelated facts that add color to the story but aren't relevant to solving the mystery. Also, indicate when each detail occurred in relation to the crime.
+Given the following story, generate 5 innocuous details that don't suggest or prove anything about the crime. These should be minor, unrelated facts that add color to the story but aren't relevant to solving the mystery, such as descriptions of the scenery. Also, indicate when each detail occurred in relation to the crime.
 
 Story:
 {story}
