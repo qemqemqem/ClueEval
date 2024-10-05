@@ -4,6 +4,7 @@ from datetime import datetime
 from enum import Enum
 from story.story import Story
 from story.evidence import StoryElement, TypeOfEvidence, WhenInTime
+import hashlib
 
 class StoryEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -20,9 +21,18 @@ def save_story_to_file(story: Story, creation_steps: str = ""):
     """
     # Create directories
     os.makedirs("generated_questions", exist_ok=True)
+    os.makedirs("story_creation_logs", exist_ok=True)
+    
+    # Generate a unique identifier for the story
+    story_id = hashlib.md5(story.title.encode()).hexdigest()[:8]
     
     # Save to Markdown file
-    filename = f"generated_questions/{story.title.replace(' ', '_')}.md"
+    filename = f"generated_questions/{story_id}_{story.title.replace(' ', '_')}.md"
+    
+    # Save full creation steps to a separate file
+    creation_steps_filename = f"story_creation_logs/{story_id}_creation_steps.txt"
+    with open(creation_steps_filename, 'w') as f:
+        f.write(creation_steps)
     
     with open(filename, 'w') as f:
         f.write(f"# {story.title}\n\n")
@@ -60,9 +70,8 @@ def save_story_to_file(story: Story, creation_steps: str = ""):
             f.write(f"{key} = {value}\n")
         f.write("```\n\n")
 
-        f.write("## Full Creation Steps\n\n")
-        f.write(creation_steps)
-        f.write("\n\n")
+        f.write("## Creation Steps\n\n")
+        f.write(f"Full creation steps can be found in: {creation_steps_filename}\n\n")
 
     print(f"Story saved to {filename}")
 
