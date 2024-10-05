@@ -63,7 +63,7 @@ def convert_story_to_story_elements(story: str) -> list[StoryElement]:
                     print(f"Warning: Invalid when value '{elem['when']}'. Using default.")
                     when = WhenInTime.UNKNOWN
                 
-                story_elements.append(StoryElement(text=text, type_of_evidence=type_of_evidence, target=target, when=when))
+                story_elements.append(StoryElement(text=text, type_of_evidence=type_of_evidence, target=target, when=when, speaker=""))
 
             return story_elements
         except json.JSONDecodeError:
@@ -108,7 +108,8 @@ Innocuous details never introduce a new character or location, and they don't in
                 text=detail['text'],
                 target=central_character,
                 type_of_evidence=TypeOfEvidence.INNOCUOUS,
-                when=WhenInTime(detail['when'])
+                when=WhenInTime(detail['when']),
+                speaker=""
             )
             for detail in details
         ]

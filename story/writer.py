@@ -125,7 +125,7 @@ def write_prose(story: Story):
     notes = story.summary + "\n\n" + "\n\n".join([f"{cs.character_name}'s Story to the Detective: \n\n{cs.story_to_detective}" for cs in [story.crime_story] + story.distractor_stories])
 
     def add_narrative(text, position='end'):
-        new_element = StoryElement(text=text, target="", type_of_evidence=TypeOfEvidence.NARRATIVE, when=WhenInTime.NARRATIVE)
+        new_element = StoryElement(text=text, target="", type_of_evidence=TypeOfEvidence.NARRATIVE, when=WhenInTime.NARRATIVE, speaker="")
         if position == 'end':
             story.new_story_details.append(new_element)
         elif position == 'beginning':
