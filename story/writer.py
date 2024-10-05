@@ -111,7 +111,7 @@ def stories_to_elements(story: Story):
     assert not story.crime_story.clues_that_prove_innocence, "The crime story has no clues that prove innocence, as it is the true story of the crime."
 
     # Generate innocuous details for the crime story
-    story.crime_story.innocuous_elements = generate_innocuous_details(story.crime_story.real_story, story.killer)
+    story.crime_story.innocuous_elements = generate_innocuous_details(story.crime_story.real_story, story.killer, config)
     display_story_elements(story.crime_story.innocuous_elements, title="Crime Story Innocuous Details")
 
     # Add means, motive, and opportunity as StoryElements for the crime story
@@ -129,7 +129,7 @@ def stories_to_elements(story: Story):
             display_story_elements(ds.clues_that_prove_innocence_elements, title=f"{ds.character_name}'s Story, Clues that Prove Innocence")
         
         # Generate innocuous details for each distractor story
-        ds.innocuous_elements = generate_innocuous_details(ds.real_story, ds.character_name)
+        ds.innocuous_elements = generate_innocuous_details(ds.real_story, ds.character_name, config)
         display_story_elements(ds.innocuous_elements, title=f"{ds.character_name}'s Story, Innocuous Details")
 
         # Add means, motive, and opportunity as StoryElements for each distractor story
