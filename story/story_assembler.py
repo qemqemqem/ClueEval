@@ -48,8 +48,8 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
     # Add distracting elements
     final_elements.extend(random.sample(distracting, min(num_distracting, len(distracting))))
 
-    # Sort the final elements by their WhenInTime value
-    final_elements.sort(key=lambda x: [WhenInTime.UNKNOWN, WhenInTime.BEFORE_CRIME, WhenInTime.DURING_CRIME, WhenInTime.AFTER_CRIME].index(x.when))
+    # Sort the final elements by their WhenInTime value and then by speaker
+    final_elements.sort(key=lambda x: ([WhenInTime.UNKNOWN, WhenInTime.BEFORE_CRIME, WhenInTime.DURING_CRIME, WhenInTime.AFTER_CRIME].index(x.when), x.speaker))
 
     # Display the final list of elements
     display_story_elements(final_elements, title="Assembled Story Elements")
