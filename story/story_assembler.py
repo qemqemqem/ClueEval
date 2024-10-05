@@ -71,6 +71,20 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
     # Sort the final elements by their WhenInTime value and then by speaker
     final_elements.sort(key=lambda x: ([WhenInTime.UNKNOWN, WhenInTime.BEFORE_CRIME, WhenInTime.DURING_CRIME, WhenInTime.AFTER_CRIME].index(x.when), x.speaker))
 
+    # Add narrative elements for each character protesting their innocence
+    for character in characters:
+        character_elements = [e for e in final_elements if e.speaker == character]
+        if character_elements:
+            insert_index = final_elements.index(character_elements[0])
+            protest_element = StoryElement(
+                text=f"{character} vehemently protests their innocence.",
+                target="",
+                type_of_evidence=TypeOfEvidence.NARRATIVE,
+                when=character_elements[0].when,
+                speaker=character
+            )
+            final_elements.insert(insert_index, protest_element)
+
     # Display the final list of elements
     display_story_elements(final_elements, title="Assembled Story Elements")
 
