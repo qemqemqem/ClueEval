@@ -12,4 +12,4 @@ class StoryConfig:
     # Add more configurable parameters here
 
     def __str__(self):
-        return "StoryConfig(" + ", ".join(f"{field.name}={getattr(self, field.name)}" for field in fields(self)) + ")"
+        return "StoryConfig(" + ", \n".join(f"{field.name} = {getattr(self, field.name)}" for field in fields(self)) + ")"

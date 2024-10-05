@@ -29,7 +29,7 @@ def save_story_to_file(story: Story):
         
         f.write("## Story Configuration\n\n")
         f.write("```python\n")
-        for key, value in vars(story.story_config).items():
+        for key, value in vars(story.config).items():
             f.write(f"{key} = {value}\n")
         f.write("```\n\n")
         
@@ -71,7 +71,7 @@ def save_story_to_file(story: Story):
         "killer": story.killer,
         "reasoning": [str(reason) for reason in story.reasons_for_guilt_and_innocence],
         "story_details": [element.__dict__ for element in story.new_story_details],
-        "story_config": vars(story.story_config)
+        "story_config": vars(story.config)
     }
     
     with open("generated_questions/all_questions.jsonl", "a") as f:

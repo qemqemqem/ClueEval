@@ -2,6 +2,7 @@ import random
 from dataclasses import dataclass, field
 from typing import List, Optional
 
+from config.story_config import StoryConfig
 from story.evidence import StoryElement
 
 
@@ -62,6 +63,8 @@ class Story:
 
     question: str = ""
     question_options: dict = field(default_factory=dict)
+
+    config: Optional[StoryConfig] = None
 
     def get_living_character_names_random(self):
         characters = [charo for charo in self.random_people if charo not in [self.victim]]
