@@ -1,4 +1,4 @@
-from story.evidence import TypeOfEvidence, StoryElement, WhenInTime
+from story.evidence import TypeOfEvidence, StoryElement, WhenInTime, MurderElement
 from story.story import Story
 from utils.display_interface import display_story_elements
 from collections import defaultdict

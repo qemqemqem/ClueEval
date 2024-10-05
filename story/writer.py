@@ -97,7 +97,8 @@ def add_murder_elements(elements: List[StoryElement], character_story: Character
                     type_of_evidence=TypeOfEvidence.SUGGESTS_GUILT,
                     when=WhenInTime.BEFORE_CRIME,
                     speaker=character_name,
-                    murder_element=murder_element
+                    murder_element=murder_element,
+                    concealed=True,
                 )
             )
 
