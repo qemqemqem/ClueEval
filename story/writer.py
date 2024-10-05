@@ -215,7 +215,7 @@ def create_story(config: StoryConfig):
     start_recording()
     
     # Get random story details
-    story = get_random_details(config)
+    story: Story = get_random_details(config)
     story.config = config
     display_story_element(story.summary, title="Story Summary: " + story.title)
 
@@ -236,11 +236,11 @@ def create_story(config: StoryConfig):
     present_question(story, config.interactive_mode)
 
     # Get the recording
-    story.creation_steps = get_recording()
+    creation_steps = get_recording()
     end_recording()
 
     # Save the story to a file
-    save_story_to_file(story)
+    save_story_to_file(story, creation_steps)
 
 
 if __name__ == '__main__':

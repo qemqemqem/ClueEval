@@ -11,7 +11,7 @@ class StoryEncoder(json.JSONEncoder):
             return obj.value
         return super().default(obj)
 
-def save_story_to_file(story: Story):
+def save_story_to_file(story: Story, creation_steps: str = ""):
     """
     Save a Story object to a Markdown file and append a JSON object to all_questions.jsonl.
     
@@ -60,9 +60,9 @@ def save_story_to_file(story: Story):
             f.write(f"{key} = {value}\n")
         f.write("```\n\n")
 
-        f.write("## Creation Steps\n\n")
+        f.write("## Full Creation Steps\n\n")
         f.write("```\n")
-        f.write(story.creation_steps)
+        f.write(creation_steps)
         f.write("```\n\n")
 
     print(f"Story saved to {filename}")
@@ -77,7 +77,7 @@ def save_story_to_file(story: Story):
         "reasoning": [str(reason) for reason in story.reasons_for_guilt_and_innocence],
         "story_details": [element.__dict__ for element in story.new_story_details],
         "story_config": vars(story.config),
-        "creation_steps": story.creation_steps
+        # "full_creation_steps": creation_steps
     }
     
     with open("generated_questions/all_questions.jsonl", "a") as f:

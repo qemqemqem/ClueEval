@@ -21,7 +21,7 @@ def end_recording():
     _is_recording = False
 
 def get_recording():
-    return "\n".join(_recording)
+    return "\n\n".join(_recording)
 
 def _record(content: str):
     if _is_recording:
