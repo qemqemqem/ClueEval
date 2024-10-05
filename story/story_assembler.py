@@ -2,13 +2,14 @@ from story.evidence import TypeOfEvidence, StoryElement, WhenInTime, MurderEleme
 from story.story import Story
 from utils.display_interface import display_story_elements
 from collections import defaultdict
+from config.story_config import StoryConfig
 import random
 
 def get_random_character_element(elements):
     character_elements = [e for e in elements if e.speaker != "Narrator"]
     return random.choice(character_elements) if character_elements else None
 
-def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int = 1, num_distracting: int = 5):
+def assemble_details(story: Story, config: StoryConfig):
     all_elements = []
     characters = [story.killer] + [ds.character_name for ds in story.distractor_stories]
 
@@ -40,12 +41,12 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
 
     # Add suspicious elements for each character
     for character in characters:
-        final_elements.extend(random.sample(suggests_guilt[character], min(num_sus, len(suggests_guilt[character]))))
+        final_elements.extend(random.sample(suggests_guilt[character], min(config.num_suspicious_elements, len(suggests_guilt[character]))))
 
     # Add elements proving innocence for non-guilty characters
     for character in characters:
         if character != story.killer:
-            innocence_proving_details: list[StoryElement] = random.sample(proves_innocence[character], min(num_proving_innocence, len(proves_innocence[character])))
+            innocence_proving_details: list[StoryElement] = random.sample(proves_innocence[character], min(config.num_proving_innocence_elements, len(proves_innocence[character])))
             story.reasons_for_guilt_and_innocence.extend(innocence_proving_details)
             final_elements.extend(innocence_proving_details)
 
@@ -70,7 +71,7 @@ def assemble_details(story: Story, num_sus: int = 3, num_proving_innocence: int 
     story.reasons_for_guilt_and_innocence.extend(killer_elements)
 
     # Add distracting elements
-    final_elements.extend(random.sample(distracting, min(num_distracting, len(distracting))))
+    final_elements.extend(random.sample(distracting, min(config.num_distracting_elements, len(distracting))))
 
     # Sort the final elements by their WhenInTime value and then by speaker
     final_elements.sort(key=lambda x: ([WhenInTime.UNKNOWN, WhenInTime.BEFORE_CRIME, WhenInTime.DURING_CRIME, WhenInTime.AFTER_CRIME].index(x.when), x.speaker))

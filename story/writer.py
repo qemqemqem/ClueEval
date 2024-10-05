@@ -7,6 +7,7 @@ from typing import List
 from utils.gpt import prompt_completion_chat
 from utils.display_interface import display_story_element, display_text, display_story_elements, display_bullet_points
 from utils.save_to_file import save_story_to_file
+from config.story_config import StoryConfig
 import random
 
 
@@ -39,7 +40,7 @@ def parse_crime_story(character_name: str, story_text: str) -> CharacterStory:
         clues_that_prove_innocence='\n'.join(details.get('clues that prove innocence', []))
     )
 
-def write_stories(story: Story):
+def write_stories(story: Story, config: StoryConfig):
     # Load prompt templates
     with open('config/prompts/central_story.txt', 'r') as f:
         central_story_prompt = f.read()
@@ -58,8 +59,7 @@ def write_stories(story: Story):
 
     # Generate distractor stories for other characters
     other_characters = [char for char in story.random_people if char not in [story.killer, story.victim]]
-    # other_characters = []  # Disabling for Development! TODO Reenable
-    # murder_summary = f"{story.killer} killed {story.victim} with a {story.crime_weapon} in the {story.crime_location}."
+    other_characters = other_characters[:config.max_distractor_stories]  # Limit the number of distractor stories
     murder_summary = story.crime_story.real_story
     
     for character in other_characters:
@@ -211,30 +211,30 @@ def present_question(story: Story, interactive_mode: bool = False):
 
     display_bullet_points([str(rfi) for rfi in story.reasons_for_guilt_and_innocence], title="Reasoning")
 
-def create_story(interactive_mode: bool = False):
+def create_story(config: StoryConfig):
     # Get random story details
     story = get_random_details()
     display_story_element(story.summary, title="Story Summary: " + story.title)
 
     # Write stories
-    story = write_stories(story)
+    story = write_stories(story, config)
 
     # Convert stories to story elements and display them
     stories_to_elements(story)
 
     # Assemble all details
-    assemble_details(story)
+    assemble_details(story, config)
 
     # Write full prose
     write_prose(story)
 
     # Create and present the question
     create_question(story)
-    present_question(story, interactive_mode)
+    present_question(story, config.interactive_mode)
 
     # Save the story to a file
     save_story_to_file(story)
 
 
 if __name__ == '__main__':
-    create_story()
+    create_story(StoryConfig())
