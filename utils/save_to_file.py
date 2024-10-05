@@ -61,9 +61,7 @@ def save_story_to_file(story: Story, creation_steps: str = ""):
         f.write("```\n\n")
 
         f.write("## Full Creation Steps\n\n")
-        f.write("```\n")
         f.write(creation_steps)
-        f.write("```\n\n")
 
     print(f"Story saved to {filename}")
 
