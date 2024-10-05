@@ -8,11 +8,8 @@ def create_simple_jsonl():
         for line in infile:
             data = json.loads(line)
 
-            print(data["options"])
-            print(list(data["options"].values()))
-
             simple_data = {
-                "question": data["question"],
+                "question": f"{data['full_prose']}\n\n{data['question']}",
                 "choices": list(data["options"].values()),
                 "answer": list(data["options"].values()).index(data["killer"])
             }
