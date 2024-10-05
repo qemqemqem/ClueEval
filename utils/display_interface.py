@@ -23,9 +23,12 @@ def end_recording():
 def get_recording():
     return "\n\n".join(_recording)
 
-def _record(content: str):
+def _record(content: str, title: str = None):
     if _is_recording:
-        _recording.append(content)
+        if title:
+            _recording.append(f"### {title}\n\n{content}")
+        else:
+            _recording.append(content)
 
 def display_story_element(text: str, title: str = None, style: str = "cyan") -> None:
     """
@@ -41,7 +44,7 @@ def display_story_element(text: str, title: str = None, style: str = "cyan") -> 
         title_align="center"
     )
     console.print(panel)
-    _record(f"Story Element: {title if title else 'Untitled'}\n{text}")
+    _record(text, f"Story Element: {title if title else 'Untitled'}")
 
 def display_story_elements(elements: list[StoryElement], title: str = "Story Elements", style: str = "cyan") -> None:
     """
@@ -57,7 +60,7 @@ def display_story_elements(elements: list[StoryElement], title: str = "Story Ele
         title_align="center"
     )
     console.print(panel)
-    _record(f"Story Elements: {title}\n{content}")
+    _record(content, f"Story Elements: {title}")
 
 def display_text(text: str, speaker: str = None, style: str = "green") -> None:
     """
@@ -72,7 +75,7 @@ def display_text(text: str, speaker: str = None, style: str = "green") -> None:
         title_align="left" if speaker else "right"
     )
     console.print(panel)
-    _record(f"{'Speaker: ' + speaker if speaker else 'Narrative'}\n{text}")
+    _record(text, f"{'Speaker: ' + speaker if speaker else 'Narrative'}")
 
 def display_bullet_points(points: list[str], title: str = "Bullet Points", style: str = "yellow") -> None:
     """
@@ -88,7 +91,7 @@ def display_bullet_points(points: list[str], title: str = "Bullet Points", style
         title_align="center"
     )
     console.print(panel)
-    _record(f"Bullet Points: {title}\n{content}")
+    _record(content, f"Bullet Points: {title}")
 
 def display_error(error_message: str) -> None:
     """
@@ -102,7 +105,7 @@ def display_error(error_message: str) -> None:
         expand=False
     )
     console.print(panel)
-    _record(f"Error: {error_message}")
+    _record(error_message, "Error")
 
 def display_json(json_data: str, title: str = "JSON Data", style: str = "blue") -> None:
     """
@@ -110,7 +113,7 @@ def display_json(json_data: str, title: str = "JSON Data", style: str = "blue") 
     """
     try:
         print_json(json_data)
-        _record(f"JSON Data: {title}\n{json_data}")
+        _record(json_data, f"JSON Data: {title}")
     except Exception as e:
         error_message = f"Failed to display JSON data: {str(e)}"
         display_error(error_message)
