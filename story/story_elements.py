@@ -52,13 +52,13 @@ def convert_story_to_story_elements(story: str, speaking_character: str) -> list
                 target = elem['target']
                 
                 try:
-                    type_of_evidence = TypeOfEvidence(elem['type_of_evidence'])
+                    type_of_evidence = TypeOfEvidence(elem['type_of_evidence'].replace(' ', '_'))
                 except ValueError:
                     print(f"Warning: Invalid type_of_evidence value '{elem['type_of_evidence']}'. Using default.")
                     type_of_evidence = TypeOfEvidence.SUGGESTS_GUILT
                 
                 try:
-                    when = WhenInTime(elem['when'])
+                    when = WhenInTime(elem['when'].replace(' ', '_'))
                 except ValueError:
                     print(f"Warning: Invalid when value '{elem['when']}'. Using default.")
                     when = WhenInTime.UNKNOWN
