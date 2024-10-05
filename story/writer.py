@@ -101,7 +101,7 @@ def add_murder_elements(elements: List[StoryElement], character_story: Character
                 )
             )
 
-def stories_to_elements(story: Story):
+def stories_to_elements(story: Story, config: StoryConfig):
     story.crime_story.real_story_elements = get_elements(story.crime_story.real_story, story.killer, concealed=True)
     display_story_elements(story.crime_story.real_story_elements, title="Crime Story Real Story Elements")
     
@@ -220,7 +220,7 @@ def create_story(config: StoryConfig):
     story = write_stories(story, config)
 
     # Convert stories to story elements and display them
-    stories_to_elements(story)
+    stories_to_elements(story, config)
 
     # Assemble all details
     assemble_details(story, config)
