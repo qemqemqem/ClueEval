@@ -52,7 +52,7 @@ def save_story_to_file(story: Story, creation_steps: str = ""):
         f.write("```jsonl\n")
         for element in story.new_story_details:
             f.write(json.dumps(element.__dict__, cls=StoryEncoder) + "\n")
-        f.write("```")
+        f.write("```\n\n")
 
         f.write("## Story Configuration\n\n")
         f.write("```python\n")
@@ -62,6 +62,7 @@ def save_story_to_file(story: Story, creation_steps: str = ""):
 
         f.write("## Full Creation Steps\n\n")
         f.write(creation_steps)
+        f.write("\n\n")
 
     print(f"Story saved to {filename}")
 
