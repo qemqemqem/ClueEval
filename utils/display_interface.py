@@ -25,8 +25,8 @@ def get_recording():
 
 def _record(content: str, title: str = None):
     if _is_recording:
-        if "\n #" in content:
-            content = content.replace("\n #", "\n####")
+        if "\n#" in content:
+            content = content.replace("\n#", "\n####")
         if title:
             _recording.append(f"### {title}\n\n{content}")
         else:
