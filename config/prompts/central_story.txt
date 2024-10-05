@@ -20,4 +20,4 @@ Then write a three paragraph story explaining what happened. The first paragraph
 
 # Explanation to Detective
 
-The detective in my story interviews each of the characters. Write a 3 paragraph story in the first person which {{killer}} would give to the detective, in which they try to explain themself. Keep this as an outline and don't use dialog. Obviously, the killer protests that they are innocent, and doesn't confess to having committed the crime. They lie and dissemble instead.
+The detective in my story interviews each of the characters. Write a 3 paragraph story in the first person which {{killer}} would give to the detective, in which they try to explain themself. Keep this as an outline and don't use dialog. Obviously, the killer protests that they are innocent, and doesn't confess to having committed the crime. They lie and dissemble instead. {{killer}} is {{killer_description}}.

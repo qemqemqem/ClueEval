@@ -23,7 +23,7 @@ def main():
     parser.add_argument("--num_random_places", type=int, default=3,
                         help="Number of random places to select, like rooms or other settings")
     parser.add_argument("--default_model", type=str, default="gpt-4o-mini",
-                        help="Default model to use for GPT completions")
+                        help="Default model to use for GPT completions. Supports gpt-4o-mini or gpt-4o.")
     args = parser.parse_args()
 
     set_default_model(args.default_model)

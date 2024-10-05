@@ -51,6 +51,7 @@ def write_stories(story: Story, config: StoryConfig):
     central_prompt = central_story_prompt.replace('{{summary}}', story.summary)
     central_prompt = central_prompt.replace('{{killer}}', story.killer)
     central_prompt = central_prompt.replace('{{victim}}', story.victim)
+    central_prompt = central_prompt.replace('{{killer_description}}', story.character_details[story.killer])
     crime_story_text = prompt_completion_chat(central_prompt)
     story.crime_story = parse_crime_story(story.killer, crime_story_text)
 
@@ -65,6 +66,7 @@ def write_stories(story: Story, config: StoryConfig):
         other_prompt = other_story_prompt.replace('{{summary}}', story.summary)
         other_prompt = other_prompt.replace('{{murder_summary}}', murder_summary)
         other_prompt = other_prompt.replace('{{character}}', character)
+        other_prompt = other_prompt.replace('{{character_description}}', story.character_details[character])
         other_prompt = other_prompt.replace('{{other_stories}}', "\n".join([ds.real_story for ds in story.distractor_stories]))
         
         distractor_story_text = prompt_completion_chat(other_prompt)
