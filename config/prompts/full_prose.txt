@@ -16,6 +16,6 @@ Now, here's the outline of the story that I have. I want you to follow this outl
 
 Each element in the outline should be converted into exactly one sentence (or dialog with an introduction). I want you to take this list and make it flow. The story you write should start with Detective Detecto's arrival, and be structured as Detecto's revelations as he investigates. The story you write will end just before Detecto announces who did it.
 
-Everything should be narrated from Detecto's point of view, recounted in dialog and description by interviewing the assembled characters. Remember that Detecto doesn't have any special knowledge of what really occurred, and we see things only through the detective's eyes.
+Everything should be narrated from Detecto's point of view, recounted in dialog and description by interviewing the assembled characters. Remember that Detecto doesn't have any special knowledge of what really occurred, and we see things only through the detective's eyes. Notice that some of the bullet points in my outline are concealed from the detective; you should indicate how the detective learns these things.
 
 Write nothing except for a story. Write a short story which closely follows my outline.
