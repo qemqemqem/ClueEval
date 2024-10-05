@@ -26,11 +26,11 @@ def get_random_details(config: StoryConfig) -> Story:
     random_people = random.sample(person_elements, config.num_random_people + 2)  # The first two are the killer and victim
     killer, victim = random_people[0], random_people[1]
 
-    random_crimes = random.sample(crime_elements, config.num_random_crimes)  # One of these will be the murder weapon
+    random_items = random.sample(crime_elements, config.num_random_items)  # One of these will be the murder weapon
     random_places = random.sample(place_elements, config.num_random_places)
 
     # Select specific crime weapon, location, and setting
-    crime_weapon = random.choice(random_crimes)
+    crime_weapon = random.choice(random_items)
     crime_location = random.choice(random_places)
     mystery_setting = random.choice(mystery_settings)
 
@@ -43,7 +43,7 @@ def get_random_details(config: StoryConfig) -> Story:
     # Create a Story object
     story = Story(
         summary="",
-        random_crimes=random_crimes,
+        random_items=random_items,
         random_places=random_places,
         random_people=random_people,
         killer=killer,
@@ -57,7 +57,7 @@ def get_random_details(config: StoryConfig) -> Story:
 
     bystanders = [person for person in story.random_people if person not in [story.killer, story.victim]]
     other_places = [place for place in story.random_places if place != story.crime_location]
-    other_items = [crime for crime in story.random_crimes if crime != story.crime_weapon]
+    other_items = [crime for crime in story.random_items if crime != story.crime_weapon]
 
     story.summary = unindent(f"""
         This is a mystery story in the style of a golden age classic. The story features the following elements:

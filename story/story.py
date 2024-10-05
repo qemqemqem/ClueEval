@@ -31,7 +31,7 @@ class Story:
     summary: str
 
     # The story has these elements, which are part of the story description
-    random_crimes: List[str]
+    random_items: List[str]
     random_places: List[str]
     random_people: List[str]
     killer: str
