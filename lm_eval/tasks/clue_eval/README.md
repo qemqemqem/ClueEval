@@ -20,19 +20,22 @@ This directory contains a custom multiple-choice task for the LM Evaluation Harn
 
 To use this task:
 
-1. Ensure you have the LM Evaluation Harness installed and set up.
+1. Install the LM Evaluation Harness. You can find installation instructions and more information at https://github.com/EleutherAI/lm-evaluation-harness
 2. Make sure you have an OpenAI API key if you're using the OpenAI model (as in the example script).
-3. Customize the `my_multiple_choice.jsonl` file with your own questions if desired.
+3. Customize the `clue_questions.jsonl` file with your own questions if desired.
 4. Adjust the `run_evaluation.sh` script if you want to use a different model or change evaluation parameters.
 
 ## Running the evaluation
 
 To run the evaluation:
 
-1. Make the script executable: `chmod +x run_evaluation.sh`
-2. Run the script: `./run_evaluation.sh`
+1. Make sure you have the LM Evaluation Harness installed and set up correctly.
+2. Make the script executable: `chmod +x run_evaluation.sh`
+3. Run the script: `./run_evaluation.sh`
 
-The results will be saved in `results_gpt35_multiple_choice.json`.
+The script uses the `lm_eval` command provided by the LM Evaluation Harness. You can find the exact command in the `run_evaluation.sh` file.
+
+The results will be saved in the directory specified by `results_path` in the `clue_eval.yaml` file.
 
 ## Customization
 
