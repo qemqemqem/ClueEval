@@ -29,9 +29,9 @@ To use this task:
 
 To run the evaluation:
 
-1. Make sure you have the LM Evaluation Harness installed and set up correctly.
-2. Make the script executable: `chmod +x run_evaluation.sh`
-3. Run the script: `./run_evaluation.sh`
+1. Make sure you have the LM Evaluation Harness installed and set up correctly. For more information about lm_eval and its installation, visit: https://github.com/EleutherAI/lm-evaluation-harness
+2. Make the script executable: `chmod +x lm_eval/tasks/clue_eval/run_evaluation.sh`
+3. Run the script: `lm_eval/tasks/clue_eval/run_evaluation.sh`
 
 The script uses the `lm_eval` command provided by the LM Evaluation Harness. You can find the exact command in the `run_evaluation.sh` file.
 
