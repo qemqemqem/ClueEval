@@ -6,7 +6,7 @@ dataset_kwargs:
 test_split: train
 fewshot_split: train
 
-results_path: /home/keenan/Dev/ClueEval/lm_eval/tasks/clue_eval/results
+results_path: lm_eval/tasks/clue_eval/results
 
 doc_to_text: "{{question}}\n\nRespond with the letter of the correct answer, with no other commentary."
 doc_to_target: "{{['A', 'B', 'C', 'D'][answer]}}"

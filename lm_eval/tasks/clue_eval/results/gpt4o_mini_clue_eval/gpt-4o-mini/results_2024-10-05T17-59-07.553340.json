@@ -1,0 +1,111 @@
+{
+  "results": {
+    "clue_eval": {
+      "alias": "clue_eval",
+      "exact_match,get-letter": 0.2857142857142857,
+      "exact_match_stderr,get-letter": 0.07747516350666293
+    }
+  },
+  "group_subtasks": {
+    "clue_eval": []
+  },
+  "configs": {
+    "clue_eval": {
+      "task": "clue_eval",
+      "dataset_path": "json",
+      "dataset_kwargs": {
+        "data_files": "lm_eval/tasks/clue_eval/clue_questions.jsonl"
+      },
+      "test_split": "train",
+      "fewshot_split": "train",
+      "doc_to_text": "{{question}}\n\nRespond with the letter of the correct answer, with no other commentary.",
+      "doc_to_target": "{{['A', 'B', 'C', 'D'][answer]}}",
+      "description": "",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "num_fewshot": 0,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "\n"
+        ],
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "get-letter",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "[ABCD]"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false
+    }
+  },
+  "versions": {
+    "clue_eval": "Yaml"
+  },
+  "n-shot": {
+    "clue_eval": 0
+  },
+  "higher_is_better": {
+    "clue_eval": {
+      "exact_match": true
+    }
+  },
+  "n-samples": {
+    "clue_eval": {
+      "original": 35,
+      "effective": 35
+    }
+  },
+  "config": {
+    "model": "openai-chat-completions",
+    "model_args": "model=gpt-4o-mini",
+    "batch_size": "1",
+    "batch_sizes": [],
+    "device": null,
+    "use_cache": null,
+    "limit": null,
+    "bootstrap_iters": 100000,
+    "gen_kwargs": null,
+    "random_seed": 0,
+    "numpy_seed": 1234,
+    "torch_seed": 1234,
+    "fewshot_seed": 1234
+  },
+  "git_hash": "d86231e",
+  "date": 1728176327.9476376,
+  "pretty_env_info": "PyTorch version: 2.2.2+cpu\nIs debug build: False\nCUDA used to build PyTorch: Could not collect\nROCM used to build PyTorch: N/A\n\nOS: Pop!_OS 22.04 LTS (x86_64)\nGCC version: (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0\nClang version: Could not collect\nCMake version: version 3.22.1\nLibc version: glibc-2.35\n\nPython version: 3.10.12 (main, Sep 11 2024, 15:47:36) [GCC 11.4.0] (64-bit runtime)\nPython platform: Linux-6.9.3-76060903-generic-x86_64-with-glibc2.35\nIs CUDA available: False\nCUDA runtime version: 11.2.67\nCUDA_MODULE_LOADING set to: N/A\nGPU models and configuration: Could not collect\nNvidia driver version: Could not collect\ncuDNN version: Could not collect\nHIP runtime version: N/A\nMIOpen runtime version: N/A\nIs XNNPACK available: True\n\nCPU:\nArchitecture:                         x86_64\nCPU op-mode(s):                       32-bit, 64-bit\nAddress sizes:                        39 bits physical, 48 bits virtual\nByte Order:                           Little Endian\nCPU(s):                               12\nOn-line CPU(s) list:                  0-11\nVendor ID:                            GenuineIntel\nModel name:                           13th Gen Intel(R) Core(TM) i5-1335U\nCPU family:                           6\nModel:                                186\nThread(s) per core:                   2\nCore(s) per socket:                   10\nSocket(s):                            1\nStepping:                             3\nCPU max MHz:                          4600.0000\nCPU min MHz:                          400.0000\nBogoMIPS:                             4992.00\nFlags:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb intel_pt sha_ni xsaveopt xsavec xgetbv1 xsaves split_lock_detect user_shstk avx_vnni dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req hfi vnmi umip pku ospke waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize arch_lbr ibt flush_l1d arch_capabilities\nVirtualization:                       VT-x\nL1d cache:                            352 KiB (10 instances)\nL1i cache:                            576 KiB (10 instances)\nL2 cache:                             6.5 MiB (4 instances)\nL3 cache:                             12 MiB (1 instance)\nNUMA node(s):                         1\nNUMA node0 CPU(s):                    0-11\nVulnerability Gather data sampling:   Not affected\nVulnerability Itlb multihit:          Not affected\nVulnerability L1tf:                   Not affected\nVulnerability Mds:                    Not affected\nVulnerability Meltdown:               Not affected\nVulnerability Mmio stale data:        Not affected\nVulnerability Reg file data sampling: Mitigation; Clear Register File\nVulnerability Retbleed:               Not affected\nVulnerability Spec rstack overflow:   Not affected\nVulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:             Mitigation; Enhanced / Automatic IBRS; IBPB conditional; RSB filling; PBRSB-eIBRS SW sequence; BHI BHI_DIS_S\nVulnerability Srbds:                  Not affected\nVulnerability Tsx async abort:        Not affected\n\nVersions of relevant libraries:\n[pip3] flake8==7.1.1\n[pip3] mypy-extensions==1.0.0\n[pip3] numpy==1.26.4\n[pip3] torch==2.2.2+cpu\n[conda] Could not collect",
+  "transformers_version": "4.44.2",
+  "upper_git_hash": null,
+  "task_hashes": {
+    "clue_eval": "2a63e8f6fef70ecb854a94c6f9b6200714b47647a2b4d6a35ba1b3bb1e3ae386"
+  },
+  "model_source": "openai-chat-completions",
+  "model_name": "gpt-4o-mini",
+  "model_name_sanitized": "gpt-4o-mini",
+  "system_instruction": null,
+  "system_instruction_sha": null,
+  "fewshot_as_multiturn": false,
+  "chat_template": "",
+  "chat_template_sha": null,
+  "start_time": 66410.290565057,
+  "end_time": 66436.5909209,
+  "total_evaluation_time_seconds": "26.30035584299185"
+}
