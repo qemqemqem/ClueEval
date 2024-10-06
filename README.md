@@ -53,18 +53,14 @@ ClueEval creates mystery stories that theoretically test deductive reasoning abi
    This will generate 10 mysteries, and store them in `generated_questions`. Beware that each generation will take a couple of minutes, as there is a lot of back and forth with an LLM.
 
 7. Run lm_eval:
-   ```
-   lm_eval/tasks/clue_eval/run_evaluation.sh
-   ```
-   
-   This will evaluate the model's performance on the CLUE task. You can find the results in the `lm_eval/tasks/clue_eval/results` directory.
+   For information on running the CLUE evaluation task using lm_eval, please refer to the README in the `lm_eval/tasks/clue_eval/` directory.
 
 ## Project Structure
 
 - `story/`: Contains the core logic for story generation and processing.
 - `utils/`: Utility functions, including GPT API interactions.
 - `config/`: Configuration files, including prompts and element lists.
-- `lm_eval/`: Contains the CLUE evaluation task and results.
+- `lm_eval/`: Contains the CLUE evaluation task and results. See the README in `lm_eval/tasks/clue_eval/` for detailed information on running the evaluation.
 
 ## Contributing
 
