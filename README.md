@@ -2,6 +2,8 @@
 
 ClueEval is a project designed to evaluate the reasoning capabilities of Large Language Models (LLMs) by challenging them to solve generated mystery stories. 
 
+⭐ **If you find this tool useful, please consider starring the repository on GitHub!** ⭐
+
 ## Purpose
 
 ClueEval creates mystery stories that theoretically test deductive reasoning abilities in solving.
